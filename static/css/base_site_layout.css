@@ -1,0 +1,124 @@
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@4/distr/fira_code.css);
+
+@supports (font-variation-settings: normal) {
+    * {
+        font-family: 'Fira Code VF', monospace;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .base {
+        grid-template-columns: 1em auto 1em;
+        font-size: 12px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Fira Code', monospace;
+}
+
+.base {
+    display: grid;
+    grid-template-columns: auto minmax(min-content, 1000px) auto;
+    grid-template-rows: 5em 10em 5em auto 5em;
+    --content-width: minmax(min-content, 1000px);
+    min-height: 100vh;
+}
+
+.site_header {
+    grid-row: 2;
+    grid-column: 2;
+
+    display: grid;
+    grid-auto-columns: 1;
+
+    grid-template-rows: min-content auto;
+}
+
+.site_header--root {
+    grid-column: 1;
+    display: grid;
+    justify-content: left;
+
+    color: var(--site-colour-highlight);
+}
+
+.site_header--root a {
+    text-decoration: none;
+    color: var(--site-colour-highlight)
+}
+
+.site_header--title {
+    padding-bottom: 0.25em;
+}
+
+.site_header--links {
+    grid-column: 1;
+    display: grid;
+
+    grid-auto-flow: column;
+    justify-content: left;
+}
+
+.site_header--link {
+    text-decoration: none;
+    color: var(--site-colour-lowlight);
+    padding-right: 2em;
+}
+
+.site_header--links a:hover {
+    color: var(--site-colour-highlight);
+}
+
+.page_header {
+    grid-row: 3;
+    grid-column: 2;
+
+    display: grid;
+    grid-auto-rows: 2;
+    grid-auto-columns: 1;
+}
+
+.page_header--root {
+    grid-column: 1;
+    grid-row: 1;
+    display: grid;
+    justify-content: left;
+    align-content: center;
+    color: var(--site-colour-highlight);
+}
+
+.content {
+    grid-row: 4;
+    grid-column: 2;
+    padding-bottom: 5em;
+}
+
+.footer {
+    display: grid;
+    grid-row: 5;
+    grid-column: 2;
+    grid-auto-columns: 2;
+    border-top: 1px solid var(--site-colour-block);
+}
+
+.footer--site-links {
+    display: grid;
+    grid-column: 2;
+    align-content: center;
+    justify-content: right;
+    grid-auto-flow: column;
+    grid-auto-rows: 1;
+    gap: 1em;
+}
+
+.footer--site-links a {
+    color: var(--site-colour-lowlight);
+    text-decoration: none;
+}
+
+.footer--site-links a:hover {
+    color: var(--site-colour-highlight);
+}

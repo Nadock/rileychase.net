@@ -1,0 +1,62 @@
+<!-- https://jinja.palletsprojects.com/en/3.1.x/templates/ -->
+<!DOCTYPE html>
+<html lang="en-au">
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ props.description }}">
+    <meta name="color-scheme" content="dark light">
+
+    <link rel="stylesheet" type="text/css" href="/css/base_site_layout.css">
+    <link rel="stylesheet" type="text/css" href="/css/markdown_formatting.css">
+    <link rel="stylesheet" type="text/css" href="/css/code_highlighting.css">
+
+    <title>{{ props.title }}</title>
+</head>
+
+<body>
+    <div class="base">
+
+        <div class="site_header">
+            <div class="site_header--root">
+                <a href="/">
+                    <h1 class="site_header--title">rileychase&lt;dot&gt;net</h1>
+                </a>
+            </div>
+            <div class="site_header--links">
+                <a class="site_header--link" href="/">Home</a>
+
+                <a class="site_header--link" href="/markdown_test.html">Markdown Test</a>
+                <a class="site_header--link" href="/emoji_test.html">Emoji Test</a>
+                <a class="site_header--link" href="/lorem_article.html">Lorem article</a>
+                <a class="site_header--link" href="/licenses">Licenses</a>
+                <a class="site_header--link" href="/404.html">404</a>
+
+                <a class="site_header--link" href="https://github.com/nadock" target="_blank">GitHub</a>
+            </div>
+        </div>
+
+        <div class="page_header">
+            <div class="page_header--root">
+                <h2 class="page_header--title">{{ props.title }}</h2>
+                <h3 class="page_header--subtitle">{{ props.subtitle }}</h3>
+                <em class="page_header--date">{{ props.date }}</em>
+            </div>
+        </div>
+
+        <div class="content">
+            {{ content }}
+        </div>
+
+        <div class="footer">
+            <div class="footer--site-links">
+                <a class="header_links--link" href="/">Home</a>
+                <a class="header_links--link" href="/licenses">Licenses</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

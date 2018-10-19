@@ -1,0 +1,11 @@
+version: '3'
+
+
+includes:
+  gh: ./Taskfile.yaml
+
+
+output:
+  group:
+    begin: "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}"
+    end: "::endgroup::"

@@ -1,0 +1,27 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+jinja2 = "~=3.1.2"
+markdown = "~=3.4.1"
+pydantic = "~=1.10.1"
+pygments = "~=2.13.0"
+pymdown-extensions = "~=9.5"
+pyyaml = "~=6.0"
+watchdog = "~=2.1.9"
+
+[dev-packages]
+black = "~=22.6.0"
+cfn-lint = "~=0.65.0"
+isort = "~=5.10.1"
+mypy = "~=0.971"
+pylint = "~=2.15.0"
+pytest = "~=7.1.2"
+rope = "~=1.3.0"
+types-markdown = "~=3.4.1"
+types-pyyaml = "~=6.0.11"
+
+[requires]
+python_version = "3.10"
