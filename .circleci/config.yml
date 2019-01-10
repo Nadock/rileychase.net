@@ -1,0 +1,68 @@
+# Build config for CircleCI
+
+version: 2.1
+
+executors:
+  deployment_executor:
+    docker:
+      - image: docker.io/nadock/rileychase.net-deploy:latest
+
+commands:
+  install_dependecies:
+    description: "Install test and deploy requirements"
+    steps:
+      - run: |
+          cd infra
+          make install
+
+jobs:
+  test:
+    executor: deployment_executor
+    steps:
+      - checkout
+      - install_dependecies
+      - run:
+          name: Running unit tests
+          command: |
+            cd infra
+            make test
+  deploy_dev:
+    executor: deployment_executor
+    steps:
+      - checkout
+      - deploy:
+          name: Deploying dev environment
+          environment:
+            STAGE: dev
+          command: |
+            cd infra
+            make deploy
+  deploy_prod:
+    executor: deployment_executor
+    steps:
+      - checkout
+      - deploy:
+          name: Deploying prod environment
+          environment:
+            STAGE: prod
+          command: |
+            cd infra
+            make deploy
+
+workflows:
+  version: 2.1
+  test_deploy:
+    jobs:
+      - test
+      - deploy_dev:
+          requires:
+            - test
+          filters:
+            branches:
+              only: dev
+      - deploy_prod:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master
