@@ -23,8 +23,81 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: rileychase.net-${self:custom.stage}
-  Outputs:
-    WebsiteBucketOutput:
-      Description: The name of the S3 bucket the website will be deployed into.
-      Value:
-        Ref: WebsiteBucket
+    WebsiteLogsBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: rileychase.net-logs-${self:custom.stage}
+    # CloudFront Distribution for website
+    WebsiteCFDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - GET
+              - HEAD
+            TargetOriginId:
+              Ref: WebsiteBucket
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: none
+            ViewerProtocolPolicy: redirect-to-https
+          DefaultRootObject: index.html
+          Enabled: true
+          HttpVersion: http2
+          Origins:
+            - DomainName:
+                Fn::Join:
+                  - ""
+                  - - Ref: WebsiteBucket
+                    - ".s3.amazonaws.com"
+              Id:
+                Ref: WebsiteBucket
+              S3OriginConfig:
+                OriginAccessIdentity:
+                  Fn::Join:
+                    - ""
+                    - - origin-access-identity/cloudfront/
+                      - Ref: DistributionOAI
+          PriceClass: PriceClass_All
+          Logging:
+            Bucket:
+              Fn::Join:
+                  - ""
+                  - - Ref: WebsiteLogsBucket
+                    - ".s3.amazonaws.com"
+          Aliases:
+            - rileychase.net
+            - dev.rileychase.net
+          ViewerCertificate:
+            AcmCertificateArn: arn:aws:acm:ap-southeast-2:065006121675:certificate/260a7a2d-3c28-4e0f-a2c8-34275beacf13
+            SslSupportMethod: sni-only
+    # Access configuration so the CF Distribution can access the content in S3
+    DistributionOAI:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: rileychase.net
+    DistributionOAIBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: WebsiteBucket
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                CanonicalUser:
+                  Fn::GetAtt:
+                    - DistributionOAI
+                    - S3CanonicalUserId
+              Action:
+                - s3:GetObject
+              Resource:
+                Fn::Join:
+                  - ""
+                  - - "arn:aws:s3:::"
+                    - Ref: WebsiteBucket
+                    - /*
