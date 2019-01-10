@@ -8,7 +8,7 @@ install:
 	cd ../rileychase.net && npm install
 
 .PHONY: format
-format:
+format: install
 	cd ../rileychase.net && npm run format
 
 .PHONY: test
@@ -16,7 +16,7 @@ test: format
 	cd ../rileychase.net && npm test
 
 .PHONY: build
-build:
+build: install
 	cd ../rileychase.net && npm run build
 
 .PHONY: infra
