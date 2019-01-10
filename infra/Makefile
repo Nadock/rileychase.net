@@ -1,7 +1,7 @@
-default: deploy
+default: test
 
 .PHONY: deploy
-deploy: install format test build infra upload
+deploy: install test build infra upload
 
 .PHONY: install
 install:
@@ -12,7 +12,7 @@ format:
 	cd ../rileychase.net && npm run format
 
 .PHONY: test
-test:
+test: format
 	cd ../rileychase.net && npm test
 
 .PHONY: build
@@ -26,6 +26,11 @@ infra:
 .PHONY: upload
 upload:
 	./bin/upload_website.sh ../rileychase.net/public
+
+.PHONY: docker
+docker: ./Dockerfile
+	docker build -t nadock/rileychase.net-deploy .
+	docker push nadock/rileychase.net-deploy:latest
 
 .PHONY:
 clean:
