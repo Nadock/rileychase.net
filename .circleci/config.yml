@@ -34,6 +34,7 @@ jobs:
           name: Deploying dev environment
           environment:
             STAGE: dev
+            AWS_DEFAULT_REGION: ap-southeast-2
           command: |
             cd infra
             make deploy
