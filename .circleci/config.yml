@@ -25,6 +25,7 @@ jobs:
           name: Deploying prod environment
           environment:
             STAGE: prod
+            AWS_DEFAULT_REGION: ap-southeast-2
           command: |
             cd infra
             make deploy
