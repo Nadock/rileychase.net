@@ -4,4 +4,14 @@
 
 # ${GITHUB_WORKSPACE} contains checked out a copy of the git commit that triggered this action
 cd ${GITHUB_WORKSPACE}/infra
-make deploy
+BRANCH_NAME=$(git branch | grep \* | cut -d " " -f2)
+
+if [[ ${BRANCH_NAME} == "master" ]]; then
+	STAGE=prod
+	make deploy
+elif [[ ${BRANCH_NAME} == "dev" ]]; then
+	STAGE=dev
+	make deploy
+else
+	make test
+fi
