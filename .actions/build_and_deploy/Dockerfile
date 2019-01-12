@@ -1,8 +1,8 @@
 FROM nadock/rileychase.net-deploy:latest
 
-LABEL "com.github.actions.name"="Test"
-LABEL "com.github.actions.description"="Runs unit tests and linting on code"
-LABEL "com.github.actions.icon"="codepen"
+LABEL "com.github.actions.name"="Build & Deploy"
+LABEL "com.github.actions.description"="Builds a production optimised version of the website and deploys it"
+LABEL "com.github.actions.icon"="cloud-lightning"
 LABEL "com.github.actions.color"="orange"
 
 LABEL "repository"="https://github.com/Nadock/rileychase.net"
