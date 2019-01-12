@@ -1,4 +1,4 @@
-FROM rileychase.net-deploy:latest
+FROM nadock/rileychase.net-deploy:latest
 
 LABEL "com.github.actions.name"="Test Code"
 LABEL "com.github.actions.description"="Runs unit tests and linting on code"
