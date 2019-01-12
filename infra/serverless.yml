@@ -70,9 +70,9 @@ resources:
           Aliases:
             - rileychase.net
             - dev.rileychase.net
-          # ViewerCertificate:
-          #   AcmCertificateArn: #TODO: wait for AWS Support to up out limit so we can provision the correct cert
-          #   SslSupportMethod: sni-only
+          ViewerCertificate:
+            AcmCertificateArn: arn:aws:acm:us-east-1:065006121675:certificate/e9584a1c-07d9-4e64-92a7-0fcdc6b76056
+            SslSupportMethod: sni-only
     # Access configuration so the CF Distribution can access the content in S3
     DistributionOAI:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
