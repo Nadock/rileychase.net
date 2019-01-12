@@ -101,3 +101,8 @@ resources:
                   - - "arn:aws:s3:::"
                     - Ref: WebsiteBucket
                     - /*
+  Outputs:
+    WebsiteBucketOutput:
+      Description: The name of the S3 bucket the website will be deployed into.
+      Value:
+        Ref: WebsiteBucket
