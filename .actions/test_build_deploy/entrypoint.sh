@@ -11,7 +11,9 @@ if [[ ${BRANCH_NAME} == "master" ]]; then
 	make deploy
 elif [[ ${BRANCH_NAME} == "dev" ]]; then
 	STAGE=dev
-	make deploy
+	# TODO: configure a development environment
+	# make deploy
+	make test
 else
 	make test
 fi
