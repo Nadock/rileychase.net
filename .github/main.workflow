@@ -3,7 +3,7 @@ workflow "Test, Build & Deploy" {
   resolves = ["test_build_deploy"]
 }
 
-action "build_and_deploy_production" {
+action "test_build_deploy" {
   uses = "./.actions/test_build_deploy"
   env = {
     AWS_DEFAULT_REGION = "ap-southeast-2"
