@@ -30,14 +30,14 @@ jobs:
             cd infra
             make deploy
 
-workflows:
-  version: 2.1
-  test_deploy:
-    jobs:
-      - test
-      - deploy_prod:
-          requires:
-            - test
-          filters:
-            branches:
-              only: master
+# workflows:
+#   version: 2.1
+#   test_deploy:
+#     jobs:
+#       - test
+#       - deploy_prod:
+#           requires:
+#             - test
+#           filters:
+#             branches:
+#               only: master
