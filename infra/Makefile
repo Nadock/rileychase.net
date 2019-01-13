@@ -21,7 +21,8 @@ build: install
 
 .PHONY: infra
 infra:
-	sls deploy
+	# Force deploy because Serverless can't always correctly tell when things have changed
+	sls deploy --force
 
 .PHONY: upload
 upload:

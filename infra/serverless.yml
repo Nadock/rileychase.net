@@ -8,8 +8,14 @@ service: rileychase-net
 custom:
   region: ${env:AWS_DEFAULT_REGION , "ap-southeast-2"}
   stage: ${env:STAGE, "dev"}
-  output:
-    file: .build/stack.json
+  resources:
+    cloudfront:
+      aliases:
+        dev:
+          - dev.rileychase.net
+        prod:
+          - www.rileychase.net
+          - rileychase.net
 
 provider:
   name: aws
@@ -65,9 +71,7 @@ resources:
                     - ".s3.amazonaws.com"
             IncludeCookies: true
             Prefix: cf-logs
-          Aliases:
-            - rileychase.net
-            - www.rileychase.net
+          Aliases: ${self:custom.resources.cloudfront.aliases.${self:custom.stage}}
           ViewerCertificate:
             AcmCertificateArn: arn:aws:acm:us-east-1:065006121675:certificate/e9584a1c-07d9-4e64-92a7-0fcdc6b76056
             SslSupportMethod: sni-only
