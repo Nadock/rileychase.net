@@ -23,10 +23,6 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: rileychase.net-${self:custom.stage}
-    WebsiteLogsBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: rileychase.net-logs-${self:custom.stage}
     # CloudFront Distribution for website
     WebsiteCFDistribution:
       Type: AWS::CloudFront::Distribution
@@ -65,11 +61,13 @@ resources:
             Bucket:
               Fn::Join:
                   - ""
-                  - - Ref: WebsiteLogsBucket
+                  - - Ref: WebsiteBucket
                     - ".s3.amazonaws.com"
+            IncludeCookies: true
+            Prefix: cf-logs
           Aliases:
             - rileychase.net
-            - dev.rileychase.net
+            - www.rileychase.net
           ViewerCertificate:
             AcmCertificateArn: arn:aws:acm:us-east-1:065006121675:certificate/e9584a1c-07d9-4e64-92a7-0fcdc6b76056
             SslSupportMethod: sni-only
