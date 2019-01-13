@@ -1,23 +1,11 @@
-workflow "Test, Build & Deploy" {
+workflow "Test, Build, and Deploy" {
   on = "push"
-  resolves = ["build_and_deploy_production"]
+  resolves = ["test_build_deploy"]
 }
 
-action "test" {
-  uses = "./.actions/test"
-}
-
-action "master_filter" {
-  needs = "test"
-  uses = "actions/bin/filter@master"
-  args = "branch master"
-}
-
-action "build_and_deploy_production" {
-  needs = "master_filter"
-  uses = "./.actions/build_and_deploy"
+action "test_build_deploy" {
+  uses = "./.actions/test_build_deploy"
   env = {
-    STAGE = "prod"
     AWS_DEFAULT_REGION = "ap-southeast-2"
   }
   secrets = ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]
