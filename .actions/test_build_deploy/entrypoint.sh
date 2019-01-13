@@ -16,7 +16,7 @@ set -Eeuxo pipefail
 
 # ${GITHUB_WORKSPACE} contains checked out a copy of the git commit that triggered this action
 cd ${GITHUB_WORKSPACE}/infra
-BRANCH_NAME=$(git branch | grep \* | cut -d " " -f2)
+BRANCH_NAME=$(echo ${GITHUB_REF} | cut -d "/" -f3)
 
 if [[ ${BRANCH_NAME} == "master" ]]; then
 	export STAGE=prod
