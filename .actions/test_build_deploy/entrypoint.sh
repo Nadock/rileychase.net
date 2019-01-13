@@ -19,10 +19,10 @@ cd ${GITHUB_WORKSPACE}/infra
 BRANCH_NAME=$(git branch | grep \* | cut -d " " -f2)
 
 if [[ ${BRANCH_NAME} == "master" ]]; then
-	STAGE=prod
+	export STAGE=prod
 	make deploy
 elif [[ ${BRANCH_NAME} == "dev" ]]; then
-	STAGE=dev
+	export STAGE=dev
 	# TODO: configure a development environment
 	# make deploy
 	make test
