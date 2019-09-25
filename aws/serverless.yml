@@ -4,7 +4,7 @@
 #    docs.serverless.com
 #
 # Environment vairables to configure before deployment:
-#   - AWS_DEFAULT_REGION: The AWS region the stack will be deployed to (default: ap-southeast-2)
+#   - AWS_DEFAULT_REGION: The AWS region the stack will be deployed to
 #   - STAGE:              Deployment stage (either "dev" or "prod")
 #   - PREFIX:             If deploying a "dev" stage, set this to get a unique stack per source
 #   - ACM_CERT_ARN:       The ARN of a certificate in ACM the CloudFront Distribution can use for SSL
@@ -13,9 +13,10 @@
 service: rileychase-net
 
 custom:
-  region: ${env:AWS_DEFAULT_REGION , "ap-southeast-2"}
-  stage: ${env:STAGE, "dev"}
-  prefix: ${env:PREFIX, "dev"}
+  region: ${env:AWS_DEFAULT_REGION}
+  stage: ${env:STAGE}
+  prefix: ${env:PREFIX}
+  domain: ${env:DOMAIN}
 
   # Development environment deployment configuration
   dev:
@@ -23,9 +24,9 @@ custom:
       stage: ${self:custom.prefix}-${self:custom.stage}
     cloudfront:
       Aliases:
-        - ${env:PREFIX}.${env:DOMAIN}
+        - ${env:PREFIX}.${self:custom.domain}
     s3:
-      BucketName: ${env:PREFIX}-${env:STAGE}-${env:DOMAIN}
+      BucketName: ${env:PREFIX}-${env:STAGE}-${self:custom.domain}
     acm:
       AcmCertificateArn: ${env:ACM_CERT_ARN}
 
@@ -35,10 +36,10 @@ custom:
       stage: ${self:custom.stage}
     cloudfront:
       Aliases:
-        - www.${env:DOMAIN}
-        - ${env:DOMAIN}
+        - www.${self:custom.domain}
+        - ${self:custom.domain}
     s3:
-      BucketName: ${env:STAGE}-${env:DOMAIN}
+      BucketName: ${env:STAGE}-${self:custom.domain}
     acm:
       AcmCertificateArn: ${env:ACM_CERT_ARN}
 
@@ -87,9 +88,11 @@ resources:
                     - ".s3.amazonaws.com"
               Id: !Ref WebsiteBucket
               S3OriginConfig:
-                OriginAccessIdentity: !Sub
-                  - origin-access-identity/cloudfront/${DistributionOAI}
-                  - { DistributionOAI: !Ref DistributionOAI }
+                OriginAccessIdentity:
+                  Fn::Join:
+                    - ""
+                    - - origin-access-identity/cloudfront/
+                      - !Ref DistributionOAI
           PriceClass: PriceClass_All
           Aliases: ${self:custom.${self:custom.stage}.cloudfront.Aliases}
           ViewerCertificate:
@@ -120,6 +123,9 @@ resources:
                     - S3CanonicalUserId
               Action:
                 - s3:GetObject
-              Resource: !Sub
-                - arn:aws:s3:::${BucketName}/*
-                - { BucketName: !Ref WebsiteBucket }
+              Resource:
+                Fn::Join:
+                  - ""
+                  - - "arn:aws:s3:::"
+                    - !Ref WebsiteBucket
+                    - /*
