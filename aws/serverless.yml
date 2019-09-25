@@ -28,6 +28,7 @@ custom:
       BucketName: ${env:PREFIX}-${env:STAGE}-${env:DOMAIN}
     acm:
       AcmCertificateArn: ${env:ACM_CERT_ARN}
+
   # Production environment deployment configuration
   prod:
     provider:
@@ -54,6 +55,11 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.${self:custom.stage}.s3.BucketName}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: True
+          BlockPublicPolicy: True
+          IgnorePublicAcls: True
+          RestrictPublicBuckets: True
 
     # CloudFront Distribution to host website conent via AWSs CDN
     WebsiteCFDistribution:
@@ -96,6 +102,8 @@ resources:
       Properties:
         CloudFrontOriginAccessIdentityConfig:
           Comment: ${self:custom.prefix}-${self:custom.stage}-${self:custom.domain}
+
+    # Bucket policy to allow the access identity to GetObjects
     DistributionOAIBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
