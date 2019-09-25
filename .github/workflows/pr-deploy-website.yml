@@ -41,7 +41,7 @@ jobs:
           node-version: '10.x'
 
       - name: Configure deployment variables
-        runs: >-
+        run: >-
           # GITHUB_REF has the following format: "refs/pull/{pr_number}/merge", we use that to make
           # a CFN compatible prefix with the format "pull-{pr_number}"
           #                                 remove "refs/"      remove "/merge"      swap "/" to "-"
