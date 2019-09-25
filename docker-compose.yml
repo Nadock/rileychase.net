@@ -7,3 +7,17 @@ services:
       - .:/app
     ports:
       - 1313:1313
+
+  infra:
+    build: ./docker/infra
+    command: /bin/false
+    volumes:
+      - .:/app
+      - ${HOME}/.aws:/root/.aws
+    environment:
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      AWS_PROFILE: ${AWS_PROFILE}
+      STAGE: ${STAGE}
+      PREFIX: ${PREFIX}
+      DOMAIN: ${DOMAIN}
+      ACM_CERT_ARN: ${ACM_CERT_ARN}
