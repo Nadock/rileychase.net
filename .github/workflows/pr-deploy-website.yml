@@ -28,7 +28,7 @@ jobs:
       - markdown-lint
     steps:
       - name: Checkout source
-        uses: actions/checkou@v1
+        uses: actions/checkout@v1
 
       - name: Install Node.js
         uses: actions/setup-node@v1
