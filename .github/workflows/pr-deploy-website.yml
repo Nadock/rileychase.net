@@ -19,7 +19,7 @@ jobs:
         run: npm install --global markdownlint-cli
 
       - name: Lint markdown files
-        run: markdownlint $(find . -name "*.md" -not -path "themes/*")
+        run: markdownlint $(find . -name "*.md" -not -path "./themes/*")
 
   deploy-pr-content:
     name: Deploy PR content
