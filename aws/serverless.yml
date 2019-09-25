@@ -1,0 +1,117 @@
+# Welcome to Serverless!
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Environment vairables to configure before deployment:
+#   - AWS_DEFAULT_REGION: The AWS region the stack will be deployed to (default: ap-southeast-2)
+#   - STAGE:              Deployment stage (either "dev" or "prod")
+#   - PREFIX:             If deploying a "dev" stage, set this to get a unique stack per source
+#   - ACM_CERT_ARN:       The ARN of a certificate in ACM the CloudFront Distribution can use for SSL
+
+
+service: rileychase-net
+
+custom:
+  region: ${env:AWS_DEFAULT_REGION , "ap-southeast-2"}
+  stage: ${env:STAGE, "dev"}
+  prefix: ${env:PREFIX, "dev"}
+
+  # Development environment deployment configuration
+  dev:
+    provider:
+      stage: ${self:custom.prefix}-${self:custom.stage}
+    cloudfront:
+      Aliases:
+        - ${env:PREFIX}.${env:DOMAIN}
+    s3:
+      BucketName: ${env:PREFIX}-${env:STAGE}-${env:DOMAIN}
+    acm:
+      AcmCertificateArn: ${env:ACM_CERT_ARN}
+  # Production environment deployment configuration
+  prod:
+    provider:
+      stage: ${self:custom.stage}
+    cloudfront:
+      Aliases:
+        - www.${env:DOMAIN}
+        - ${env:DOMAIN}
+    s3:
+      BucketName: ${env:STAGE}-${env:DOMAIN}
+    acm:
+      AcmCertificateArn: ${env:ACM_CERT_ARN}
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: ${self:custom.${self:custom.stage}.provider.stage}
+  region: ${self:custom.region}
+
+resources:
+  Resources:
+    # S3 bucket to store static site contents
+    WebsiteBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.${self:custom.stage}.s3.BucketName}
+
+    # CloudFront Distribution to host website conent via AWSs CDN
+    WebsiteCFDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - GET
+              - HEAD
+            TargetOriginId: !Ref WebsiteBucket
+            ForwardedValues:
+              QueryString: false
+              Cookies:
+                Forward: none
+            ViewerProtocolPolicy: redirect-to-https
+          DefaultRootObject: index.html
+          Enabled: true
+          HttpVersion: http2
+          Origins:
+            - DomainName:
+                Fn::Join:
+                  - ""
+                  - - !Ref WebsiteBucket
+                    - ".s3.amazonaws.com"
+              Id: !Ref WebsiteBucket
+              S3OriginConfig:
+                OriginAccessIdentity: !Sub
+                  - origin-access-identity/cloudfront/${DistributionOAI}
+                  - { DistributionOAI: !Ref DistributionOAI }
+          PriceClass: PriceClass_All
+          Aliases: ${self:custom.${self:custom.stage}.cloudfront.Aliases}
+          ViewerCertificate:
+            AcmCertificateArn: ${self:custom.${self:custom.stage}.acm.AcmCertificateArn}
+            SslSupportMethod: sni-only
+
+    # Access configuration so the CF Distribution can access the content in S3
+    DistributionOAI:
+      Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+      Properties:
+        CloudFrontOriginAccessIdentityConfig:
+          Comment: ${self:custom.prefix}-${self:custom.stage}-${self:custom.domain}
+    DistributionOAIBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: WebsiteBucket
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                CanonicalUser:
+                  Fn::GetAtt:
+                    - DistributionOAI
+                    - S3CanonicalUserId
+              Action:
+                - s3:GetObject
+              Resource: !Sub
+                - arn:aws:s3:::${BucketName}/*
+                - { BucketName: !Ref WebsiteBucket }
