@@ -42,7 +42,10 @@ jobs:
 
       - name: Configure deployment variables
         runs: >-
-          export AWS_DEFAULT_REGION=ap-southeast-2
-          export PREFIX=$GITHUB_SHA
+          # GITHUB_REF has the following format: "refs/pull/{pr_number}/merge", we use that to make
+          # a CFN compatible prefix with the format "pull-{pr_number}"
+          #                                 remove "refs/"      remove "/merge"      swap "/" to "-"
+          export PREFIX=$(echo $GITHUB_REF | sed "s/refs\///g" | sed "s/\/merge//g" | sed "s/\//-/g")
           export STAGE=dev
+          export AWS_DEFAULT_REGION=ap-southeast-2
           export ACM_CERT_ARN=${{ secrets.DEV_ACM_CERT_ARN }}
