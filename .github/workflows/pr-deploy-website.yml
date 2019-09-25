@@ -22,7 +22,7 @@ jobs:
         run: markdownlint $(find . -name "*.md" -not -path "./themes/*")
 
   deploy-pr-content:
-    name: Deploy PR content
+    name: Deploy PR to development domain
     runs-on: ubuntu-latest
     needs:
       - markdown-lint
@@ -35,11 +35,13 @@ jobs:
         with:
           node-version: '10.x'
 
+      - name: Install serverless cli
+        run: npm install --global serverless
+
       - name: Configure deployment variables
+        # GITHUB_REF has the following format: "refs/pull/{pr_number}/merge", we use that to make
+        # a CFN compatible prefix with the format "pull-{pr_number}"
         run: >-
-          # GITHUB_REF has the following format: "refs/pull/{pr_number}/merge", we use that to make
-          # a CFN compatible prefix with the format "pull-{pr_number}"
-          #                                 remove "refs/"      remove "/merge"      swap "/" to "-"
           export PREFIX=$(echo $GITHUB_REF | sed "s/refs\///g" | sed "s/\/merge//g" | sed "s/\//-/g")
           export STAGE=dev
           export AWS_DEFAULT_REGION=ap-southeast-2
