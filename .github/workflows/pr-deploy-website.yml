@@ -42,6 +42,7 @@ jobs:
 
       - name: Configure deployment variables
         runs: >-
-          export AWS_REGION=ap-southeast-2
+          export AWS_DEFAULT_REGION=ap-southeast-2
           export PREFIX=$GITHUB_SHA
           export STAGE=dev
+          export ACM_CERT_ARN=${{ secrets.DEV_ACM_CERT_ARN }}
