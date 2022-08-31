@@ -1,0 +1,35 @@
+# https://taskfile.dev
+
+version: '3'
+
+
+tasks:
+  ci:
+    cmds:
+      - task: black:check
+      - task: mypy
+      - task: pylint
+
+  black:
+    cmds:
+      - black site_generator
+
+  black:check:
+    cmds:
+      - black --check site_generator
+
+  pylint:
+    cmds:
+      - pylint site_generator
+
+  mypy:
+    cmds:
+      - mypy site_generator
+
+  live:
+    cmds:
+      - python -m site_generator live {{.CLI_ARGS}}
+
+  build:
+    cmds:
+      - python -m site_generator build {{.CLI_ARGS}}
