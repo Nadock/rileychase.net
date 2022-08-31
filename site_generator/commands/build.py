@@ -1,4 +1,4 @@
-from site_generator import config
+from site_generator import config, markdown
 
 
 class BuildCommand:
@@ -7,3 +7,6 @@ class BuildCommand:
 
     def run(self):
         print("build")
+
+        for md_path in markdown.find_markdown(self.cfg.pages):
+            markdown.load_markdown(md_path)
