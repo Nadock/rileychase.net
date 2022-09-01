@@ -9,6 +9,7 @@ tasks:
       - task: black:check
       - task: mypy
       - task: pylint
+      - task: pytest
 
   black:
     cmds:
@@ -25,6 +26,10 @@ tasks:
   mypy:
     cmds:
       - mypy site_generator
+
+  pytest:
+    cmds:
+      - pytest site_generator
 
   live:
     cmds:
