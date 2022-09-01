@@ -9,4 +9,8 @@ class BuildCommand:
         print("build")
 
         for md_path in markdown.find_markdown(self.cfg.pages):
-            markdown.load_markdown(md_path)
+            print(md_path)
+            mdf = markdown.load_markdown(md_path)
+            print(mdf)
+            print(mdf.render())
+            print("")
