@@ -12,7 +12,8 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
     templates: pathlib.Path
     pages: pathlib.Path
-    output: Optional[pathlib.Path]
+    output: pathlib.Path
+    static: pathlib.Path
 
     host: Optional[str]
     port: Optional[str]
