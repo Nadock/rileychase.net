@@ -6,7 +6,7 @@ import yaml
 from pymdownx import emoji  # type: ignore
 
 import markdown
-from site_generator import config, template
+from site_generator import config, file_util, template
 
 
 async def markdown_pipeline(
@@ -23,6 +23,10 @@ async def markdown_pipeline(
         name = page.parts[-1].replace(".md", ".html")
         output_path = base / name
     output_path = (cfg.output / output_path).absolute()
+
+    if not file_util.is_outdated(page, output_path) and not cfg.force_rebuild:
+        return output_path
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     html = await template.render_template(

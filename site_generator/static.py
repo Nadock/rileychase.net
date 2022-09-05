@@ -3,6 +3,8 @@ import pathlib
 import shutil
 from typing import AsyncIterator
 
+from site_generator import file_util
+
 from . import config
 
 
@@ -14,6 +16,9 @@ async def static_pipeline(
     directory.
     """
     output = (cfg.output / cfg.static.relative_to(source)).absolute()
+    if not file_util.is_outdated(source, output) and not cfg.force_rebuild:
+        return output
+
     output.parent.mkdir(parents=True, exist_ok=True)
     return shutil.copy(source, output)
 
