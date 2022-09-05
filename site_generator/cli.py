@@ -1,8 +1,9 @@
 import argparse
+import asyncio
 import pathlib
 import sys
 
-from . import config
+from site_generator import commands, config
 
 
 class SiteGeneratorCLI:
@@ -35,6 +36,22 @@ class SiteGeneratorCLI:
             metavar="PATH",
             help="Markdown pages to render into site pages via templates.",
         )
+        self.root_parser.add_argument(
+            "--static",
+            "-s",
+            type=pathlib.Path,
+            default="./static",
+            metavar="PATH",
+            help="Static files that are required to fully display the rendered site.",
+        )
+        self.root_parser.add_argument(
+            "--output",
+            "-o",
+            type=pathlib.Path,
+            default="./output",
+            metavar="PATH",
+            help="Rendered file output location.",
+        )
 
         command_parsers = self.root_parser.add_subparsers(dest="command")
 
@@ -53,7 +70,7 @@ class SiteGeneratorCLI:
             "--port",
             "-p",
             type=str,
-            default="8080",
+            default="8000",
             metavar="PORT",
             help="Port number to listen on when running in live mode.",
         )
@@ -61,14 +78,6 @@ class SiteGeneratorCLI:
         build_parser = command_parsers.add_parser(
             "build",
             help="Build a fully rendered site and then exit.",
-        )
-        build_parser.add_argument(
-            "--output",
-            "-o",
-            type=pathlib.Path,
-            default="./output",
-            metavar="PATH",
-            help="Rendered file output location.",
         )
 
     def run(self, argv: list[str]):
@@ -84,16 +93,13 @@ class SiteGeneratorCLI:
         # print(f"{cfg=}", file=sys.stderr)
 
         cmd = self._get_command(args.command, cfg)
-        cmd.run()
+        asyncio.run(cmd())
 
     def _get_command(self, command: str, cfg: config.SiteGeneratorConfig):
         if command == "live":
-            from .commands import live
+            return commands.live(cfg)
 
-            return live.LiveCommand(cfg)
-        elif command == "build":
-            from .commands import build
+        if command == "build":
+            return commands.build(cfg)
 
-            return build.BuildCommand(cfg)
-        else:
-            raise ValueError(f"Unknown command name '{command}'")
+        raise ValueError(f"Unknown command name '{command}'")
