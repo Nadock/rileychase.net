@@ -20,7 +20,7 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
     host: str = "localhost"
     port: str = "8000"
 
-    @pydantic.validator("templates", "pages")
+    @pydantic.validator("templates", "pages", "static")
     def ensure_directory(cls, path: Optional[pathlib.Path]):
         if path is None:
             return None
