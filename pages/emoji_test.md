@@ -1,3 +1,7 @@
+---
+title: Emoji Test
+---
+
 ## Emoji test
 
 List of Emoji from the [Emoji Cheet Sheet](https://www.webfx.com/tools/emoji-cheat-sheet/).
