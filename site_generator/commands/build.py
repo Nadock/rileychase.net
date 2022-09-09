@@ -1,6 +1,4 @@
-import asyncio
-
-from site_generator import config, logging, markdown, pipeline, static
+from site_generator import config, logging, pipeline
 
 LOGGER = logging.getLogger()
 

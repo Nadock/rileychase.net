@@ -15,15 +15,15 @@ async def static_pipeline(
     Process a static file by copying it into the same relative location in the output
     directory.
     """
-    LOGGER.debug(f"Running static file pipeline for {path=}")
-    output = (cfg.output / cfg.static.relative_to(path)).absolute()
+    LOGGER.debug(f"Processing static file {path=}")
+    output = (cfg.output / path.relative_to(cfg.static)).absolute()
     if not file_util.is_outdated(path, output) and not cfg.force_rebuild:
-        LOGGER.debug(f"Skipping up to date {path=}")
+        LOGGER.debug(f"Skipping up to date file at {path=}")
         return output
 
     output.parent.mkdir(parents=True, exist_ok=True)
     output = shutil.copy(path, output)
-    LOGGER.debug(f"Static pipeline output written to {output}")
+    LOGGER.debug(f"Static file output written to {output}")
     return output
 
 

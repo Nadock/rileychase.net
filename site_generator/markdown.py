@@ -3,10 +3,11 @@ import pathlib
 from typing import AsyncIterator, Tuple
 
 import markdown
+import pydantic
 import yaml
 from pymdownx import emoji  # type: ignore
 
-from site_generator import config, file_util, logging, template
+from site_generator import config, file_util, frontmatter, logging, template
 
 LOGGER = logging.getLogger()
 
@@ -15,30 +16,32 @@ async def markdown_pipeline(
     cfg: config.SiteGeneratorConfig, path: pathlib.Path
 ) -> pathlib.Path:
     """Process a markdown page into an HTML page."""
-    LOGGER.debug(f"Running markdown pipeline for {path=}")
-    content, frontmatter = await load_markdown(path)
-    LOGGER.debug(f"Markdown content and frontmatter loaded from {path}")
+    LOGGER.debug(f"Processing markdown file {path=}")
 
-    template_name = frontmatter.get("template", cfg.default_template)
+    try:
+        content, fm = await load_markdown(path)
+    except pydantic.ValidationError as ex:
+        LOGGER.error(
+            f"Unable to process markdown from {path} due to a frontmatter error: {ex}"
+        )
+        raise ex
 
-    output_path = frontmatter.get("path")
-    if not output_path:
-        base = path.parent.relative_to(cfg.pages)
-        name = path.parts[-1].replace(".md", ".html")
-        output_path = base / name
-    output_path = (cfg.output / output_path).absolute()
+    fm.config = cfg
 
-    if not file_util.is_outdated(path, output_path) and not cfg.force_rebuild:
-        LOGGER.debug(f"Skipping up to date {path=}")
-        return output_path
-
+    template_name = fm.get_template_name()
+    output_path = fm.get_output_path()
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
+    if not fm.is_outdated() and not cfg.force_rebuild:
+        return output_path
+
     html = await template.render_template(
-        cfg.templates,
-        template_name,
-        content=content,
-        meta=frontmatter,
+        templates=cfg.templates,
+        name=template_name,
+        **{
+            "content": await render(content),
+            "meta": fm.dict(),
+        },
     )
 
     output_path.write_text(html)
@@ -60,7 +63,7 @@ async def find_markdown(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
                 yield path
 
 
-async def load_markdown(path: pathlib.Path) -> Tuple[str, dict]:
+async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontmatter]:
     """
     Read file at path and extract markdown content and any YAML frontmatter separately.
 
@@ -72,7 +75,7 @@ async def load_markdown(path: pathlib.Path) -> Tuple[str, dict]:
 
     if len(lines) < 2:
         # Cannot have frontmatter with less than 2 lines
-        return "".join(lines), {}
+        return "".join(lines), frontmatter.PageFrontmatter(file=path)
 
     # Detect end of frontmatter — idx points to frontmatter end delimiter line
     idx = 0
@@ -84,9 +87,13 @@ async def load_markdown(path: pathlib.Path) -> Tuple[str, dict]:
                 break
 
     content = "".join(lines[idx:])
-    frontmatter = yaml.safe_load("".join(lines[1 : idx - 1]))
 
-    return content, frontmatter
+    page_fm = {}
+    if idx > 0:
+        page_fm = yaml.safe_load("".join(lines[1 : idx - 1]))
+    fm = frontmatter.PageFrontmatter(file=path, **page_fm)
+
+    return content, fm
 
 
 async def render(content: str) -> str:
