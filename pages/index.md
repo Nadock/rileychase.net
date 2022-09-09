@@ -7,6 +7,8 @@ title: RileyChase.net
 * [Markdown Test](/markdown_test.html)
 * [Emoji Test](/emoji_test.html)
 * [Lorem article](/lorem_article.html)
+* [Licenses](/licenses.html)
+* [404](/404.html)
 
 ## Site todo
 
@@ -16,7 +18,7 @@ title: RileyChase.net
 - [x] Consider font choice - see if we can use Fira Code as our mono spaced font with ligature support
 - [x] Decide on inital set of required post metadata
 - [x] Footer with copywrite and links
-- [ ] Make links not ending in `.html` work
+- [x] Make links not ending in `.html` work
 - [x] 404 page
 - [ ] Docker things
 - [ ] AWS infra

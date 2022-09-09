@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/markdown_formatting.css">
     <link rel="stylesheet" type="text/css" href="/css/code_highlighting.css">
 
-    <title>{{ meta.title }}</title>
+    <title>{{ props.title }}</title>
 </head>
 
 
@@ -19,9 +19,9 @@
     <div class="base">
         <div class="header">
             <div class="header_title">
-                <h1>{{ meta.title }}</h1>
-                <h3>{{ meta.subtitle }}</h3>
-                <em>{{ meta.date }}</em>
+                <h1>{{ props.title }}</h1>
+                <h3>{{ props.subtitle }}</h3>
+                <em>{{ props.date }}</em>
             </div>
             <div class="header_links">
                 <div class="header_links--menu">

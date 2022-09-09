@@ -34,7 +34,7 @@ async def markdown_pipeline(
             name=template_name,
             **{
                 "content": await render(content),
-                "props": fm.dict(exclude={"meta", "config", "file"}),
+                "props": fm.dict(exclude={"meta", "config", "file"}, exclude_none=True),
                 "meta": fm.dict(include={"meta"}),
             },
         )
