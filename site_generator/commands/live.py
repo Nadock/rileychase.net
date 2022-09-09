@@ -2,52 +2,68 @@ import asyncio
 import functools
 from http import server
 
-from watchdog import observers
+from watchdog import events, observers
 
-from site_generator import config, file_util, markdown, pipeline_manager, static
+from site_generator import config, logging, pipeline
+
+LOGGER = logging.getLogger()
 
 
 def live(cfg: config.SiteGeneratorConfig):
     async def _live():
-        print(f"live! {cfg.host=}, {cfg.port=}")
+        LOGGER.info("Building site")
+        await pipeline.pipeline(cfg)
+        LOGGER.debug("First time build complete")
 
-        init_tasks = []
+        pr = PipelineRunner(cfg)
 
+        # Start watching paths for file system events
         observer = observers.Observer()
-        with pipeline_manager.PipelineManager(cfg) as mgr:
-            async for path in markdown.find_markdown(cfg.pages):
-                # Add initial build to init tasks
-                init_tasks.append(
-                    asyncio.create_task(markdown.markdown_pipeline(cfg, path))
-                )
-                # Setup watcher for this path to trigger rebuilds
-                observer.schedule(
-                    file_util.FileWatcher(mgr.enqueue, args=[path, "markdown"]), path
-                )
+        observer.schedule(
+            pr,
+            cfg.pages,
+            recursive=True,
+        )
+        observer.schedule(
+            pr,
+            cfg.templates,
+            recursive=True,
+        )
+        observer.schedule(
+            pr,
+            cfg.static,
+            recursive=True,
+        )
+        observer.start()
+        LOGGER.debug("File system watcher started")
 
-            async for path in static.find_static(cfg.pages):
-                # Add initial build to init tasks
-                init_tasks.append(
-                    asyncio.create_task(static.static_pipeline(cfg, path))
-                )
-                # Setup watcher for this path to trigger rebuilds
-                observer.schedule(
-                    file_util.FileWatcher(mgr.enqueue, args=[path, "static"]), path
-                )
-
-            # Finish all init tasks before continuing
-            asyncio.gather(*init_tasks)
-
-            # Start watching paths for file system events
-            observer.start()
-
-            # Start serving content
-            web_handler = functools.partial(
-                server.SimpleHTTPRequestHandler, directory=cfg.output
-            )
-            with server.ThreadingHTTPServer(
-                (cfg.host, int(cfg.port)), web_handler
-            ) as web_server:
-                web_server.serve_forever()
+        # Start serving content
+        h = functools.partial(server.SimpleHTTPRequestHandler, directory=cfg.output)
+        try:
+            with server.ThreadingHTTPServer((cfg.host, int(cfg.port)), h) as s:
+                LOGGER.info(f"Starting dev server at http://{cfg.host}:{cfg.port}")
+                s.serve_forever()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            observer.stop()
+            observer.join()
 
     return _live
+
+
+class PipelineRunner(events.FileSystemEventHandler):
+    def __init__(self, cfg: config.SiteGeneratorConfig):
+        super().__init__()
+        self._cfg = cfg
+        self._lock = asyncio.Lock()
+
+    def on_any_event(self, event):
+        asyncio.run(self.run(event))
+
+    async def run(self, event: events.FileSystemEvent):
+        LOGGER.info(f"{event.src_path} changed, rebuilding site")
+        async with self._lock:
+            LOGGER.debug(f"{self.__class__.__name__}.run2 => lock acquired")
+            await pipeline.pipeline(self._cfg)
+        LOGGER.info("Site rebuilt")

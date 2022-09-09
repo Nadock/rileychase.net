@@ -1,7 +1,9 @@
 import pathlib
-from typing import Callable, Optional
+from typing import Optional
 
-from watchdog import events
+from site_generator import logging
+
+LOGGER = logging.getLogger()
 
 
 def is_outdated(source: Optional[pathlib.Path], dest: Optional[pathlib.Path]) -> bool:
@@ -13,38 +15,3 @@ def is_outdated(source: Optional[pathlib.Path], dest: Optional[pathlib.Path]) ->
     if dest is None or not dest.exists() or not dest.is_file():
         return True
     return source.stat().st_mtime_ns > dest.stat().st_mtime_ns
-
-
-class FileWatcher(events.FileSystemEventHandler):
-    """
-    A `watchdog` `FileSystemEventHandler` that forwards the event to a configured callback
-    function.
-
-    `callback` must be a callable, if `pass_event` is `True` it must accept at least
-    one argument.
-
-    If `pass_event` is `True` the `watchdog` event is passed to the callback function
-    as the first argument, otherwise it is not included in the callback.
-
-    `args` and `kwargs` will be passed to the callback function in the normal way.
-    """
-
-    def __init__(
-        self,
-        callback: Callable,
-        *,
-        pass_event: bool = False,
-        args: Optional[list] = None,
-        kwargs: Optional[dict] = None,
-    ) -> None:
-        super().__init__()
-        self.pass_event = pass_event
-        self.callback = callback
-        self.args = args if args else []
-        self.kwargs = kwargs if kwargs else {}
-
-    def on_any_event(self, event: events.FileSystemEvent):
-        if self.pass_event:
-            self.callback(event, *self.args, **self.kwargs)
-        else:
-            self.callback(*self.args, **self.kwargs)
