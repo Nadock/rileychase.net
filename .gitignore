@@ -1,2 +1,5 @@
 old
 output
+node_modules
+.pytest_cache
+.mypy_cache

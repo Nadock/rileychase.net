@@ -1,6 +1,7 @@
 ---
 title: Markdown test
 ---
+<!-- markdownlint-disable -->
 
 # Markdown test
 

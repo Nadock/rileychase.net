@@ -11,6 +11,7 @@ tasks:
       - task: pylint
       - task: pytest
       - task: validate
+      - task: mdlint
 
   black:
     cmds:
@@ -43,3 +44,7 @@ tasks:
   validate:
     cmds:
       - python -m site_generator validate {{.CLI_ARGS}}
+
+  mdlint:
+    cmds:
+      - npx markdownlint '**/*.md' --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/markdown_test.md'
