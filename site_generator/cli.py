@@ -3,7 +3,7 @@ import asyncio
 import pathlib
 import sys
 
-from site_generator import commands, config
+from site_generator import commands, config, logging
 
 
 class SiteGeneratorCLI:
@@ -52,6 +52,20 @@ class SiteGeneratorCLI:
             metavar="PATH",
             help="Rendered file output location.",
         )
+        self.root_parser.add_argument(
+            "--verbose",
+            "-v",
+            default=False,
+            action="store_true",
+            help="Enable verbose logging output.",
+        )
+        self.root_parser.add_argument(
+            "--force",
+            "-f",
+            default=False,
+            action="store_true",
+            help="Force a full rebuild of the site, even if output files are up to date.",
+        )
 
         command_parsers = self.root_parser.add_subparsers(dest="command")
 
@@ -90,7 +104,8 @@ class SiteGeneratorCLI:
             return
 
         cfg = config.SiteGeneratorConfig.from_orm(args)
-        # print(f"{cfg=}", file=sys.stderr)
+        logger = logging.configure_logging(cfg)
+        logger.debug(f"Staring site_generator with config: {cfg}")
 
         cmd = self._get_command(args.command, cfg)
         asyncio.run(cmd())

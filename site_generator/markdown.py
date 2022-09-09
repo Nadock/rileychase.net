@@ -2,29 +2,34 @@ import os
 import pathlib
 from typing import AsyncIterator, Tuple
 
+import markdown
 import yaml
 from pymdownx import emoji  # type: ignore
 
-import markdown
-from site_generator import config, file_util, template
+from site_generator import config, file_util, logging, template
+
+LOGGER = logging.getLogger()
 
 
 async def markdown_pipeline(
-    cfg: config.SiteGeneratorConfig, page: pathlib.Path
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
 ) -> pathlib.Path:
     """Process a markdown page into an HTML page."""
-    content, frontmatter = await load_markdown(page)
+    LOGGER.debug(f"Running markdown pipeline for {path=}")
+    content, frontmatter = await load_markdown(path)
+    LOGGER.debug(f"Markdown content and frontmatter loaded from {path}")
 
     template_name = frontmatter.get("template", cfg.default_template)
 
     output_path = frontmatter.get("path")
     if not output_path:
-        base = page.parent.relative_to(cfg.pages)
-        name = page.parts[-1].replace(".md", ".html")
+        base = path.parent.relative_to(cfg.pages)
+        name = path.parts[-1].replace(".md", ".html")
         output_path = base / name
     output_path = (cfg.output / output_path).absolute()
 
-    if not file_util.is_outdated(page, output_path) and not cfg.force_rebuild:
+    if not file_util.is_outdated(path, output_path) and not cfg.force_rebuild:
+        LOGGER.debug(f"Skipping up to date {path=}")
         return output_path
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -37,7 +42,7 @@ async def markdown_pipeline(
     )
 
     output_path.write_text(html)
-
+    LOGGER.debug(f"Markdown pipeline output written to {output_path}")
     return output_path
 
 
@@ -50,7 +55,9 @@ async def find_markdown(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
     for dirpath, _, filenames in os.walk(path):
         for filename in filenames:
             if filename.endswith(".md"):
-                yield pathlib.Path(dirpath) / filename
+                path = pathlib.Path(dirpath) / filename
+                LOGGER.debug(f"Found markdown file at {path}")
+                yield path
 
 
 async def load_markdown(path: pathlib.Path) -> Tuple[str, dict]:

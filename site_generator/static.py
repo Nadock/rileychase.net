@@ -3,28 +3,34 @@ import pathlib
 import shutil
 from typing import AsyncIterator
 
-from site_generator import file_util
+from site_generator import config, file_util, logging
 
-from . import config
+LOGGER = logging.getLogger()
 
 
 async def static_pipeline(
-    cfg: config.SiteGeneratorConfig, source: pathlib.Path
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
 ) -> pathlib.Path:
     """
     Process a static file by copying it into the same relative location in the output
     directory.
     """
-    output = (cfg.output / cfg.static.relative_to(source)).absolute()
-    if not file_util.is_outdated(source, output) and not cfg.force_rebuild:
+    LOGGER.debug(f"Running static file pipeline for {path=}")
+    output = (cfg.output / cfg.static.relative_to(path)).absolute()
+    if not file_util.is_outdated(path, output) and not cfg.force_rebuild:
+        LOGGER.debug(f"Skipping up to date {path=}")
         return output
 
     output.parent.mkdir(parents=True, exist_ok=True)
-    return shutil.copy(source, output)
+    output = shutil.copy(path, output)
+    LOGGER.debug(f"Static pipeline output written to {output}")
+    return output
 
 
 async def find_static(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
     """Find any files static files under a root `path`."""
     for dirpath, _, filenames in os.walk(path):
         for filename in filenames:
-            yield pathlib.Path(dirpath) / filename
+            path = pathlib.Path(dirpath) / filename
+            LOGGER.debug(f"Found static file at {path}")
+            yield path
