@@ -15,8 +15,7 @@ title: RileyChase.net
 - [x] Fix code block layout - currently copies from `<table>` elements
 - [x] Setup colour scheme and apply to headers, links, tables, etc
 - [x] Decide on primary highlight colour (ie: everything that's currently `orange`)
-- [x] Consider font choice - see if we can use Fira Code as our mono spaced font with
-ligature support
+- [x] Consider font choice - see if we can use Fira Code as our mono spaced font with ligature support
 - [x] Decide on inital set of required post metadata
 - [x] Footer with copywrite and links
 - [x] Make links not ending in `.html` work
