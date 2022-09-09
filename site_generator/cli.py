@@ -59,13 +59,6 @@ class SiteGeneratorCLI:
             action="store_true",
             help="Enable verbose logging output.",
         )
-        self.root_parser.add_argument(
-            "--force",
-            "-f",
-            default=False,
-            action="store_true",
-            help="Force a full rebuild of the site, even if output files are up to date.",
-        )
 
         command_parsers = self.root_parser.add_subparsers(dest="command")
 
@@ -98,14 +91,17 @@ class SiteGeneratorCLI:
         self._setup_parser()
 
         args = self.root_parser.parse_args(argv)
-        # print(f"{args=}", file=sys.stderr)
         if args.help or not args.command:
             self.root_parser.print_help(sys.stderr)
             return
 
+        args.base = pathlib.Path(".").resolve()
+
         cfg = config.SiteGeneratorConfig.from_orm(args)
         logger = logging.configure_logging(cfg)
-        logger.debug(f"Staring site_generator with config: {cfg}")
+
+        for key, value in cfg.dict().items():
+            logger.debug(f"config.{key} = {value}")
 
         cmd = self._get_command(args.command, cfg)
         asyncio.run(cmd())

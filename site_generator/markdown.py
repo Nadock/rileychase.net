@@ -3,11 +3,10 @@ import pathlib
 from typing import AsyncIterator, Tuple
 
 import markdown
-import pydantic
 import yaml
 from pymdownx import emoji  # type: ignore
 
-from site_generator import config, file_util, frontmatter, logging, template
+from site_generator import config, errors, frontmatter, logging, template
 
 LOGGER = logging.getLogger()
 
@@ -16,37 +15,45 @@ async def markdown_pipeline(
     cfg: config.SiteGeneratorConfig, path: pathlib.Path
 ) -> pathlib.Path:
     """Process a markdown page into an HTML page."""
-    LOGGER.debug(f"Processing markdown file {path=}")
-
     try:
         content, fm = await load_markdown(path)
-    except pydantic.ValidationError as ex:
-        LOGGER.error(
-            f"Unable to process markdown from {path} due to a frontmatter error: {ex}"
-        )
-        raise ex
+    except Exception as ex:
+        raise errors.PipelineError(
+            f"Unable to read markdown file {cfg.format_relative_path(path)}: {ex}"
+        ) from ex
 
     fm.config = cfg
 
     template_name = fm.get_template_name()
-    output_path = fm.get_output_path()
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output = fm.get_output_path()
+    output.parent.mkdir(parents=True, exist_ok=True)
 
-    if not fm.is_outdated() and not cfg.force_rebuild:
-        return output_path
+    try:
+        html = await template.render_template(
+            templates=cfg.templates,
+            name=template_name,
+            **{
+                "content": await render(content),
+                "props": fm.dict(exclude={"meta", "config", "file"}),
+                "meta": fm.dict(include={"meta"}),
+            },
+        )
+    except Exception as ex:
+        raise errors.PipelineError(
+            f"Rendering HTML for {cfg.format_relative_path(path)} failed: {ex}"
+        ) from ex
 
-    html = await template.render_template(
-        templates=cfg.templates,
-        name=template_name,
-        **{
-            "content": await render(content),
-            "meta": fm.dict(),
-        },
+    try:
+        output.write_text(html)
+    except Exception as ex:
+        raise errors.PipelineError(
+            f"Failed to write output file {cfg.format_relative_path(output)}: {ex}"
+        ) from ex
+
+    LOGGER.debug(
+        f"Markdown pipeline converted {cfg.format_relative_path(path)} to {cfg.format_relative_path(output)}"
     )
-
-    output_path.write_text(html)
-    LOGGER.debug(f"Markdown pipeline output written to {output_path}")
-    return output_path
+    return output
 
 
 async def find_markdown(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
@@ -58,9 +65,7 @@ async def find_markdown(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
     for dirpath, _, filenames in os.walk(path):
         for filename in filenames:
             if filename.endswith(".md"):
-                path = pathlib.Path(dirpath) / filename
-                LOGGER.debug(f"Found markdown file at {path}")
-                yield path
+                yield pathlib.Path(dirpath) / filename
 
 
 async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontmatter]:
@@ -73,13 +78,9 @@ async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontm
     with path.open("r", encoding="utf-8") as file:
         lines = file.readlines()
 
-    if len(lines) < 2:
-        # Cannot have frontmatter with less than 2 lines
-        return "".join(lines), frontmatter.PageFrontmatter(file=path)
-
     # Detect end of frontmatter — idx points to frontmatter end delimiter line
     idx = 0
-    if lines[0] == "---\n":
+    if len(lines) > 2 and lines[0] == "---\n":
         while idx < len(lines):
             idx += 1
             if idx + 1 < len(lines) and lines[idx] in ["---\n", "...\n"]:

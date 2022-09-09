@@ -10,6 +10,7 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
         env_prefix = "SG_"
         orm_mode = True
 
+    base: pathlib.Path
     templates: pathlib.Path
     pages: pathlib.Path
     output: pathlib.Path
@@ -21,9 +22,8 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
     port: str = "8000"
 
     verbose: bool = False
-    force_rebuild: bool = False
 
-    @pydantic.validator("templates", "pages", "static")
+    @pydantic.validator("templates", "pages", "static", "base", "output")
     @classmethod
     def ensure_directory(cls, path: Optional[pathlib.Path]):
         """Pydantic validator to ensure the specified path is a directory."""
@@ -39,19 +39,21 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
         return path
 
-    @pydantic.validator("output")
-    @classmethod
-    def ensure_directory_clean(cls, path: Optional[pathlib.Path]):
-        """Pydantic validator to ensure the specified path is an empty directory."""
-        if path is None:
-            return None
+    def format_relative_path(self, path: pathlib.Path | str) -> str:
+        """
+        Call `path.relative_to(SiteGeneratorConfig.base)` and return the result.
 
-        path = path.absolute()
+        If any error occurs while calling `relative_to` the original `path` is returned
+        unmodified.
+        """
+        if isinstance(path, str):
+            path = pathlib.Path(path)
 
-        if path.exists():
-            assert path.is_dir(), f"{path} is a file, expected directory"
-            shutil.rmtree(path)
+        try:
+            path = path.relative_to(self.base)
+        except Exception:
+            pass
 
-        path.mkdir(parents=True)
-
-        return path
+        if path.is_absolute():
+            return str(path)
+        return f"./{path}"

@@ -3,7 +3,7 @@ import pathlib
 import shutil
 from typing import AsyncIterator
 
-from site_generator import config, file_util, logging
+from site_generator import config, errors, logging
 
 LOGGER = logging.getLogger()
 
@@ -15,15 +15,24 @@ async def static_pipeline(
     Process a static file by copying it into the same relative location in the output
     directory.
     """
-    LOGGER.debug(f"Processing static file {path=}")
-    output = (cfg.output / path.relative_to(cfg.static)).absolute()
-    if not file_util.is_outdated(path, output) and not cfg.force_rebuild:
-        LOGGER.debug(f"Skipping up to date file at {path=}")
-        return output
+    try:
+        output = (cfg.output / path.relative_to(cfg.static)).absolute()
+    except Exception as ex:
+        raise errors.PipelineError(
+            f"Cannot compute output location for static file {cfg.format_relative_path(path)}: {ex}"
+        ) from ex
 
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output = shutil.copy(path, output)
-    LOGGER.debug(f"Static file output written to {output}")
+    try:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output = shutil.copy(path, output)
+    except Exception as ex:
+        raise errors.PipelineError(
+            f"Unable to write static file {cfg.format_relative_path(path)} to output: {ex}"
+        ) from ex
+
+    LOGGER.debug(
+        f"Static pipeline converted {cfg.format_relative_path(path)} to {cfg.format_relative_path(output)}"
+    )
     return output
 
 
@@ -31,6 +40,4 @@ async def find_static(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
     """Find any files static files under a root `path`."""
     for dirpath, _, filenames in os.walk(path):
         for filename in filenames:
-            path = pathlib.Path(dirpath) / filename
-            LOGGER.debug(f"Found static file at {path}")
-            yield path
+            yield pathlib.Path(dirpath) / filename

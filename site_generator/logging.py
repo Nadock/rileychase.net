@@ -17,7 +17,7 @@ def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:
         app.setLevel(logging.INFO)
 
     handler = logging.StreamHandler(sys.stderr)
-    formatter = logging.Formatter("[%(asctime)s][%(levelname)s] %(message)s")
+    formatter = logging.Formatter("[%(asctime)s] [%(levelname)s] %(message)s")
     handler.formatter = formatter
 
     app.addHandler(handler)

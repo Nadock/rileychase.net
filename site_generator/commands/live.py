@@ -1,19 +1,21 @@
 import asyncio
 import functools
+import pathlib
 from http import server
 
 from watchdog import events, observers
 
-from site_generator import config, logging, pipeline
+from site_generator import config, errors, logging, pipeline
 
 LOGGER = logging.getLogger()
 
 
 def live(cfg: config.SiteGeneratorConfig):
     async def _live():
-        LOGGER.info("Building site")
-        await pipeline.pipeline(cfg)
-        LOGGER.debug("First time build complete")
+        try:
+            await pipeline.pipeline(cfg)
+        except Exception as ex:
+            errors.log_error(ex)
 
         pr = PipelineRunner(cfg)
 
@@ -24,24 +26,31 @@ def live(cfg: config.SiteGeneratorConfig):
             cfg.pages,
             recursive=True,
         )
+        LOGGER.debug(f"Watching {cfg.format_relative_path(cfg.pages)} for file changes")
         observer.schedule(
             pr,
             cfg.templates,
             recursive=True,
+        )
+        LOGGER.debug(
+            f"Watching {cfg.format_relative_path(cfg.templates)} for file changes"
         )
         observer.schedule(
             pr,
             cfg.static,
             recursive=True,
         )
+        LOGGER.debug(
+            f"Watching {cfg.format_relative_path(cfg.static)} for file changes"
+        )
+
         observer.start()
-        LOGGER.debug("File system watcher started")
 
         # Start serving content
-        h = functools.partial(server.SimpleHTTPRequestHandler, directory=cfg.output)
+        h = _handler(cfg.output)
         try:
             with server.ThreadingHTTPServer((cfg.host, int(cfg.port)), h) as s:
-                LOGGER.info(f"Starting dev server at http://{cfg.host}:{cfg.port}")
+                LOGGER.info(f"Live server listening at: http://{cfg.host}:{cfg.port}")
                 s.serve_forever()
         except KeyboardInterrupt:
             pass
@@ -50,6 +59,15 @@ def live(cfg: config.SiteGeneratorConfig):
             observer.join()
 
     return _live
+
+
+def _handler(directory: pathlib.Path):
+    return functools.partial(LoggingSimpleHTTPRequestHandler, directory=directory)
+
+
+class LoggingSimpleHTTPRequestHandler(server.SimpleHTTPRequestHandler):
+    def log_message(self, msg: str, *args) -> None:
+        LOGGER.info(f"[SERVER] {msg%args}")
 
 
 class PipelineRunner(events.FileSystemEventHandler):
@@ -62,8 +80,11 @@ class PipelineRunner(events.FileSystemEventHandler):
         asyncio.run(self.run(event))
 
     async def run(self, event: events.FileSystemEvent):
-        LOGGER.info(f"{event.src_path} changed, rebuilding site")
+        LOGGER.info(
+            f"File change detected in {self._cfg.format_relative_path(event.src_path)}"
+        )
         async with self._lock:
-            LOGGER.debug(f"{self.__class__.__name__}.run2 => lock acquired")
-            await pipeline.pipeline(self._cfg)
-        LOGGER.info("Site rebuilt")
+            try:
+                await pipeline.pipeline(self._cfg)
+            except Exception as ex:
+                errors.log_error(ex)

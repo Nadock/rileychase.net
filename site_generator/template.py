@@ -11,5 +11,4 @@ async def render_template(templates: pathlib.Path, name: str, **render_kwargs) -
     """Render the `name`d template from the `templates` directory."""
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(templates))
     template = env.get_or_select_template(name)
-    LOGGER.debug(f"Rendering template {template.name} from {templates}")
     return template.render(**render_kwargs)
