@@ -20,10 +20,10 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
     host: str = "localhost"
     port: str = "8000"
 
-    force_rebuild: bool
-
     @pydantic.validator("templates", "pages", "static")
+    @classmethod
     def ensure_directory(cls, path: Optional[pathlib.Path]):
+        """Pydantic validator to ensure the specified path is a directory."""
         if path is None:
             return None
 
@@ -37,7 +37,9 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
         return path
 
     @pydantic.validator("output")
+    @classmethod
     def ensure_directory_clean(cls, path: Optional[pathlib.Path]):
+        """Pydantic validator to ensure the specified path is an empty directory."""
         if path is None:
             return None
 
