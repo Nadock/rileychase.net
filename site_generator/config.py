@@ -1,12 +1,14 @@
 import pathlib
-import shutil
 from typing import Optional
 
 import pydantic
 
 
 class SiteGeneratorConfig(pydantic.BaseSettings):
+    """General configuration values for `site_generator`, populated from CLI args."""
+
     class Config(pydantic.BaseConfig):
+        # pylint: disable=missing-class-docstring, too-few-public-methods
         env_prefix = "SG_"
         orm_mode = True
 
@@ -51,7 +53,7 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
         try:
             path = path.relative_to(self.base)
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             pass
 
         if path.is_absolute():

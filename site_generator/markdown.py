@@ -51,7 +51,8 @@ async def markdown_pipeline(
         ) from ex
 
     LOGGER.debug(
-        f"Markdown pipeline converted {cfg.format_relative_path(path)} to {cfg.format_relative_path(output)}"
+        f"Markdown pipeline converted {cfg.format_relative_path(path)} "
+        f"to {cfg.format_relative_path(output)}"
     )
     return output
 

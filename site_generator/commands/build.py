@@ -1,13 +1,12 @@
-from site_generator import config, errors, logging, pipeline
+from site_generator import config, logging, pipeline
 
 LOGGER = logging.getLogger()
 
 
 def build(cfg: config.SiteGeneratorConfig):
+    """Build CLI command handler; build site once."""
+
     async def _build():
-        try:
-            await pipeline.pipeline(cfg)
-        except Exception as ex:
-            errors.log_error(ex)
+        await pipeline.pipeline(cfg)
 
     return _build

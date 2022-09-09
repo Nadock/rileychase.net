@@ -5,6 +5,7 @@ from site_generator import config
 
 
 def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:
+    """Setup root `logging.Logger` objects to print to stderr nicely."""
     root = logging.getLogger()
 
     app = root.getChild("site_generator")
@@ -27,5 +28,7 @@ def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:
 
 
 def getLogger(name: str | None = None) -> logging.Logger:
+    """Alias function for `logging.getLogger` that ensure we use the app logger."""
+    # pylint: disable=invalid-name
     name = f"site_generator.{name}" if name else "site_generator"
     return logging.getLogger(name)

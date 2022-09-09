@@ -4,14 +4,15 @@ LOGGER = logging.getLogger()
 
 
 class SiteGeneratorError(Exception):
-    pass
+    """Base exception class for any `site_generator` errors."""
 
 
 class PipelineError(SiteGeneratorError):
-    pass
+    """Pipeline failure for a specific source file."""
 
 
 def log_error(ex: Exception):
+    """Log an exception according to what kind of exception it is."""
     if isinstance(ex, SiteGeneratorError):
         LOGGER.error(ex)
         LOGGER.debug(ex, exc_info=True)

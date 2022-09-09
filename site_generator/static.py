@@ -31,7 +31,8 @@ async def static_pipeline(
         ) from ex
 
     LOGGER.debug(
-        f"Static pipeline converted {cfg.format_relative_path(path)} to {cfg.format_relative_path(output)}"
+        f"Static pipeline converted {cfg.format_relative_path(path)} "
+        f"to {cfg.format_relative_path(output)}"
     )
     return output
 

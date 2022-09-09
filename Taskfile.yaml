@@ -10,6 +10,7 @@ tasks:
       - task: mypy
       - task: pylint
       - task: pytest
+      - task: validate
 
   black:
     cmds:
@@ -38,3 +39,7 @@ tasks:
   build:
     cmds:
       - python -m site_generator build {{.CLI_ARGS}}
+
+  validate:
+    cmds:
+      - python -m site_generator validate {{.CLI_ARGS}}

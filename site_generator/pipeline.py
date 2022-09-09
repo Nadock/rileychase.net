@@ -7,6 +7,7 @@ LOGGER = logging.getLogger()
 
 
 async def pipeline(cfg: config.SiteGeneratorConfig):
+    """Generate the entire site once end-to-end."""
     try:
         shutil.rmtree(cfg.output)
         LOGGER.debug(f"{cfg.format_relative_path(cfg.output)} cleared")

@@ -3,10 +3,12 @@ import asyncio
 import pathlib
 import sys
 
-from site_generator import commands, config, logging
+from site_generator import commands, config, errors, logging
 
 
 class SiteGeneratorCLI:
+    # pylint: disable=missing-class-docstring, too-few-public-methods
+
     def __init__(self):
         self.root_parser = argparse.ArgumentParser(
             prog="site_generator", add_help=False
@@ -82,12 +84,18 @@ class SiteGeneratorCLI:
             help="Port number to listen on when running in live mode.",
         )
 
-        build_parser = command_parsers.add_parser(
+        _ = command_parsers.add_parser(
             "build",
             help="Build a fully rendered site and then exit.",
         )
 
+        _ = command_parsers.add_parser(
+            "validate",
+            help="Validate source file for semantic errors",
+        )
+
     def run(self, argv: list[str]):
+        """Setup and run `site_generator` CLI from args."""
         self._setup_parser()
 
         args = self.root_parser.parse_args(argv)
@@ -104,13 +112,17 @@ class SiteGeneratorCLI:
             logger.debug(f"config.{key} = {value}")
 
         cmd = self._get_command(args.command, cfg)
-        asyncio.run(cmd())
+        try:
+            asyncio.run(cmd())
+        except Exception as ex:  # pylint: disable=broad-except
+            errors.log_error(ex)
 
     def _get_command(self, command: str, cfg: config.SiteGeneratorConfig):
         if command == "live":
             return commands.live(cfg)
-
         if command == "build":
             return commands.build(cfg)
+        if command == "validate":
+            return commands.validate(cfg)
 
         raise ValueError(f"Unknown command name '{command}'")
