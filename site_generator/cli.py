@@ -114,6 +114,8 @@ class SiteGeneratorCLI:
         cmd = self._get_command(args.command, cfg)
         try:
             asyncio.run(cmd())
+        except KeyboardInterrupt:
+            pass
         except Exception as ex:  # pylint: disable=broad-except
             errors.log_error(ex)
 
