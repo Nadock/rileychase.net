@@ -26,5 +26,6 @@ title: RileyChase.net
   - [ ] No JS
   - [ ] Social links
 - [ ] Light mode / dark mode toggle
+- [ ] Nav menu animation improvement
 - [ ] Tags support (view list, jump to page)
 - [ ] Blog support (view list)

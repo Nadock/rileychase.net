@@ -1,5 +1,6 @@
 ---
 title: Licenses
+path: licenses
 ---
 
 Unless noted otherwise, all of this sites contents are licensed to the public under the
