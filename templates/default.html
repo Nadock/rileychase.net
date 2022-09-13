@@ -17,28 +17,36 @@
 
 <body>
     <div class="base">
-        <div class="header">
-            <div class="header_title">
-                <h1>{{ props.title }}</h1>
-                <h3>{{ props.subtitle }}</h3>
-                <em>{{ props.date }}</em>
-            </div>
-            <div class="header_links">
-                <div class="header_links--menu">
-                    <input type="checkbox" id="header_links--checkbox" class="header_links--checkbox">
-                    <label for="header_links--checkbox" class="header_links--label">
-                        <img src="/img/menu.svg" alt="Menu">
-                    </label>
 
-                    <div class="header_links--links">
-                        <a class="header_links--link" href="/">Home</a>
-                    </div>
-                </div>
+        <div class="site_header">
+            <div class="site_header--root">
+                <h1 class="site_header--title">rileychase&lt;dot&gt;net</h1>
+            </div>
+            <div class="site_header--links">
+                <a href="/">Home</a>
+
+                <a href="/markdown_test.html">Markdown Test</a>
+                <a href="/emoji_test.html">Emoji Test</a>
+                <a href="/lorem_article.html">Lorem article</a>
+                <a href="/licenses">Licenses</a>
+                <a href="/404.html">404</a>
+
+                <a href="https://github.com/nadock">GitHub</a>
             </div>
         </div>
+
+        <div class="page_header">
+            <div class="page_header--root">
+                <h1 class="page_header--title">{{ props.title }}</h1>
+                <h3 class="page_header--subtitle">{{ props.subtitle }}</h3>
+                <em class="page_header--date">{{ props.date }}</em>
+            </div>
+        </div>
+
         <div class="content">
             {{ content }}
         </div>
+
         <div class="footer">
             <div class="footer--site-links">
                 <a class="header_links--link" href="/">Home</a>

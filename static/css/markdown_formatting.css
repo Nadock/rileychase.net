@@ -1,4 +1,4 @@
-html {
+:root {
     --site-colour-bg: #1D1F21;
     --site-colour-lowlight: #CCCCCC;
     --site-colour-highlight: #FFA500;
@@ -94,6 +94,7 @@ body {
     padding: 0.5em;
     background-color: var(--site-colour-block);
 }
+
 .content blockquote p {
     margin: 0;
 }
@@ -120,6 +121,7 @@ body {
 .content code {
     background-color: var(--site-colour-block);
 }
+
 .content .codehilite {
     margin: 1em 0;
     padding: 1em;
@@ -128,6 +130,7 @@ body {
     border-radius: 0.5em;
     background-color: var(--site-colour-block);
 }
+
 .content .codehilite pre {
     white-space: pre-wrap;
 }
