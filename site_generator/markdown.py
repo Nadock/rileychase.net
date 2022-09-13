@@ -35,7 +35,7 @@ async def markdown_pipeline(
             **{
                 "content": await render(content),
                 "props": fm.dict(exclude={"meta", "config", "file"}, exclude_none=True),
-                "meta": fm.dict(include={"meta"}),
+                "meta": fm.dict(include={"meta"}).get("meta", {}),
             },
         )
     except Exception as ex:
