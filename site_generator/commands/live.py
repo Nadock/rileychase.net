@@ -71,6 +71,12 @@ class LoggingSimpleHTTPRequestHandler(server.SimpleHTTPRequestHandler):
         # pylint: disable=arguments-differ
         LOGGER.info(f"[SERVER] {msg%args}")
 
+    def end_headers(self) -> None:
+        self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
+        self.send_header("Pragma", "no-cache")
+        self.send_header("Expires", "0")
+        return super().end_headers()
+
 
 class PipelineRunner(events.FileSystemEventHandler):
     """
