@@ -3,6 +3,7 @@
     --site-colour-lowlight: #CCCCCC;
     --site-colour-highlight: #FFA500;
     --site-colour-block: #282c34;
+    --site-colour-border: #808080;
 }
 
 body {
@@ -90,7 +91,7 @@ body {
 }
 
 .content blockquote {
-    border-left: 0.2em solid grey;
+    border-left: 0.2em solid var(--site-colour-border);
     padding: 0.5em;
     background-color: var(--site-colour-block);
 }
