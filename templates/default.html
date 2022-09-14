@@ -1,3 +1,4 @@
+<!-- https://jinja.palletsprojects.com/en/3.1.x/templates/ -->
 <!DOCTYPE html>
 <html lang="en-au">
 
@@ -5,7 +6,7 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ meta.description }}">
+    <meta name="description" content="{{ props.description }}">
 
     <link rel="stylesheet" type="text/css" href="/css/base_site_layout.css">
     <link rel="stylesheet" type="text/css" href="/css/markdown_formatting.css">
@@ -13,7 +14,6 @@
 
     <title>{{ props.title }}</title>
 </head>
-
 
 <body>
     <div class="base">
@@ -23,21 +23,21 @@
                 <h1 class="site_header--title">rileychase&lt;dot&gt;net</h1>
             </div>
             <div class="site_header--links">
-                <a href="/">Home</a>
+                <a class="site_header--link" href="/">Home</a>
 
-                <a href="/markdown_test.html">Markdown Test</a>
-                <a href="/emoji_test.html">Emoji Test</a>
-                <a href="/lorem_article.html">Lorem article</a>
-                <a href="/licenses">Licenses</a>
-                <a href="/404.html">404</a>
+                <a class="site_header--link" href="/markdown_test.html">Markdown Test</a>
+                <a class="site_header--link" href="/emoji_test.html">Emoji Test</a>
+                <a class="site_header--link" href="/lorem_article.html">Lorem article</a>
+                <a class="site_header--link" href="/licenses">Licenses</a>
+                <a class="site_header--link" href="/404.html">404</a>
 
-                <a href="https://github.com/nadock">GitHub</a>
+                <a class="site_header--link" href="https://github.com/nadock">GitHub</a>
             </div>
         </div>
 
         <div class="page_header">
             <div class="page_header--root">
-                <h1 class="page_header--title">{{ props.title }}</h1>
+                <h2 class="page_header--title">{{ props.title }}</h2>
                 <h3 class="page_header--subtitle">{{ props.subtitle }}</h3>
                 <em class="page_header--date">{{ props.date }}</em>
             </div>

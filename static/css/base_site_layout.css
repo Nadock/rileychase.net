@@ -1,21 +1,28 @@
 @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@4/distr/fira_code.css);
 
-* {
-    margin: 0;
-    padding: 0;
-    font-family: 'Fira Code', monospace;
-}
-
 @supports (font-variation-settings: normal) {
     * {
         font-family: 'Fira Code VF', monospace;
     }
 }
 
+@media only screen and (max-width: 1000px) {
+    .base {
+        grid-template-columns: 1em auto 1em;
+        font-size: 12px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Fira Code', monospace;
+}
+
 .base {
     display: grid;
     grid-template-columns: auto minmax(min-content, 1000px) auto;
-    grid-template-rows: 5em 5em 10em auto 5em;
+    grid-template-rows: 5em 10em 5em auto 5em;
     --content-width: minmax(min-content, 1000px);
     min-height: 100vh;
 }
@@ -25,16 +32,21 @@
     grid-column: 2;
 
     display: grid;
-    grid-auto-rows: 1;
-    grid-auto-columns: 2;
+    grid-auto-columns: 1;
+
+    grid-template-rows: min-content auto;
 }
 
 .site_header--root {
     grid-column: 1;
     display: grid;
     justify-content: left;
-    align-content: center;
+
     color: var(--site-colour-highlight);
+}
+
+.site_header--title {
+    padding-bottom: 0.25em;
 }
 
 .site_header--links {
@@ -45,7 +57,7 @@
     justify-content: left;
 }
 
-.site_header--links a {
+.site_header--link {
     text-decoration: none;
     color: var(--site-colour-lowlight);
     padding-right: 2em;
@@ -72,7 +84,6 @@
     align-content: center;
     color: var(--site-colour-highlight);
 }
-
 
 .content {
     grid-row: 4;
@@ -105,11 +116,4 @@
 
 .footer--site-links a:hover {
     color: var(--site-colour-highlight);
-}
-
-@media only screen and (max-width: 1000px) {
-    .base {
-        grid-template-columns: 1em auto 1em;
-        font-size: 12px;
-    }
 }
