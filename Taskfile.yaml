@@ -13,8 +13,6 @@ tasks:
       - task: validate
       - task: mdlint
       - task: aws:lint
-      - task: aws:website:validate
-      - task: aws:gh-actions:validate
 
   black:
     desc: Run psf/black code formatting tool
