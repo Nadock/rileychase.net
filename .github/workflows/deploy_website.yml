@@ -12,6 +12,7 @@ on:
       - ./static/*/**
       - ./templates/*
       - ./templates/*/**
+  workflow_dispatch: {}
 
 
 jobs:
@@ -40,3 +41,6 @@ jobs:
 
       - name: Deploy Website
         run: aws sync ./output s3://website-rileychase-net/website
+
+      - name: Invalidate Cache
+        run: aws cloudfront create-invalidation --distribution-id E30QO4IRFOUXH7 --path /
