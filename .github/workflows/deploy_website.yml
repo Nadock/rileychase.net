@@ -1,0 +1,46 @@
+name: Deploy Website
+
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ./pages/*
+      - ./pages/*/**
+      - ./static/*
+      - ./static/*/**
+      - ./templates/*
+      - ./templates/*/**
+  workflow_dispatch: {}
+
+
+jobs:
+  deploy_website:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup go-task/task
+        uses: arduino/setup-task@v1
+        with:
+          version: 3.x
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_ROLE_ARN }}
+          aws-region: ap-southeast-2
+
+      - name: Build Website
+        run: task -t Taskfile.github.yaml build
+
+      - name: Deploy Website
+        run: aws sync ./output s3://website-rileychase-net/website
+
+      - name: Invalidate Cache
+        run: aws cloudfront create-invalidation --distribution-id E30QO4IRFOUXH7 --path /

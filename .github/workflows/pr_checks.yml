@@ -1,0 +1,38 @@
+name: Pull Request Checks
+
+on:
+  pull_request: {}
+
+jobs:
+  pr_checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Tooling installs
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Setup go-task/task
+        uses: arduino/setup-task@v1
+        with:
+          version: 3.x
+
+      # Dependency installs
+      - name: Install Python dependencies
+        run: |
+          pip install pipenv
+          pipenv install --dev --system
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: PR Checks
+        run: task -t Taskfile.github.yaml gh:ci

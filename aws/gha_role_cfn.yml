@@ -1,0 +1,73 @@
+# Based on template from here:
+# https://github.com/aws-actions/configure-aws-credentials#sample-iam-role-cloudformation-template
+#
+# Each repository that requires access needs to deploy their own version of this stack with the repository name and
+# owner set accordingly and the permissions required added to the GitHubActionsRole resource.
+#
+# The stack that is deployed should be named `github-actions-${RepositoryOwner}-${RepositoryName}`, with any additional
+# details included after (such as dev/prod splits).
+AWSTemplateFormatVersion: "2010-09-09"
+
+
+Description: GitHub Actions role assumed via OpenID Connect for Nadock/atmtn
+
+
+Parameters:
+  RepositoryOwner:
+    Type: String
+    Description: The name of the GitHub user or organisation that owns the repository.
+
+  RepositoryName:
+    Type: String
+    Description: The name of the GitHub repository to grant access to AWS.
+
+  BucketName:
+    Type: String
+    Description: The name of the S3 Bucket that hosts the website
+    Default: website-rileychase-net
+
+  DistributionID:
+    Type: String
+    Description: The ID of the CloudFront Distribution that hosts the website
+    Default: E30QO4IRFOUXH7
+
+
+Resources:
+  GitHubActionsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action: sts:AssumeRoleWithWebIdentity
+            Principal:
+              Federated: !ImportValue github-actions-oidc-provider-arn
+            Condition:
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub repo:${RepositoryOwner}/${RepositoryName}:*
+      # Specific policy statements go here
+      Policies:
+        - PolicyName: !Sub ${AWS::StackName}-policy
+          PolicyDocument:
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                  - s3:PutObject
+                  - s3:PutObjectAcl
+                Resource:
+                  - !Sub arn:${AWS::Partition}:s3:::${BucketName}
+                  - !Sub arn:${AWS::Partition}:s3:::${BucketName}/*
+              - Effect: Allow
+                Action:
+                  - cloudfront:ListInvalidations
+                  - cloudfront:GetInvalidation
+                  - cloudfront:CreateInvalidation
+                Resource:
+                  - !Sub arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${DistributionID}
+
+
+Outputs:
+  GitHubActionsRoleArn:
+    Value: !GetAtt GitHubActionsRole.Arn

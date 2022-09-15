@@ -1,0 +1,103 @@
+# https://taskfile.dev
+version: '3'
+
+
+tasks:
+  ci:
+    desc: Run all tasks required to merge code into the main branch
+    cmds:
+      - task: black:check
+      - task: mypy
+      - task: pylint
+      - task: pytest
+      - task: validate
+      - task: mdlint
+      - task: aws:lint
+
+  black:
+    desc: Run psf/black code formatting tool
+    cmds:
+      - black site_generator
+
+  black:check:
+    desc: Run psf/black code formatting tool in check only mode
+    cmds:
+      - black --check site_generator
+
+  pylint:
+    desc: Lint Python sources with pycqa/pylint
+    cmds:
+      - pylint site_generator
+
+  mypy:
+    desc: Run python/mypy Python type checking tool
+    cmds:
+      - mypy site_generator
+
+  pytest:
+    desc: Run unit tests via pytest-dev/pytest
+    cmds:
+      - pytest site_generator
+
+  live:
+    desc: Run the site_generator in live rebuild mode
+    cmds:
+      - python -m site_generator live {{.CLI_ARGS}}
+
+  build:
+    desc: Run the site_generator in single build mode
+    cmds:
+      - python -m site_generator build {{.CLI_ARGS}}
+
+  validate:
+    desc: Run the inbuilt site_generator validator
+    cmds:
+      - python -m site_generator validate {{.CLI_ARGS}}
+
+  mdlint:
+    desc: Lint markdown sources with DavidAnson/markdownlint
+    cmds:
+      - npx markdownlint '**/*.md' --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/markdown_test.md'
+
+  aws:lint:
+    desc: Run cfn-lint across all templates
+    sources:
+      - aws/*.yml
+      - aws/**/*.yml
+    cmds:
+      - pipenv run cfn-lint --include-checks I -- ./aws/**/*.yml
+
+  aws:website:validate:
+    desc: Validate the website_cfn.yml CloudFormation template
+    sources:
+      - aws/website_cfn.yml
+    cmds:
+      - aws cloudformation validate-template --template-body file://./aws/website_cfn.yml
+
+  aws:website:deploy:
+    desc: Deploy the website_cfn.yml CloudFormation template
+    deps:
+      - aws:website:validate
+    cmds:
+      - aws cloudformation deploy --template-file ./aws/website_cfn.yml --stack-name website-rileychase-net --no-fail-on-empty-changeset
+
+  aws:gh-actions:validate:
+    desc: Validate the gha_role_cfn.yml CloudFormation template
+    sources:
+      - aws/gha_role_cfn.yml
+    cmds:
+      - aws cloudformation validate-template --template-body file://./aws/gha_role_cfn.yml
+
+  aws:gh-actions:deploy:
+    desc: Deploy the gha_role_cfn.yml CloudFormation template
+    deps:
+      - aws:gh-actions:validate
+    cmds:
+      - |
+        aws cloudformation deploy --template-file ./aws/gha_role_cfn.yml \
+                                  --stack-name github-actions-nadock-rileychase-net \
+                                  --no-fail-on-empty-changeset \
+                                  --capabilities CAPABILITY_IAM \
+                                  --parameter-overrides \
+                                    'RepositoryOwner=nadock' \
+                                    'RepositoryName=rileychase.net'

@@ -1,9 +1,0 @@
-version: "3"
-
-services:
-  hugo:
-    build: ./docker/hugo
-    volumes:
-      - .:/app
-    ports:
-      - 1313:1313
