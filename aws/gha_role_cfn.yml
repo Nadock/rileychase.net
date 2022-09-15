@@ -16,10 +16,12 @@ Parameters:
   RepositoryOwner:
     Type: String
     Description: The name of the GitHub user or organisation that owns the repository.
+    Default: Nadock
 
   RepositoryName:
     Type: String
     Description: The name of the GitHub repository to grant access to AWS.
+    Default: rileychase.net
 
   BucketName:
     Type: String
@@ -44,6 +46,7 @@ Resources:
               Federated: !ImportValue github-actions-oidc-provider-arn
             Condition:
               StringLike:
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
                 token.actions.githubusercontent.com:sub: !Sub repo:${RepositoryOwner}/${RepositoryName}:*
       # Specific policy statements go here
       Policies:
