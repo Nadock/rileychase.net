@@ -14,6 +14,7 @@ watchdog = "~=2.1.9"
 
 [dev-packages]
 black = "~=22.6.0"
+cfn-lint = "~=0.65.0"
 isort = "~=5.10.1"
 mypy = "~=0.971"
 pylint = "~=2.15.0"

@@ -57,3 +57,25 @@ tasks:
     desc: Lint markdown sources with DavidAnson/markdownlint
     cmds:
       - npx markdownlint '**/*.md' --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/markdown_test.md'
+
+  aws:lint:
+    desc: Run cfn-lint across all templates
+    sources:
+      - aws/*.yml
+      - aws/**/*.yml
+    cmds:
+      - pipenv run cfn-lint --include-checks I -- ./aws/**/*.yml
+
+  aws:website:validate:
+    desc: Validate the website_cfn.yml CloudFormation template
+    sources:
+      - aws/website_cfn.yml
+    cmds:
+      - aws cloudformation validate-template --template-body file://./aws/website_cfn.yml
+
+  aws:website:deploy:
+    desc: Deploy the website_cfn.yml CloudFormation template
+    deps:
+      - aws:website:validate
+    cmds:
+      - aws cloudformation deploy --template-file ./aws/website_cfn.yml --stack-name website-rileychase-net --no-fail-on-empty-changeset
