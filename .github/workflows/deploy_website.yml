@@ -6,12 +6,9 @@ on:
     branches:
       - main
     paths:
-      - ./pages/*
-      - ./pages/*/**
-      - ./static/*
-      - ./static/*/**
-      - ./templates/*
-      - ./templates/*/**
+      - pages/**
+      - static/**
+      - templates/**
   workflow_dispatch: {}
 
 
