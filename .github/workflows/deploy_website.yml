@@ -20,6 +20,7 @@ jobs:
       contents: read
       deployments: write
     steps:
+      # Set gup
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -36,21 +37,34 @@ jobs:
         with:
           version: 3.x
 
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Python dependencies
+        run: |
+          pip install pipenv
+          pipenv install --dev --system
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_ROLE_ARN }}
           aws-region: ap-southeast-2
 
+      # Build
       - name: Build Website
         run: task -t Taskfile.github.yaml gh:build
 
+      # Publish
       - name: Deploy Website
         run: aws sync ./output s3://website-rileychase-net/website
 
       - name: Invalidate Cache
         run: aws cloudfront create-invalidation --distribution-id E30QO4IRFOUXH7 --path /
 
+      # Tear down
       - name: Record deployment success
         if: success()
         uses: chrnorm/deployment-status@07b3930847f65e71c9c6802ff5a402f6dfb46b86
