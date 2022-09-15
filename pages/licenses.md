@@ -1,6 +1,10 @@
 ---
 title: Licenses
 path: licenses
+meta:
+  validation:
+    subtitle: false
+    description: false
 ---
 
 Unless noted otherwise, all of this sites contents are licensed to the public under the

@@ -76,9 +76,16 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
         The validation is above and beyond the Pydantic validation, and is aimed at
         determining if a page's frontmatter is likely to cause build issues.
         """
-        _errors = []
+        errors = []
+        validation = self.meta.get("validation", {}) if self.meta else {}
 
-        if not self.title:
-            _errors.append("no title set")
+        if not self.title and validation.get("title", True):
+            errors.append("no title set")
 
-        return _errors
+        if not self.subtitle and validation.get("subtitle", True):
+            errors.append("no subtitle set")
+
+        if not self.description and validation.get("description", True):
+            errors.append("no description set")
+
+        return errors

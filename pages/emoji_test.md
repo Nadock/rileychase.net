@@ -1,5 +1,7 @@
 ---
 title: Emoji Test
+subtitle: A whole bunch of emoji to test that it's working
+description: Emoji testing
 ---
 
 ## Emoji test
