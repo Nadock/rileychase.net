@@ -31,7 +31,7 @@ Parameters:
   DistributionID:
     Type: String
     Description: The ID of the CloudFront Distribution that hosts the website
-    Default: E30QO4IRFOUXH7
+    Default: E2FPAR92JVVBNE
 
 
 Resources:
