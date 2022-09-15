@@ -2,6 +2,8 @@
 
 Simple static site generator and content that powers [rileychase.net](https://rileychase.net).
 
+[![Deploy Website](https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml/badge.svg)](https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml)
+
 ## To do
 
 Before this is "done" and ready for regular use, we still need to do the following:
