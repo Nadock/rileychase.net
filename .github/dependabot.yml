@@ -1,0 +1,36 @@
+version: 2
+
+
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      day: tuesday
+      interval: weekly
+      time: "07:00"
+      timezone: Australia/Adelaide
+    labels:
+      - dependencies
+      - python
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      day: tuesday
+      interval: weekly
+      time: "07:00"
+      timezone: Australia/Adelaide
+    labels:
+      - dependencies
+      - github-actions
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      day: tuesday
+      interval: weekly
+      time: "07:00"
+      timezone: Australia/Adelaide
+    labels:
+      - dependencies
+      - nodejs
