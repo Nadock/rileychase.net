@@ -6,12 +6,9 @@ on:
     branches:
       - main
     paths:
-      - ./pages/*
-      - ./pages/*/**
-      - ./static/*
-      - ./static/*/**
-      - ./templates/*
-      - ./templates/*/**
+      - pages/**
+      - static/**
+      - templates/**
   workflow_dispatch: {}
 
 
@@ -21,9 +18,18 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      deployments: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Create deployment
+        uses: chrnorm/deployment-action@21e908ae0ea3c446d94b0c4000eb933126d3b6a3
+        id: deployment
+        with:
+          token: ${{ github.token }}
+          environment-url: https://rileychase.net
+          initial-status: in_progress
 
       - name: Setup go-task/task
         uses: arduino/setup-task@v1
@@ -44,3 +50,21 @@ jobs:
 
       - name: Invalidate Cache
         run: aws cloudfront create-invalidation --distribution-id E30QO4IRFOUXH7 --path /
+
+      - name: Record deployment success
+        if: success()
+        uses: chrnorm/deployment-status@07b3930847f65e71c9c6802ff5a402f6dfb46b86
+        with:
+          token: ${{ github.token }}
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: success
+
+      - name: Record deployment failure
+        if: failure()
+        uses: chrnorm/deployment-status@07b3930847f65e71c9c6802ff5a402f6dfb46b86
+        with:
+          token: ${{ github.token }}
+          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          state: failure
