@@ -1,7 +1,3 @@
----
-title: RileyChase.net
----
-
 ## Pages
 
 - [Markdown Test](/markdown_test.html)
@@ -22,6 +18,9 @@ title: RileyChase.net
 - [x] 404 page
 - ~~[ ] Docker things~~
 - [ ] AWS infra
+  - [x] CF Distro & S3
+  - [ ] ACM cert
+  - [ ] DNS config
 - [ ] Home page content
   - [ ] No JS
   - [ ] Social links
@@ -29,3 +28,8 @@ title: RileyChase.net
 - [ ] Nav menu animation improvement
 - [ ] Tags support (view list, jump to page)
 - [ ] Blog support (view list)
+- [ ] CI Workflows
+  - [x] Code quality checks on PR
+  - [x] Markdown lint on PR
+  - [ ] Deploy site CFN on change
+  - [ ] Sync site contents & invalidate on change

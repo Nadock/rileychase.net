@@ -45,6 +45,11 @@
     color: var(--site-colour-highlight);
 }
 
+.site_header--root a {
+    text-decoration: none;
+    color: var(--site-colour-highlight)
+}
+
 .site_header--title {
     padding-bottom: 0.25em;
 }
