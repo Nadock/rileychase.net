@@ -46,14 +46,14 @@ Resources:
           PolicyDocument:
             Statement:
               - Effect: Allow
-                Action: s3:*
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                  - s3:PutObject
+                  - s3:PutObjectAcl
                 Resource:
                   - !Sub arn:${AWS::Partition}:s3:::${BucketName}
                   - !Sub arn:${AWS::Partition}:s3:::${BucketName}/*
-              - Effect: Allow
-                Action: cloudfront:*
-                Resource:
-                  - !Sub arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:*/*
 
 
 Outputs:
