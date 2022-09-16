@@ -35,6 +35,6 @@ Before this is "done" and ready for regular use, we still need to do the followi
   ~~- [ ] Deploy site CFN on change~~
   - [x] Sync site contents & invalidate on change
 - [ ] New README and content
-- [ ] Serve Fira Code source via CF domain, not JSDelivr for CSP reasons
+- [x] Serve Fira Code source via CF domain, not JSDelivr for CSP reasons
 - [ ] Redirects to `index.html` for non-root paths
   - https://luke.plaus.in/posts/cloudfront-index-redirect/
