@@ -136,7 +136,7 @@ def get_render_info(cfg: config.SiteGeneratorConfig) -> dict[str, Any]:
     page render.
     """
     info: dict[str, Any] = {
-        "rendered_at": datetime.datetime.now(),
+        "rendered_at": datetime.datetime.now().astimezone(),
         "ref": None,
     }
 
