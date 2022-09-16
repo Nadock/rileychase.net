@@ -1,6 +1,7 @@
+import datetime
 import os
 import pathlib
-from typing import AsyncIterator, Tuple
+from typing import Any, AsyncIterator, Tuple
 
 import markdown
 import yaml
@@ -36,6 +37,7 @@ async def markdown_pipeline(
                 "content": await render(content),
                 "props": fm.dict(exclude={"meta", "config", "file"}, exclude_none=True),
                 "meta": fm.dict(include={"meta"}).get("meta", {}),
+                "info": get_render_info(cfg),
             },
         )
     except Exception as ex:
@@ -126,3 +128,23 @@ async def render(content: str) -> str:
         },
     )
     return md.convert(content)
+
+
+def get_render_info(cfg: config.SiteGeneratorConfig) -> dict[str, Any]:
+    """
+    Populate and return a `dict` of general purpose information about an individual
+    page render.
+    """
+    info: dict[str, Any] = {
+        "rendered_at": datetime.datetime.now(),
+        "ref": None,
+    }
+
+    git_head = cfg.base / ".git" / "HEAD"
+    try:
+        ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
+        info["ref"] = (cfg.base / ".git" / ref).read_text("utf-8").strip()
+    except Exception as ex:  # pylint: disable=broad-except
+        LOGGER.warning(f"Unable to read git ref: {ex}")
+
+    return info
