@@ -1,5 +1,8 @@
 # rileychase.net
 
+<!-- TODO: Disable this when we write the proper README -->
+<!-- markdownlint-disable -->
+
 Simple static site generator and content that powers [rileychase.net](https://rileychase.net).
 
 [![Deploy Website](https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml/badge.svg)](https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml)
