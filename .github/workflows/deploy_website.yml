@@ -62,7 +62,7 @@ jobs:
         run: aws s3 sync ./output s3://website-rileychase-net/website
 
       - name: Invalidate Cache
-        run: aws cloudfront create-invalidation --distribution-id E2FPAR92JVVBNE --path /
+        run: aws cloudfront create-invalidation --distribution-id E2FPAR92JVVBNE --path "/*"
 
       # Tear down
       - name: Record deployment success
