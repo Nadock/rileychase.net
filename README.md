@@ -1,5 +1,8 @@
 # rileychase.net
 
+<!-- TODO: Disable this when we write the proper README -->
+<!-- markdownlint-disable -->
+
 Simple static site generator and content that powers [rileychase.net](https://rileychase.net).
 
 [![Deploy Website](https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml/badge.svg)](https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml)
@@ -35,3 +38,6 @@ Before this is "done" and ready for regular use, we still need to do the followi
   ~~- [ ] Deploy site CFN on change~~
   - [x] Sync site contents & invalidate on change
 - [ ] New README and content
+- [x] Serve Fira Code source via CF domain, not JSDelivr for CSP reasons
+- [ ] Redirects to `index.html` for non-root paths
+  - https://luke.plaus.in/posts/cloudfront-index-redirect/
