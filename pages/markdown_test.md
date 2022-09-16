@@ -1,9 +1,8 @@
 ---
 title: Markdown test
 subtitle: Test all the various markdown things we can render
-meta:
-  validation:
-    description: false
+description: A test of all markdown content
+date: 2022-09-16
 ---
 <!-- markdownlint-disable -->
 

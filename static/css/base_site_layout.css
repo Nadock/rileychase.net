@@ -17,10 +17,23 @@
     font-family: 'Fira Code', monospace;
 }
 
+:root {
+    --site-colour-bg: #1D1F21;
+    --site-colour-lowlight: #CCCCCC;
+    --site-colour-highlight: #FFA500;
+    --site-colour-block: #282c34;
+    --site-colour-border: #808080;
+}
+
+body {
+    background-color: var(--site-colour-bg);
+    color: var(--site-colour-lowlight);
+}
+
 .base {
     display: grid;
     grid-template-columns: auto minmax(min-content, 1000px) auto;
-    grid-template-rows: 5em 10em 5em auto 5em;
+    grid-template-rows: 5em min-content min-content auto 5em;
     --content-width: minmax(min-content, 1000px);
     min-height: 100vh;
 }
@@ -49,7 +62,7 @@
 }
 
 .site_header--title {
-    padding-bottom: 0.25em;
+    margin-bottom: 0.5em;
 }
 
 .site_header--links {
@@ -58,12 +71,24 @@
 
     grid-auto-flow: column;
     justify-content: left;
+
+    min-height: 0;
 }
 
 .site_header--link {
     text-decoration: none;
     color: var(--site-colour-lowlight);
-    padding-right: 2em;
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+.site_header--link:first-child {
+    margin-left: 0;
+}
+
+.site_header--links span {
+    margin-left: 1em;
+    margin-right: 1em;
 }
 
 .site_header--links a:hover {
@@ -75,8 +100,14 @@
     grid-column: 2;
 
     display: grid;
-    grid-auto-rows: 2;
-    grid-auto-columns: 1;
+}
+
+.page_header--root :first-child {
+    margin-top: 2em;
+}
+
+.page_header--root :last-child {
+    margin-bottom: 3em;
 }
 
 .page_header--root {
@@ -86,12 +117,6 @@
     justify-content: left;
     align-content: center;
     color: var(--site-colour-highlight);
-}
-
-.content {
-    grid-row: 4;
-    grid-column: 2;
-    padding-bottom: 5em;
 }
 
 .footer {

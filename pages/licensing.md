@@ -1,19 +1,21 @@
 ---
-title: Licenses
-path: licenses
+title: Licensing
+path: licensing
 meta:
   validation:
     subtitle: false
     description: false
 ---
 
-Unless noted otherwise, all of this sites contents are licensed to the public under the
+Unless noted otherwise, all of the content on this site are licensed to the public under the
 MIT license (see below). This includes any source code that comprises the website as
 well as any of the content on the website such as blog posts and code snippets.
 
-### The MIT License (MIT)
+Any content reproduced on this website retains it's original license.
 
-Copyright © 2021 Riley Chase <[riley.chase@rileychase.net](mailto:riley.chase@rileychase.net)>
+## The MIT License (MIT)
+
+Copyright © 2021 Riley Chase <[webmaster@rileychase.net](mailto:webmaster@rileychase.net)>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
 software and associated documentation files (the “Software”), to deal in the Software
