@@ -4,13 +4,6 @@
     }
 }
 
-@media only screen and (max-width: 1000px) {
-    .base {
-        grid-template-columns: 1em auto 1em;
-        font-size: 12px;
-    }
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -38,6 +31,13 @@ body {
     min-height: 100vh;
 }
 
+@media only screen and (max-width: 1000px) {
+    .base {
+        grid-template-columns: 1em auto 1em;
+        font-size: 12px;
+    }
+}
+
 .site_header {
     grid-row: 2;
     grid-column: 2;
@@ -45,7 +45,7 @@ body {
     display: grid;
     grid-auto-columns: 1;
 
-    grid-template-rows: min-content auto;
+    grid-template-rows: min-content 1.5em;
 }
 
 .site_header--root {
@@ -65,34 +65,44 @@ body {
     margin-bottom: 0.5em;
 }
 
-.site_header--links {
+.nav_links {
     grid-column: 1;
     display: grid;
 
     grid-auto-flow: column;
     justify-content: left;
+    align-items: center;
 
     min-height: 0;
 }
 
-.site_header--link {
+.nav_links--right {
+    justify-content: right;
+}
+
+.nav_links * {
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+.nav_links :first-child {
+    margin-left: 0;
+}
+
+.nav_links :last-child {
+    margin-right: 0;
+}
+
+.nav_links a {
     text-decoration: none;
+    border-bottom: 1px solid var(--site-colour-lowlight);
     color: var(--site-colour-lowlight);
     margin-right: 1em;
     margin-left: 1em;
 }
 
-.site_header--link:first-child {
-    margin-left: 0;
-}
-
-.site_header--links span {
-    margin-left: 1em;
-    margin-right: 1em;
-}
-
-.site_header--links a:hover {
-    color: var(--site-colour-highlight);
+.nav_links a:hover {
+    border-bottom: 2px solid var(--site-colour-highlight);
 }
 
 .page_header {
@@ -125,23 +135,4 @@ body {
     grid-column: 2;
     grid-auto-columns: 2;
     border-top: 1px solid var(--site-colour-block);
-}
-
-.footer--site-links {
-    display: grid;
-    grid-column: 2;
-    align-content: center;
-    justify-content: right;
-    grid-auto-flow: column;
-    grid-auto-rows: 1;
-    gap: 1em;
-}
-
-.footer--site-links a {
-    color: var(--site-colour-lowlight);
-    text-decoration: none;
-}
-
-.footer--site-links a:hover {
-    color: var(--site-colour-highlight);
 }
