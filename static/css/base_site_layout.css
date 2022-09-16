@@ -110,23 +110,16 @@ body {
     grid-column: 2;
 
     display: grid;
+    align-content: center;
+    color: var(--site-colour-highlight);
 }
 
-.page_header--root :first-child {
+.page_header :first-child {
     margin-top: 2em;
 }
 
-.page_header--root :last-child {
+.page_header :last-child {
     margin-bottom: 3em;
-}
-
-.page_header--root {
-    grid-column: 1;
-    grid-row: 1;
-    display: grid;
-    justify-content: left;
-    align-content: center;
-    color: var(--site-colour-highlight);
 }
 
 .footer {
