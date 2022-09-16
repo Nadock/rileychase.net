@@ -48,17 +48,17 @@ body {
     grid-template-rows: min-content 1.5em;
 }
 
-.site_header--root {
+.site_header--title {
     grid-column: 1;
     display: grid;
     justify-content: left;
 
     color: var(--site-colour-highlight);
+    text-decoration: none;
 }
 
-.site_header--root a {
-    text-decoration: none;
-    color: var(--site-colour-highlight)
+.site_header--title:hover {
+    color: var(--site-colour-lowlight);
 }
 
 .site_header--title {
