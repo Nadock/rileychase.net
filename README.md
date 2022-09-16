@@ -41,3 +41,4 @@ Before this is "done" and ready for regular use, we still need to do the followi
 - [x] Serve Fira Code source via CF domain, not JSDelivr for CSP reasons
 - [ ] Redirects to `index.html` for non-root paths
   - https://luke.plaus.in/posts/cloudfront-index-redirect/
+- [ ] Decide on what we actually want for our favicon
