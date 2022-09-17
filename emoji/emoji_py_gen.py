@@ -8,6 +8,8 @@ import json
 import pathlib
 import sys
 
+import black
+
 
 def main():
     if len(sys.argv) != 3:
@@ -81,7 +83,7 @@ def main():
     lines.append("    }")
     lines.append("")
 
-    dest.write_text("\n".join(lines), "utf-8")
+    dest.write_text(black.format_str("\n".join(lines), mode=black.Mode()), "utf-8")
 
 
 if __name__ == "__main__":

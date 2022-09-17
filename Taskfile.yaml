@@ -59,6 +59,11 @@ tasks:
     cmds:
       - npx markdownlint '**/*.md' --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/markdown_test.md'
 
+  emoji:
+    desc: Update emoji files
+    cmds:
+      - ./emoji/update.sh
+
   aws:lint:
     desc: Run cfn-lint across all templates
     sources:
