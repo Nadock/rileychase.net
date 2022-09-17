@@ -5,9 +5,8 @@ from typing import Any, AsyncIterator, Tuple
 
 import markdown
 import yaml
-from pymdownx import emoji  # type: ignore
 
-from site_generator import config, errors, frontmatter, logging, template
+from site_generator import config, emoji, errors, frontmatter, logging, template
 
 LOGGER = logging.getLogger()
 
@@ -119,8 +118,8 @@ async def render(content: str) -> str:
         output_format="html",
         extension_configs={
             "pymdownx.emoji": {
-                "emoji_index": emoji.gemoji,
-                "emoji_generator": emoji.to_svg,
+                "emoji_index": emoji.unicode,
+                "emoji_generator": emoji.to_unicode_emoji,
             },
             "pymdownx.tasklist": {
                 "custom_checkbox": True,
