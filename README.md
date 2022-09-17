@@ -25,7 +25,7 @@ Before this is "done" and ready for regular use, we still need to do the followi
   - [ ] ACM cert
   - [ ] DNS config
 - [ ] Home page content
-  - [ ] No JS
+  - [x] No JS — it's on the privacy page
   - [ ] Social links
 - [ ] Light mode / dark mode toggle
 ~~- [ ] Nav menu animation improvement~~
