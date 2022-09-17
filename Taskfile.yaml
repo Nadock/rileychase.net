@@ -16,23 +16,31 @@ tasks:
 
   black:
     desc: Run psf/black code formatting tool
+    sources:
+      - ./**/*.py
     cmds:
-      - black site_generator
+      - black site_generator emoji/*.py
 
   black:check:
     desc: Run psf/black code formatting tool in check only mode
+    sources:
+      - ./**/*.py
     cmds:
-      - black --check site_generator
+      - black --check site_generator emoji/*.py
 
   pylint:
     desc: Lint Python sources with pycqa/pylint
+    sources:
+      - ./**/*.py
     cmds:
-      - pylint site_generator
+      - pylint site_generator emoji/*.py
 
   mypy:
     desc: Run python/mypy Python type checking tool
+    sources:
+      - ./**/*.py
     cmds:
-      - mypy site_generator
+      - mypy site_generator emoji/*.py
 
   pytest:
     desc: Run unit tests via pytest-dev/pytest
