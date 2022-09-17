@@ -2,3 +2,5 @@ line_length: false
 
 ul-style:
   style: dash
+
+no-trailing-punctuation: false

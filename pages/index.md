@@ -1,5 +1,9 @@
 ---
 title: Hi, I'm Riley
+meta:
+  validation:
+    subtitle: False
+    description: False
 ---
 
 ## My Professional Life :office_worker:
@@ -18,7 +22,6 @@ Like a lot, you might even like some of the songs I like. You can check out what
 
 ## Gamer? I hardly know her :video_game:
 <!-- Steam? -->
-
 
 ## Site Tree
 
