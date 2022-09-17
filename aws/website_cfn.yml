@@ -90,16 +90,15 @@ Resources:
           AllowedMethods:
             - GET
             - HEAD
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6  # CachingOptimized
+          Compress: true
+          OriginRequestPolicyId: acba4595-bd28-49b8-b9fe-13317c0390fa  # UserAgentRefererHeaders
+          ResponseHeadersPolicyId: !Ref DistributionResponseHeadersPolicy
           TargetOriginId: !Sub S3-${AWS::StackName}-WebsiteBucket
-          ForwardedValues:
-            QueryString: false
-            Cookies:
-              Forward: none
+          ViewerProtocolPolicy: redirect-to-https
           FunctionAssociations:
             - EventType: viewer-request
               FunctionARN: !GetAtt IndexRedirectFunction.FunctionMetadata.FunctionARN
-          ViewerProtocolPolicy: redirect-to-https
-          ResponseHeadersPolicyId: !Ref DistributionResponseHeadersPolicy
         DefaultRootObject: index.html
         Enabled: true
         HttpVersion: http2and3
