@@ -89,6 +89,9 @@ Resources:
             QueryString: false
             Cookies:
               Forward: none
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt IndexRedirectFunction.FunctionMetadata.FunctionARN
           ViewerProtocolPolicy: redirect-to-https
           ResponseHeadersPolicyId: !Ref DistributionResponseHeadersPolicy
         DefaultRootObject: index.html
@@ -132,6 +135,33 @@ Resources:
             ModeBlock: true
             Override: true
             Protection: true
+
+  IndexRedirectFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      AutoPublish: true
+      Name: !Sub ${AWS::StackName}-index-redirect-function
+      FunctionConfig:
+        Comment: !Ref AWS::StackName
+        Runtime: cloudfront-js-1.0
+      FunctionCode: |
+        function handler(event) {
+            var request = event.request;
+            var uri = request.uri;
+            var leaf = uri.split("/")[uri.split("/").length - 1];
+
+            // Check whether the URI is missing a file name.
+            if (uri.endsWith('/')) {
+                request.uri += 'index.html';
+            }
+            // Check whether the URI is missing a file extension.
+            else if (!leaf.includes('.')) {
+                request.uri += '/index.html';
+            }
+
+            return request;
+        }
+
 
 Outputs:
   BucketName:
