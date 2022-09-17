@@ -6,7 +6,7 @@ description: Privacy policy information for this website rileychase.net.
 path: privacy
 ---
 
-The modern web is a privacy nightmare, so I'll keep this simple; **this site is not tracking you**. There are **no** cookies, **no** ads, **no** Javascript, or any other tracking "feature" on this website.
+The modern web is a privacy nightmare, so I'll keep this simple; **this site is not tracking you**. There are **no** cookies, **no** ads, **no** Javascript, and no other tracking "features" on this website.
 
 ## Contact Me
 
