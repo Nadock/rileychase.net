@@ -6,7 +6,9 @@ meta:
     description: False
 ---
 
+Hi :wave:
 
+Welcome to my little corner of the internet. Right now there's not much here, but that might change in the future.
 
 ## My Professional Life :office_worker:
 
