@@ -56,7 +56,8 @@ jobs:
       # Build
       - name: Build Website
         run: |
-          task --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
+          task --output group \
+               --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \
                gh:build
 
