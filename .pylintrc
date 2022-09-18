@@ -19,7 +19,8 @@ py-version=3.10
 [MESSAGES CONTROL]
 
 disable=missing-module-docstring,
-        logging-fstring-interpolation
+        logging-fstring-interpolation,
+        duplicate-code
 
 
 [LOGGING]
