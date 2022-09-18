@@ -4,6 +4,17 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: S3 storage and CloudFront distribution to host rileychase.net
 
 
+Parameters:
+  DomainName:
+    Type: String
+    Description: The domain name to use an alias to the website CloudFront Distribution
+    Default: rileychase.net
+
+  CertificateArn:
+    Type: String
+    Description: The ARN of the ACM Certificate to allow access via the DomainName
+
+
 Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
@@ -51,6 +62,8 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
+        Aliases:
+          - !Ref DomainName
         Comment: !Ref AWS::StackName
         CustomErrorResponses:
           - ErrorCode: 400
@@ -114,6 +127,10 @@ Resources:
             OriginAccessControlId: !GetAtt DistributionOAC.Id
             S3OriginConfig:
               OriginAccessIdentity: ""
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CertificateArn
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: sni-only
 
   DistributionResponseHeadersPolicy:
     Type: AWS::CloudFront::ResponseHeadersPolicy
@@ -167,6 +184,26 @@ Resources:
 
             return request;
         }
+
+  WebsiteDNS:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneName: !Sub ${DomainName}.
+      RecordSets:
+        - Name: !Ref DomainName
+          Type: A
+          AliasTarget:
+            DNSName: !GetAtt WebsiteDistribution.DomainName
+            EvaluateTargetHealth: false
+            # The  following HosteZoneId is always used for alias records pointing to CF.
+            HostedZoneId: Z2FDTNDATAQYW2
+        - Name: !Ref DomainName
+          Type: AAAA
+          AliasTarget:
+            DNSName: !GetAtt WebsiteDistribution.DomainName
+            EvaluateTargetHealth: false
+            # The  following HosteZoneId is always used for alias records pointing to CF.
+            HostedZoneId: Z2FDTNDATAQYW2
 
 
 Outputs:

@@ -75,7 +75,7 @@ On every merge to main, if the site contents was modified, the site will be buil
 
 The CloudFormation template `:/aws/website_cfn.yml` contains the S3 & CloudFront combo that actually serves the site contents.
 
-To deploy updates to this template run `task aws:website:deploy`. Note: Changes to the CloudFront Distribution can take a long time to complete.
+To deploy updates to this template run `task aws:website:deploy`. Note: Changes to the CloudFront Distribution can take a long time to complete. This workflow relies on the `.env` values `DOMAIN_NAME`, and `CERTIFICATE_ARN`.
 
 ### GitHub Actions
 

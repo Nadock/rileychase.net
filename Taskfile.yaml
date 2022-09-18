@@ -103,7 +103,13 @@ tasks:
     deps:
       - aws:website:validate
     cmds:
-      - aws cloudformation deploy --template-file ./aws/website_cfn.yml --stack-name website-rileychase-net --no-fail-on-empty-changeset
+      - |
+        aws cloudformation deploy --template-file ./aws/website_cfn.yml \
+                                  --stack-name website-rileychase-net \
+                                  --no-fail-on-empty-changeset \
+                                  --parameter-overrides \
+                                    DomainName=${DOMAIN_NAME} \
+                                    CertificateArn=${CERTIFICATE_ARN}
 
   aws:gh-actions:validate:
     desc: Validate the gha_role_cfn.yml CloudFormation template
