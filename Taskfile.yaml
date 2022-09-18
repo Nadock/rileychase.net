@@ -117,4 +117,7 @@ tasks:
         aws cloudformation deploy --template-file ./aws/gha_role_cfn.yml \
                                   --stack-name github-actions-nadock-rileychase-net \
                                   --no-fail-on-empty-changeset \
-                                  --capabilities CAPABILITY_IAM
+                                  --capabilities CAPABILITY_IAM \
+                                  --parameter-overrides \
+                                    'BucketName=${BUCKET_NAME}' \
+                                    'DistributionID=${DISTRIBUTION_ID}' \

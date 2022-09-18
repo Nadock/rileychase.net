@@ -59,10 +59,10 @@ jobs:
 
       # Publish
       - name: Deploy Website
-        run: aws s3 sync ./output s3://website-rileychase-net/website
+        run: aws s3 sync ./output s3://${{ secrets.BUCKET_NAME }}/website
 
       - name: Invalidate Cache
-        run: aws cloudfront create-invalidation --distribution-id E2FPAR92JVVBNE --path "/*"
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --path "/*"
 
       # Tear down
       - name: Record deployment success
