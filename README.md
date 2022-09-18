@@ -6,7 +6,7 @@
   <em>Simple static site generator and content that powers <a href="https://rileychase.net">rileychase.net</a>.</em>
   <br><br>
   <a href="https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml">
-    <img alt="Deploy website" img="https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml/badge.svg">
+    <img alt="Deploy website" src="https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml/badge.svg">
   </a>
   <a href="https://github.com/Nadock/rileychase.net/blob/main/Pipfile">
     <img alt="Python 3.10" src="https://img.shields.io/github/pipenv/locked/python-version/Nadock/rileychase.net">
