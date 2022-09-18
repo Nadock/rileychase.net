@@ -139,10 +139,10 @@ tasks:
       - aws:acm:validate
     cmds:
       - |
-        aws cloudformation deploy --template-file ./aws/acm_cert_cfn.yml \
-                                  --stack-name website-rileychase-net-cert \
-                                  --no-fail-on-empty-changeset \
-                                  --capabilities CAPABILITY_IAM \
-                                  --parameter-overrides \
-                                    DomainName=${DOMAIN_NAME} \
-                                    HostedZoneId=${HOSTED_ZONE_ID} \
+        aws --region us-east-1 cloudformation deploy --template-file ./aws/acm_cert_cfn.yml \
+                                                     --stack-name website-rileychase-net-cert \
+                                                     --no-fail-on-empty-changeset \
+                                                     --capabilities CAPABILITY_IAM \
+                                                     --parameter-overrides \
+                                                       DomainName=${DOMAIN_NAME} \
+                                                       HostedZoneId=${HOSTED_ZONE_ID} \
