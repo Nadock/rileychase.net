@@ -87,41 +87,13 @@ To deploy updates to this template run `task aws:gh-actions:deploy`.
 
 Below is a list of all the stuff that I want to add to the site or the generator tool. Just because it's listed here doesn't mean I will do it though — again, this is just for me.
 
-- [x] Fix code block layout - currently copies from `<table>` elements
-- [x] Setup colour scheme and apply to headers, links, tables, etc
-- [x] Decide on primary highlight colour (ie: everything that's currently `orange`)
-- [x] Consider font choice - see if we can use Fira Code as our mono spaced font with ligature support
-- [x] Decide on inital set of required post metadata
-- [x] Footer with copywrite and links
-- [x] Make links not ending in `.html` work
-- [x] 404 page
-- ~~[ ] Docker things~~
 - [ ] AWS infra
   - [x] CF Distro & S3
   - [ ] ACM cert
   - [ ] DNS config
-- [x] Home page content
-  - [x] No JS — it's on the privacy page
-  - [x] Social links
-- [ ] Light mode / dark mode toggle
-~~- [ ] Nav menu animation improvement~~
-- [x] Consistent site header with nav links
-- [ ] Tags support (view list, jump to page)
-- [ ] Blog support (view list)
-- [x] CI Workflows
-  - [x] Code quality checks on PR
-  - [x] Markdown lint on PR
-  ~~- [ ] Deploy site CFN on change~~
-  - [x] Sync site contents & invalidate on change
-- [x] New README and content
-- [x] Serve Fira Code source via CF domain, not JSDelivr for CSP reasons
-- [x] Redirects to `index.html` for non-root paths
-  - ~~https://luke.plaus.in/posts/cloudfront-index-redirect/~~
-  - Used a CloudFront Function instead, was pretty easy
 - [ ] Decide on what we actually want for our favicon
-- [ ] Dead link detection?
+- [ ] Blog support (view list)
+  - [ ] Tags support (view list, jump to page)
+- [ ] Dead link detection
 - [ ] Non production pages
   - Would imply also adding a "production" build mode
-- [ ] Move distribution ID out of CFN template
-  - Put in in GHA Secrets / `.env`
-- [ ] Clean up this todo list
