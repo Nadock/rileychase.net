@@ -59,7 +59,7 @@ jobs:
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \
-               gh:build
+               build
 
       # Publish
       - name: Deploy Website
