@@ -93,10 +93,6 @@ To deploy updates to this template run `task aws:acm:deploy`. This workflow reli
 
 Below is a list of all the stuff that I want to add to the site or the generator tool. Just because it's listed here doesn't mean I will do it though — again, this is just for me.
 
-- [ ] AWS infra
-  - [x] CF Distro & S3
-  - [ ] ACM cert
-  - [ ] DNS config
 - [ ] Decide on what we actually want for our favicon
 - [ ] Blog support (view list)
   - [ ] Tags support (view list, jump to page)
