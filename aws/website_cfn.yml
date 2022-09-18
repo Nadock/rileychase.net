@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 
 
 Description: S3 storage and CloudFront distribution to host rileychase.net
-# https://github.com/aws-samples/amazon-cloudfront-secure-static-site/blob/master/templates/cloudfront-site.yaml
+
 
 Resources:
   WebsiteBucket:
