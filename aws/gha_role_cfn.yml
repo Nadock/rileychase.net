@@ -26,12 +26,10 @@ Parameters:
   BucketName:
     Type: String
     Description: The name of the S3 Bucket that hosts the website
-    Default: website-rileychase-net
 
   DistributionID:
     Type: String
     Description: The ID of the CloudFront Distribution that hosts the website
-    Default: E2FPAR92JVVBNE
 
 
 Resources:
