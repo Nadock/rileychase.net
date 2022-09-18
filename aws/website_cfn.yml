@@ -57,7 +57,6 @@ Resources:
         SigningBehavior: always
         SigningProtocol: sigv4
 
-  # TODO: SSL cert & custom domain config
   WebsiteDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
