@@ -65,7 +65,7 @@ tasks:
   mdlint:
     desc: Lint markdown sources with DavidAnson/markdownlint
     cmds:
-      - npx markdownlint '**/*.md' --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/markdown_test.md'
+      - npx markdownlint '**/*.md' --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/debug/markdown.md'
 
   emoji:
     desc: Update emoji files
