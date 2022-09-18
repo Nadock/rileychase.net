@@ -20,13 +20,7 @@ Resources:
         IgnorePublicAcls: True
         RestrictPublicBuckets: True
 
-  DistributionOAI:
-    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: !Ref AWS::StackName
-
-  DistributionOAIBucketPolicy:
+  WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref WebsiteBucket
@@ -34,11 +28,23 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action:
-              - s3:GetObject
+            Action: s3:GetObject
             Resource: !Sub arn:${AWS::Partition}:s3:::${WebsiteBucket}/*
             Principal:
-              CanonicalUser: !GetAtt DistributionOAI.S3CanonicalUserId
+              Service: cloudfront.amazonaws.com
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${WebsiteDistribution}
+
+  DistributionOAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Description: !Sub Origin access control for ${AWS::StackName}
+        Name: !Sub ${AWS::StackName}-OAC
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
 
   # TODO: SSL cert & custom domain config
   WebsiteDistribution:
@@ -84,13 +90,15 @@ Resources:
           AllowedMethods:
             - GET
             - HEAD
-          TargetOriginId: !Sub S3-${AWS::StackName}-WebsiteBucket
-          ForwardedValues:
-            QueryString: false
-            Cookies:
-              Forward: none
-          ViewerProtocolPolicy: redirect-to-https
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6  # CachingOptimized
+          Compress: true
+          OriginRequestPolicyId: acba4595-bd28-49b8-b9fe-13317c0390fa  # UserAgentRefererHeaders
           ResponseHeadersPolicyId: !Ref DistributionResponseHeadersPolicy
+          TargetOriginId: !Sub S3-${AWS::StackName}-WebsiteBucket
+          ViewerProtocolPolicy: redirect-to-https
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt IndexRedirectFunction.FunctionMetadata.FunctionARN
         DefaultRootObject: index.html
         Enabled: true
         HttpVersion: http2and3
@@ -103,8 +111,9 @@ Resources:
           - DomainName: !GetAtt WebsiteBucket.RegionalDomainName
             Id: !Sub S3-${AWS::StackName}-WebsiteBucket
             OriginPath: /website
+            OriginAccessControlId: !GetAtt DistributionOAC.Id
             S3OriginConfig:
-              OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${DistributionOAI}
+              OriginAccessIdentity: ""
 
   DistributionResponseHeadersPolicy:
     Type: AWS::CloudFront::ResponseHeadersPolicy
@@ -132,6 +141,33 @@ Resources:
             ModeBlock: true
             Override: true
             Protection: true
+
+  IndexRedirectFunction:
+    Type: AWS::CloudFront::Function
+    Properties:
+      AutoPublish: true
+      Name: !Sub ${AWS::StackName}-index-redirect-function
+      FunctionConfig:
+        Comment: !Ref AWS::StackName
+        Runtime: cloudfront-js-1.0
+      FunctionCode: |
+        function handler(event) {
+            var request = event.request;
+            var uri = request.uri;
+            var leaf = uri.split("/")[uri.split("/").length - 1];
+
+            // Check whether the URI is missing a file name.
+            if (uri.endsWith('/')) {
+                request.uri += 'index.html';
+            }
+            // Check whether the URI is missing a file extension.
+            else if (!leaf.includes('.')) {
+                request.uri += '/index.html';
+            }
+
+            return request;
+        }
+
 
 Outputs:
   BucketName:

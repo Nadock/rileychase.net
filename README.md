@@ -25,7 +25,7 @@ Before this is "done" and ready for regular use, we still need to do the followi
   - [ ] ACM cert
   - [ ] DNS config
 - [ ] Home page content
-  - [ ] No JS
+  - [x] No JS — it's on the privacy page
   - [ ] Social links
 - [ ] Light mode / dark mode toggle
 ~~- [ ] Nav menu animation improvement~~
@@ -39,6 +39,10 @@ Before this is "done" and ready for regular use, we still need to do the followi
   - [x] Sync site contents & invalidate on change
 - [ ] New README and content
 - [x] Serve Fira Code source via CF domain, not JSDelivr for CSP reasons
-- [ ] Redirects to `index.html` for non-root paths
-  - https://luke.plaus.in/posts/cloudfront-index-redirect/
+- [x] Redirects to `index.html` for non-root paths
+  - ~~https://luke.plaus.in/posts/cloudfront-index-redirect/~~
+  - Used a CloudFront Function instead, was pretty easy
 - [ ] Decide on what we actually want for our favicon
+- [ ] Dead link detection?
+- [ ] Non production pages
+  - Would imply also adding a "production" build mode

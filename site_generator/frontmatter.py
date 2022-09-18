@@ -56,6 +56,9 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
+        if self.path and self.path.startswith("/"):
+            self.path = self.path[1:]
+
         if not self.path:
             base = self.file.parent.relative_to(self.config.pages)
             name = self.file.name.replace(".md", ".html")
