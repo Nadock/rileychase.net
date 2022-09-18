@@ -2,6 +2,10 @@
 version: '3'
 
 
+dotenv:
+  - .env
+
+
 tasks:
   ci:
     desc: Run all tasks required to merge code into the main branch
@@ -119,5 +123,5 @@ tasks:
                                   --no-fail-on-empty-changeset \
                                   --capabilities CAPABILITY_IAM \
                                   --parameter-overrides \
-                                    'BucketName=${BUCKET_NAME}' \
-                                    'DistributionID=${DISTRIBUTION_ID}' \
+                                    BucketName=${BUCKET_NAME} \
+                                    DistributionID=${DISTRIBUTION_ID} \

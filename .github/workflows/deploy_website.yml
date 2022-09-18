@@ -19,6 +19,11 @@ jobs:
       id-token: write
       contents: read
       deployments: write
+    env:
+      BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+      DISTRIBUTION_ID: ${{ secrets.DISTRIBUTION_ID }}
+      DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+      HOSTED_ZONE_ID: ${{ secrets.HOSTED_ZONE_ID }}
     steps:
       # Set gup
       - name: Checkout
