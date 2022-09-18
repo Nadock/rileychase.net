@@ -2,6 +2,10 @@
 version: '3'
 
 
+dotenv:
+  - .env
+
+
 tasks:
   ci:
     desc: Run all tasks required to merge code into the main branch
@@ -99,7 +103,13 @@ tasks:
     deps:
       - aws:website:validate
     cmds:
-      - aws cloudformation deploy --template-file ./aws/website_cfn.yml --stack-name website-rileychase-net --no-fail-on-empty-changeset
+      - |
+        aws cloudformation deploy --template-file ./aws/website_cfn.yml \
+                                  --stack-name website-rileychase-net \
+                                  --no-fail-on-empty-changeset \
+                                  --parameter-overrides \
+                                    DomainName=${DOMAIN_NAME} \
+                                    CertificateArn=${CERTIFICATE_ARN}
 
   aws:gh-actions:validate:
     desc: Validate the gha_role_cfn.yml CloudFormation template
@@ -119,5 +129,26 @@ tasks:
                                   --no-fail-on-empty-changeset \
                                   --capabilities CAPABILITY_IAM \
                                   --parameter-overrides \
-                                    'BucketName=${BUCKET_NAME}' \
-                                    'DistributionID=${DISTRIBUTION_ID}' \
+                                    BucketName=${BUCKET_NAME} \
+                                    DistributionID=${DISTRIBUTION_ID} \
+
+  aws:acm:validate:
+    desc: Validate the acm_cert_cfn.yml CloudFormation template
+    sources:
+      - aws/acm_cert_cfn.yml
+    cmds:
+      - aws cloudformation validate-template --template-body file://./aws/acm_cert_cfn.yml
+
+  aws:acm:deploy:
+    desc: Deploy the acm_cert_cfn.yml CloudFormation template
+    deps:
+      - aws:acm:validate
+    cmds:
+      - |
+        aws --region us-east-1 cloudformation deploy --template-file ./aws/acm_cert_cfn.yml \
+                                                     --stack-name website-rileychase-net-cert \
+                                                     --no-fail-on-empty-changeset \
+                                                     --capabilities CAPABILITY_IAM \
+                                                     --parameter-overrides \
+                                                       DomainName=${DOMAIN_NAME} \
+                                                       HostedZoneId=${HOSTED_ZONE_ID} \

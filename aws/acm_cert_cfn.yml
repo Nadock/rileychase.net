@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+
+Description: AWS ACM Certificate for use with CloudFront
+
+
+Parameters:
+  DomainName:
+    Type: String
+    Description: The domain name for the ACM certificate
+
+  HostedZoneId:
+    Type: AWS::Route53::HostedZone::Id
+    Description: The Route53 Hosted Zone to add the DNS verification records
+
+
+Resources:
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+
+
+Outputs:
+  CertificateArn:
+    Value: !Ref Certificate
+    Description: ARN of the ACM Certificate

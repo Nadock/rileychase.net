@@ -75,13 +75,19 @@ On every merge to main, if the site contents was modified, the site will be buil
 
 The CloudFormation template `:/aws/website_cfn.yml` contains the S3 & CloudFront combo that actually serves the site contents.
 
-To deploy updates to this template run `task aws:website:deploy`. Note: Changes to the CloudFront Distribution can take a long time to complete.
+To deploy updates to this template run `task aws:website:deploy`. Note: Changes to the CloudFront Distribution can take a long time to complete. This workflow relies on the `.env` values `DOMAIN_NAME`, and `CERTIFICATE_ARN`.
 
 ### GitHub Actions
 
 An IAM Role for GitHub Actions to use in CI/CD is maintain in the `:/aws/gha_role_cfn.yml` CloudFormation template. This used OIDC to authenticate with AWS STS.
 
-To deploy updates to this template run `task aws:gh-actions:deploy`.
+To deploy updates to this template run `task aws:gh-actions:deploy`. This workflow relies on the `.env` values `BUCKET_NAME` and `DISTRIBUTION_ID`.
+
+### ACM Certificate
+
+The CloudFormation template `:/aws/acm_cert_cfn.yml` contains the ACM Certificate used by CloudFront to serve our site contents at [rileychase.net](https://rileychase.net).
+
+To deploy updates to this template run `task aws:acm:deploy`. This workflow relies on the `.env` values `DOMAIN_NAME` and `HOSTED_ZONE_ID`.
 
 ## To Do
 
