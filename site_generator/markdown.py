@@ -1,12 +1,12 @@
+import datetime
 import os
 import pathlib
-from typing import AsyncIterator, Tuple
+from typing import Any, AsyncIterator, Tuple
 
 import markdown
 import yaml
-from pymdownx import emoji  # type: ignore
 
-from site_generator import config, errors, frontmatter, logging, template
+from site_generator import config, emoji, errors, frontmatter, logging, template
 
 LOGGER = logging.getLogger()
 
@@ -36,6 +36,7 @@ async def markdown_pipeline(
                 "content": await render(content),
                 "props": fm.dict(exclude={"meta", "config", "file"}, exclude_none=True),
                 "meta": fm.dict(include={"meta"}).get("meta", {}),
+                "info": get_template_info(cfg),
             },
         )
     except Exception as ex:
@@ -117,8 +118,8 @@ async def render(content: str) -> str:
         output_format="html",
         extension_configs={
             "pymdownx.emoji": {
-                "emoji_index": emoji.gemoji,
-                "emoji_generator": emoji.to_svg,
+                "emoji_index": emoji.unicode,
+                "emoji_generator": emoji.to_unicode_emoji,
             },
             "pymdownx.tasklist": {
                 "custom_checkbox": True,
@@ -126,3 +127,23 @@ async def render(content: str) -> str:
         },
     )
     return md.convert(content)
+
+
+def get_template_info(cfg: config.SiteGeneratorConfig) -> dict[str, Any]:
+    """
+    Populate and return a `dict` of general purpose information about an individual
+    template render.
+    """
+    info: dict[str, Any] = {
+        "rendered_at": datetime.datetime.now().astimezone(),
+        "ref": None,
+    }
+
+    git_head = cfg.base / ".git" / "HEAD"
+    try:
+        ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
+        info["ref"] = (cfg.base / ".git" / ref).read_text("utf-8").strip()
+    except Exception as ex:  # pylint: disable=broad-except
+        LOGGER.warning(f"Unable to read git ref: {ex}")
+
+    return info

@@ -41,6 +41,8 @@ def test_page_frontmatter__get_template_name__no_config():
         ({}, {}, "test.html"),
         ({"path": "foo/bar/baz.html"}, {}, "foo/bar/baz.html"),
         ({"path": "foo/bar/baz"}, {}, "foo/bar/baz/index.html"),
+        ({"path": "/foo/bar/baz.html"}, {}, "foo/bar/baz.html"),
+        ({"path": "/foo/bar/baz"}, {}, "foo/bar/baz/index.html"),
     ],
 )
 def test_page_frontmatter__get_output_path(fm_kwargs, cfg_kwargs, expected):
