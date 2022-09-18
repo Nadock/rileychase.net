@@ -36,7 +36,7 @@ async def markdown_pipeline(
                 "content": await render(content),
                 "props": fm.dict(exclude={"meta", "config", "file"}, exclude_none=True),
                 "meta": fm.dict(include={"meta"}).get("meta", {}),
-                "info": get_render_info(cfg),
+                "info": get_template_info(cfg),
             },
         )
     except Exception as ex:
@@ -129,10 +129,10 @@ async def render(content: str) -> str:
     return md.convert(content)
 
 
-def get_render_info(cfg: config.SiteGeneratorConfig) -> dict[str, Any]:
+def get_template_info(cfg: config.SiteGeneratorConfig) -> dict[str, Any]:
     """
     Populate and return a `dict` of general purpose information about an individual
-    page render.
+    template render.
     """
     info: dict[str, Any] = {
         "rendered_at": datetime.datetime.now().astimezone(),
