@@ -1,6 +1,6 @@
 ---
 title: License
-path: license
+path: /license
 meta:
   validation:
     subtitle: false

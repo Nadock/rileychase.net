@@ -43,3 +43,6 @@ Before this is "done" and ready for regular use, we still need to do the followi
   - ~~https://luke.plaus.in/posts/cloudfront-index-redirect/~~
   - Used a CloudFront Function instead, was pretty easy
 - [ ] Decide on what we actually want for our favicon
+- [ ] Dead link detection?
+- [ ] Non production pages
+  - Would imply also adding a "production" build mode

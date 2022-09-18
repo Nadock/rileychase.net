@@ -3,7 +3,7 @@ title: Privacy
 subtitle: This website doesn't know what you do in the dark
 date: 2022-09-16
 description: Privacy policy information for this website rileychase.net.
-path: privacy
+path: /privacy
 ---
 
 The modern web is a privacy nightmare, so I'll keep this simple; **this site is not tracking you**. There are **no** cookies, **no** ads, **no** Javascript, and no other tracking "features" on this website.
