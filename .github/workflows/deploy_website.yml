@@ -55,7 +55,10 @@ jobs:
 
       # Build
       - name: Build Website
-        run: task -t Taskfile.github.yaml gh:build
+        run: |
+          task --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
+               --output-group-end "::endgroup::" \
+               gh:build
 
       # Publish
       - name: Deploy Website
