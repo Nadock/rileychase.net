@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "72d40a5b8f4b3043bcecbe77799cbb07c089405bc90a82a0b9a4de95fd2404a9"
+            "sha256": "0b0b45f28c6d7546462f51ef579c0a90dd93f925cd3d0f11abee1ecda15c3076"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -225,11 +225,11 @@
     "develop": {
         "astroid": {
             "hashes": [
-                "sha256:0dafbfcf4ebdecd3c8f6d742c9d9c88508229ca823d5c98ab872d964f3321e56",
-                "sha256:27a22f40e45af6d362498647a0940e8ae9c35f71cb572a1b6f8f810122a11918"
+                "sha256:81f870105d892e73bf535da77a8261aa5bde838fa4ed12bb2f435291a098c581",
+                "sha256:997e0c735df60d4a4caff27080a3afc51f9bdd693d3572a4a0b7090b645c36c5"
             ],
             "markers": "python_full_version >= '3.7.2'",
-            "version": "==2.12.9"
+            "version": "==2.12.10"
         },
         "attrs": {
             "hashes": [
@@ -279,27 +279,27 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:a8911d55f1497dc55d69d2029c3a5120887af4846ef6b9fe3ef0c777dc1b394e",
-                "sha256:f7ca88a76c8e31c19fef3bad2dee3c2ee0e77a0bced151fa3922cf021d55755e"
+                "sha256:5bfcced1a30597b06b3426024c7a9220526882e8fc2dd255f03b9389b5ad8623",
+                "sha256:aee98e60c7d2ce1396a3beaf47f8ff749e64804cbdaed8e19d4338a6f628f2dc"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.24.73"
+            "version": "==1.24.76"
         },
         "botocore": {
             "hashes": [
-                "sha256:0b94d1e7b1435f8ff108c74a09fe03ec88aadbfafe97e940ea415dc86ba305a3",
-                "sha256:e281e45e84d2728207d63499a37cea1dc1dde6093167ab238370ece67f6e7316"
+                "sha256:0d4a67801e5a4be4cd84795320ad9fb8c315ed1e7a63e1191b2b3f7a7171d43c",
+                "sha256:b5c32922eba727a466f171dcc281f309d2a313e2f6dc592d43044caad96de338"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.27.73"
+            "version": "==1.27.76"
         },
         "cfn-lint": {
             "hashes": [
-                "sha256:a83c6844463d79dfaa2f7747dfc98282af901502a7db4c66cb7200262e3cc1d0",
-                "sha256:b5992f52a86e6ef0a150fabbb4d131bbf626eddd4154ca708193c1d233a7efca"
+                "sha256:51f6ec52af87e7a44b586f889c538182b710375d644a7eb548bfe268bc393adb",
+                "sha256:f8c90398b6e8cca8cf8227c5cd84c222adee433f888cee42ecd3a627f26ec019"
             ],
             "index": "pypi",
-            "version": "==0.65.0"
+            "version": "==0.65.1"
         },
         "click": {
             "hashes": [
