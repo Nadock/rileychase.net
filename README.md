@@ -96,7 +96,7 @@ Below is a list of all the stuff that I want to add to the site or the generator
 - [ ] Decide on what we actually want for our favicon
 - [ ] Blog support (view list)
   - [ ] Tags support (view list, jump to page)
-- [ ] Support rendering Jinja elements in page contents
+- [x] Support rendering Jinja elements in page contents
 - [x] Enable auto-escaping where possible
 - [ ] Dead link detection
 - [ ] Non production pages
