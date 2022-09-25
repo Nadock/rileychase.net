@@ -4,24 +4,28 @@ from .db import EMOJI
 
 
 def to_unicode_emoji(
-    index: str,
-    shortname: str,
-    alias: str,
-    uc: str,
-    alt: str,
-    title: str,
-    category: str,
-    options: dict,
-    md,
-):
-    """Convert markdown emoji marker to Unicode emoji character."""
+    index: str = "",
+    shortname: str = "",
+    alias: str = "",
+    uc: str = "",
+    alt: str = "",
+    title: str = "",
+    category: str = "",
+    options: dict | None = None,
+    md=None,
+) -> str:
+    """
+    Convert markdown emoji marker into Unicode emoji character.
+
+    Raises a `KeyError` if the `shortname` does not exist in the emoji DB.
+    """
     shortname = shortname.removeprefix(":")
     shortname = shortname.removesuffix(":")
     return EMOJI[shortname]
 
 
-def unicode(options, md):
-    """Return the Unicode emoji DB for markdown conversion."""
+def to_markdown_db(options, md) -> dict:
+    """Return the Unicode emoji DB in the structure required for markdown conversion."""
     return {
         "name": "unicode",
         "emoji": {
@@ -34,3 +38,27 @@ def unicode(options, md):
         },
         "aliases": {},
     }
+
+
+def replace_emoji(content: str | None) -> str | None:
+    """
+    Find and replace any shortname emoji contents in a string with the corresponding
+    Unicode emoji character.
+
+    For example:
+    >>> replace_emoji("Hello there :wave:")
+    "Hello there 👋"
+    """
+    if not content:
+        return content
+
+    words = []
+    for word in content.split(" "):
+        try:
+            emoji = to_unicode_emoji(shortname=word)
+        except KeyError:
+            emoji = None
+
+        words.append(emoji or word)
+
+    return " ".join(words)
