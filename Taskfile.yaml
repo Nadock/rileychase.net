@@ -28,14 +28,14 @@ tasks:
     sources:
       - ./**/*.py
     cmds:
-      - "{{.PY_PREFIX}} black site_generator emoji/*.py"
+      - "{{.PY_PREFIX}} black site_generator"
 
   black:check:
     desc: Run psf/black code formatting tool in check only mode
     sources:
       - ./**/*.py
     cmds:
-      - "{{.PY_PREFIX}} black --check site_generator emoji/*.py"
+      - "{{.PY_PREFIX}} black --check site_generator"
 
   pylint:
     desc: Lint Python sources with pycqa/pylint
@@ -43,14 +43,14 @@ tasks:
       - ./**/*.py
       - .pylintrc
     cmds:
-      - "{{.PY_PREFIX}} pylint site_generator emoji/*.py"
+      - "{{.PY_PREFIX}} pylint site_generator"
 
   mypy:
     desc: Run python/mypy Python type checking tool
     sources:
       - ./**/*.py
     cmds:
-      - "{{.PY_PREFIX}} mypy site_generator emoji/*.py"
+      - "{{.PY_PREFIX}} mypy site_generator"
 
   pytest:
     desc: Run unit tests via pytest-dev/pytest
@@ -86,7 +86,7 @@ tasks:
   emoji:
     desc: Update emoji files
     cmds:
-      - ./emoji/update.sh
+      - ./site_generator/emoji/update.sh
 
   aws:lint:
     desc: Run cfn-lint across all templates
