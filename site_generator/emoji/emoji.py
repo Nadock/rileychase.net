@@ -54,10 +54,12 @@ def replace_emoji(content: str | None) -> str | None:
 
     words = []
     for word in content.split(" "):
-        try:
-            emoji = to_unicode_emoji(shortname=word)
-        except KeyError:
-            emoji = None
+        emoji = None
+        if word.startswith(":") and word.endswith(":"):
+            try:
+                emoji = to_unicode_emoji(shortname=word)
+            except KeyError:
+                pass
 
         words.append(emoji or word)
 
