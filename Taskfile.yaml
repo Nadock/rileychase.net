@@ -6,6 +6,11 @@ dotenv:
   - .env
 
 
+vars:
+  PY_PREFIX:
+    sh: if [[ ${PIPENV_ACTIVE:-} != "1" ]]; then echo "pipenv run"; fi
+
+
 tasks:
   ci:
     desc: Run all tasks required to merge code into the main branch
@@ -23,14 +28,14 @@ tasks:
     sources:
       - ./**/*.py
     cmds:
-      - black site_generator emoji/*.py
+      - "{{.PY_PREFIX}} black site_generator emoji/*.py"
 
   black:check:
     desc: Run psf/black code formatting tool in check only mode
     sources:
       - ./**/*.py
     cmds:
-      - black --check site_generator emoji/*.py
+      - "{{.PY_PREFIX}} black --check site_generator emoji/*.py"
 
   pylint:
     desc: Lint Python sources with pycqa/pylint
@@ -38,21 +43,21 @@ tasks:
       - ./**/*.py
       - .pylintrc
     cmds:
-      - pylint site_generator emoji/*.py
+      - "{{.PY_PREFIX}} pylint site_generator emoji/*.py"
 
   mypy:
     desc: Run python/mypy Python type checking tool
     sources:
       - ./**/*.py
     cmds:
-      - mypy site_generator emoji/*.py
+      - "{{.PY_PREFIX}} mypy site_generator emoji/*.py"
 
   pytest:
     desc: Run unit tests via pytest-dev/pytest
     sources:
       - ./**/*.py
     cmds:
-      - pytest site_generator
+      - "{{.PY_PREFIX}} pytest site_generator"
 
   mdlint:
     desc: Lint markdown sources with DavidAnson/markdownlint
@@ -66,17 +71,17 @@ tasks:
   live:
     desc: Run the site_generator in live rebuild mode
     cmds:
-      - python -m site_generator live {{.CLI_ARGS}}
+      - "{{.PY_PREFIX}} python -m site_generator live {{.CLI_ARGS}}"
 
   build:
     desc: Run the site_generator in single build mode
     cmds:
-      - python -m site_generator build {{.CLI_ARGS}}
+      - "{{.PY_PREFIX}} python -m site_generator build {{.CLI_ARGS}}"
 
   validate:
     desc: Run the inbuilt site_generator validator
     cmds:
-      - python -m site_generator validate {{.CLI_ARGS}}
+      - "{{.PY_PREFIX}} python -m site_generator validate {{.CLI_ARGS}}"
 
   emoji:
     desc: Update emoji files
@@ -89,7 +94,7 @@ tasks:
       - aws/*.yml
       - aws/**/*.yml
     cmds:
-      - pipenv run cfn-lint --include-checks I -- ./aws/**/*.yml
+      - "{{.PY_PREFIX}} pipenv run cfn-lint --include-checks I -- ./aws/**/*.yml"
 
   aws:website:validate:
     desc: Validate the website_cfn.yml CloudFormation template
