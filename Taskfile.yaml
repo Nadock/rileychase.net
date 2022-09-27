@@ -112,6 +112,7 @@ tasks:
         aws cloudformation deploy --template-file ./aws/website_cfn.yml \
                                   --stack-name website-rileychase-net \
                                   --no-fail-on-empty-changeset \
+                                  --tags PROJECT=rileychase.net \
                                   --parameter-overrides \
                                     DomainName=${DOMAIN_NAME} \
                                     CertificateArn=${CERTIFICATE_ARN}
@@ -133,6 +134,7 @@ tasks:
                                   --stack-name github-actions-nadock-rileychase-net \
                                   --no-fail-on-empty-changeset \
                                   --capabilities CAPABILITY_IAM \
+                                  --tags PROJECT=rileychase.net \
                                   --parameter-overrides \
                                     BucketName=${BUCKET_NAME} \
                                     DistributionID=${DISTRIBUTION_ID} \
@@ -154,6 +156,7 @@ tasks:
                                                      --stack-name website-rileychase-net-cert \
                                                      --no-fail-on-empty-changeset \
                                                      --capabilities CAPABILITY_IAM \
+                                                     --tags PROJECT=rileychase.net \
                                                      --parameter-overrides \
                                                        DomainName=${DOMAIN_NAME} \
                                                        HostedZoneId=${HOSTED_ZONE_ID} \
