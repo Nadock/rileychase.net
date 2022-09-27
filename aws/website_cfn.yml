@@ -33,6 +33,8 @@ Resources:
       Tags:
         - Key: PROJECT
           Value: rileychase.net
+        - Key: STAGE
+          Value: production
 
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -136,6 +138,8 @@ Resources:
       Tags:
         - Key: PROJECT
           Value: rileychase.net
+        - Key: STAGE
+          Value: production
 
   DistributionResponseHeadersPolicy:
     Type: AWS::CloudFront::ResponseHeadersPolicy

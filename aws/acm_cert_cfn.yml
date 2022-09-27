@@ -26,6 +26,8 @@ Resources:
       Tags:
         - Key: PROJECT
           Value: rileychase.net
+        - Key: STAGE
+          Value: production
 
 
 Outputs:
