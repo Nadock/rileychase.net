@@ -9,7 +9,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
 
-Description: GitHub Actions role assumed via OpenID Connect for Nadock/atmtn
+Description: GitHub Actions role assumed via OpenID Connect for Nadock/rileychase.net
 
 
 Parameters:
@@ -67,7 +67,9 @@ Resources:
                   - cloudfront:CreateInvalidation
                 Resource:
                   - !Sub arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${DistributionID}
-
+      Tags:
+        - Key: PROJECT
+          Value: rileychase.net
 
 Outputs:
   GitHubActionsRoleArn:
