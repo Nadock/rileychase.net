@@ -30,7 +30,7 @@ jobs:
         run: |
           pip install pipenv
           pipenv install --dev
-          echo "PATH=$(pipenv --venv)/bin:$PATH" >> $GITHUB_ENV
+          echo "$(pipenv --venv)/bin" >> $GITHUB_PATH
           echo "PIPENV_ACTIVE=1" >> $GITHUB_ENV
 
       - name: Install Node dependencies
