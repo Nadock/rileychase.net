@@ -29,7 +29,9 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install pipenv
-          pipenv install --dev --system
+          pipenv install --dev
+          echo "PATH=$(pipenv --venv)/bin:$PATH" >> $GITHUB_ENV
+          echo "PIPENV_ACTIVE=1" >> $GITHUB_ENV
 
       - name: Install Node dependencies
         run: npm install
