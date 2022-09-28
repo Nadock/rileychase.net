@@ -41,7 +41,7 @@
             <p>{{ props.date }}</p>
         </div>
 
-        <div class="content">{{ content }}</div>
+        <div class="content">{% autoescape false %}{{ content|render }}{% endautoescape %}</div>
 
         <div class="footer">
             <div class="nav_links nav_links--right">

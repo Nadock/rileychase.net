@@ -29,13 +29,16 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip install pipenv
-          pipenv install --dev --system
+          pipenv install --dev
+          echo "$(pipenv --venv)/bin" >> $GITHUB_PATH
+          echo "PIPENV_ACTIVE=1" >> $GITHUB_ENV
 
       - name: Install Node dependencies
         run: npm install
 
       - name: PR Checks
         run: |
+          echo "PATH=$PATH"
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \

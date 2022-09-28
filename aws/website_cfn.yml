@@ -30,6 +30,11 @@ Resources:
         BlockPublicPolicy: True
         IgnorePublicAcls: True
         RestrictPublicBuckets: True
+      Tags:
+        - Key: PROJECT
+          Value: rileychase.net
+        - Key: STAGE
+          Value: production
 
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -130,6 +135,11 @@ Resources:
           AcmCertificateArn: !Ref CertificateArn
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: sni-only
+      Tags:
+        - Key: PROJECT
+          Value: rileychase.net
+        - Key: STAGE
+          Value: production
 
   DistributionResponseHeadersPolicy:
     Type: AWS::CloudFront::ResponseHeadersPolicy

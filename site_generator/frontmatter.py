@@ -1,9 +1,11 @@
 import datetime
 import pathlib
+from typing import Any
 
 import pydantic
 
 from site_generator import config as _config
+from site_generator import emoji
 
 
 class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
@@ -71,6 +73,32 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
             path = path / "index.html"
 
         return path
+
+    def get_props(self) -> dict[str, Any]:
+        """
+        Return the frontmatter properties as a `dict` of values.
+
+        Frontmatter "properties" are any frontmatter values that might be included in
+        the rendered output, like the `title`.
+        """
+        return {
+            **self.dict(exclude={"meta", "config", "file"}, exclude_none=True),
+            **{
+                "title": emoji.replace_emoji(self.title),
+                "subtitle": emoji.replace_emoji(self.subtitle),
+                "description": emoji.replace_emoji(self.description),
+            },
+        }
+
+    def get_meta(self) -> dict[str, Any]:
+        """
+        Return the frontmatter meta content as a `dict` of values.
+
+        Frontmatter "meta" values are the frontmatter values that aren't used directly
+        in the page render but are used in other parts of the process, such as the
+        `path` meta property.
+        """
+        return self.dict(include={"meta"}).get("meta", {})
 
     def validate_frontmatter(self) -> list[str]:
         """

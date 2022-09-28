@@ -28,16 +28,19 @@ async def markdown_pipeline(
     output = fm.get_output_path()
     output.parent.mkdir(parents=True, exist_ok=True)
 
+    content = await render(content)
+    props = fm.get_props()
+    meta = fm.get_meta()
+    info = get_template_info(cfg)
+
     try:
         html = await template.render_template(
             templates=cfg.templates,
             name=template_name,
-            **{
-                "content": await render(content),
-                "props": fm.dict(exclude={"meta", "config", "file"}, exclude_none=True),
-                "meta": fm.dict(include={"meta"}).get("meta", {}),
-                "info": get_template_info(cfg),
-            },
+            content=content,
+            props=props,
+            meta=meta,
+            info=info,
         )
     except Exception as ex:
         raise errors.PipelineError(
@@ -99,8 +102,11 @@ async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontm
     return content, fm
 
 
-async def render(content: str) -> str:
+async def render(content: str | None) -> str:
     """Render Markdown content to HTML."""
+    if not content:
+        return ""
+
     md = markdown.Markdown(
         extensions=[
             "markdown.extensions.tables",
@@ -118,7 +124,7 @@ async def render(content: str) -> str:
         output_format="html",
         extension_configs={
             "pymdownx.emoji": {
-                "emoji_index": emoji.unicode,
+                "emoji_index": emoji.to_markdown_db,
                 "emoji_generator": emoji.to_unicode_emoji,
             },
             "pymdownx.tasklist": {

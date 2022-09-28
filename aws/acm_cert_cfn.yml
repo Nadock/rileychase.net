@@ -23,6 +23,11 @@ Resources:
         - DomainName: !Ref DomainName
           HostedZoneId: !Ref HostedZoneId
       ValidationMethod: DNS
+      Tags:
+        - Key: PROJECT
+          Value: rileychase.net
+        - Key: STAGE
+          Value: production
 
 
 Outputs:
