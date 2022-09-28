@@ -38,7 +38,6 @@ jobs:
 
       - name: PR Checks
         run: |
-          echo "PATH=$PATH"
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \
