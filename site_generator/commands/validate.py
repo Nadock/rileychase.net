@@ -26,6 +26,7 @@ def validate(cfg: config.SiteGeneratorConfig):
 
         if not _errors:
             return
+
         for err in _errors:
             LOGGER.error(err)
         sys.exit(1)

@@ -80,6 +80,9 @@ tasks:
 
   validate:
     desc: Run the inbuilt site_generator validator
+    sources:
+      - ./*.md
+      - ./**/*.md
     cmds:
       - "{{.PY_PREFIX}} python -m site_generator validate {{.CLI_ARGS}}"
 
