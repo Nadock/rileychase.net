@@ -6,7 +6,7 @@ from typing import Any, AsyncIterator, Tuple
 import markdown
 import yaml
 
-from site_generator import config, emoji, errors, frontmatter, logging, template
+from site_generator import blog, config, emoji, errors, frontmatter, logging, template
 
 LOGGER = logging.getLogger()
 
@@ -17,36 +17,33 @@ async def markdown_pipeline(
     """Process a markdown page into an HTML page."""
     try:
         content, fm = await load_markdown(path)
+        fm.config = cfg
     except Exception as ex:
         raise errors.PipelineError(
             f"Unable to read markdown file {cfg.format_relative_path(path)}: {ex}"
         ) from ex
 
-    fm.config = cfg
+    render_kwargs = {
+        "content": await render(content),
+        "props": fm.get_props(),
+        "meta": fm.get_meta(),
+        "info": get_template_info(cfg),
+    }
 
-    template_name = fm.get_template_name()
-    output = fm.get_output_path()
-    output.parent.mkdir(parents=True, exist_ok=True)
-
-    content = await render(content)
-    props = fm.get_props()
-    meta = fm.get_meta()
-    info = get_template_info(cfg)
+    if fm.type == "blog_index":
+        render_kwargs["blog"] = await blog.blog_index_render_info(cfg, path)
 
     try:
         html = await template.render_template(
-            templates=cfg.templates,
-            name=template_name,
-            content=content,
-            props=props,
-            meta=meta,
-            info=info,
+            templates=cfg.templates, name=fm.get_template_name(), **render_kwargs
         )
     except Exception as ex:
         raise errors.PipelineError(
             f"Rendering HTML for {cfg.format_relative_path(path)} failed: {ex}"
         ) from ex
 
+    output = fm.get_output_path()
+    output.parent.mkdir(parents=True, exist_ok=True)
     try:
         output.write_text(html)
     except Exception as ex:
