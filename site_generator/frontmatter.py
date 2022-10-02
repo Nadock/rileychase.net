@@ -81,14 +81,15 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
         Frontmatter "properties" are any frontmatter values that might be included in
         the rendered output, like the `title`.
         """
-        return {
-            **self.dict(exclude={"meta", "config", "file"}, exclude_none=True),
+        props = {
+            **self.dict(exclude={"meta", "config", "file"}),
             **{
                 "title": emoji.replace_emoji(self.title),
                 "subtitle": emoji.replace_emoji(self.subtitle),
                 "description": emoji.replace_emoji(self.description),
             },
         }
+        return {k: v for k, v in props.items() if v is not None}
 
     def get_meta(self) -> dict[str, Any]:
         """
