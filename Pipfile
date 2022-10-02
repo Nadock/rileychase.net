@@ -11,6 +11,7 @@ pygments = "~=2.13.0"
 pymdown-extensions = "~=9.7"
 pyyaml = "~=6.0"
 watchdog = "~=2.1.9"
+beautifulsoup4 = "~=4.11.1"
 
 [dev-packages]
 black = "~=22.10.0"
