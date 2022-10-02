@@ -16,40 +16,35 @@ async def markdown_pipeline(
 ) -> pathlib.Path:
     """Process a markdown page into an HTML page."""
     try:
-        content, fm = await load_markdown(path)
-        fm.config = cfg
+        return await _markdown_pipeline(cfg, path)
     except Exception as ex:
         raise errors.PipelineError(
-            f"Unable to read markdown file {cfg.format_relative_path(path)}: {ex}"
+            f"Render pipeline failure for {cfg.format_relative_path(path)}: {ex}"
         ) from ex
+
+
+async def _markdown_pipeline(cfg, path):
+    content, fm = await load_markdown(cfg, path)
 
     render_kwargs = {
         "content": await render(content),
         "props": fm.get_props(),
         "meta": fm.get_meta(),
         "info": get_template_info(cfg),
+        "blog_posts": (
+            await blog.find_blog_posts(cfg, path) if fm.type == "blog_index" else {}
+        ),
     }
 
-    if fm.type == "blog_index":
-        render_kwargs["blog"] = await blog.blog_index_render_info(cfg, path)
-
-    try:
-        html = await template.render_template(
-            templates=cfg.templates, name=fm.get_template_name(), **render_kwargs
-        )
-    except Exception as ex:
-        raise errors.PipelineError(
-            f"Rendering HTML for {cfg.format_relative_path(path)} failed: {ex}"
-        ) from ex
+    html = await template.render_template(
+        templates=cfg.templates,
+        name=fm.get_template_name(),
+        **render_kwargs,
+    )
 
     output = fm.get_output_path()
     output.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        output.write_text(html)
-    except Exception as ex:
-        raise errors.PipelineError(
-            f"Failed to write output file {cfg.format_relative_path(output)}: {ex}"
-        ) from ex
+    output.write_text(html)
 
     LOGGER.debug(
         f"Markdown pipeline converted {cfg.format_relative_path(path)} "
@@ -70,7 +65,9 @@ async def find_markdown(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
                 yield pathlib.Path(dirpath) / filename
 
 
-async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontmatter]:
+async def load_markdown(
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
+) -> Tuple[str, frontmatter.PageFrontmatter]:
     """
     Read file at path and extract markdown content and any YAML frontmatter separately.
 
@@ -95,6 +92,7 @@ async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontm
     if idx > 0:
         page_fm = yaml.safe_load("".join(lines[1 : idx - 1]))
     fm = frontmatter.PageFrontmatter(file=path, **page_fm)
+    fm.config = cfg
 
     return content, fm
 

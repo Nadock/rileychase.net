@@ -1,0 +1,15 @@
+{% extends "default.html" %}
+
+{% block content %}
+
+{% for post in blog_posts %}
+<h3><a href="{{ post.path }}">{{ post.title }}</a></h3>
+<p>
+    <em>{{ post.date }}</em>
+    <span>|</span>
+    <em>{{ post.subtitle }}</em>
+</p>
+<blockquote>{{ post.preview }}</blockquote>
+{% endfor %}
+
+{% endblock content %}
