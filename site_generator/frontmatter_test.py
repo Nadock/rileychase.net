@@ -1,3 +1,4 @@
+import datetime
 import pathlib
 
 import pytest
@@ -36,7 +37,7 @@ def test_page_frontmatter__get_template_name__no_config():
 
 
 @pytest.mark.parametrize(
-    "fm_kwargs, cfg_kwargs ,expected",
+    "fm_kwargs, cfg_kwargs, expected",
     [
         ({}, {}, "test.html"),
         ({"path": "foo/bar/baz.html"}, {}, "foo/bar/baz.html"),
@@ -56,3 +57,41 @@ def test_page_frontmatter__get_output_path__no_config():
     with pytest.raises(ValueError):
         fm = fake_page_frontmatter()
         fm.get_output_path()
+
+
+@pytest.mark.parametrize(
+    "fm_kwargs, expected",
+    [
+        ({}, {"tags": []}),
+        (
+            {"title": "test title", "subtitle": None},
+            {"title": "test title", "tags": []},
+        ),
+        (
+            {
+                "template": "props_template",
+                "path": "props_path",
+                "title": "props_title",
+                "subtitle": "props_subtitle",
+                "description": "props_description",
+                "tags": ["tag_a", "tag_b"],
+                "date": datetime.date(2022, 1, 1),
+                "meta": {"foo": "bar"},
+                "file": pathlib.Path("/path/to/file"),
+                "config": config_test.fake_test_config(),
+            },
+            {
+                "template": "props_template",
+                "path": "props_path",
+                "title": "props_title",
+                "subtitle": "props_subtitle",
+                "description": "props_description",
+                "tags": ["tag_a", "tag_b"],
+                "date": datetime.date(2022, 1, 1),
+            },
+        ),
+    ],
+)
+def test_page_frontmatter__get_props(fm_kwargs, expected):
+    fm = fake_page_frontmatter(**fm_kwargs)
+    assert fm.get_props() == expected
