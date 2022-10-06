@@ -62,10 +62,10 @@ def test_page_frontmatter__get_output_path__no_config():
 @pytest.mark.parametrize(
     "fm_kwargs, expected",
     [
-        ({}, {"tags": []}),
+        ({}, {"tags": [], "type": "default"}),
         (
             {"title": "test title", "subtitle": None},
-            {"title": "test title", "tags": []},
+            {"title": "test title", "tags": [], "type": "default"},
         ),
         (
             {
@@ -79,6 +79,7 @@ def test_page_frontmatter__get_output_path__no_config():
                 "meta": {"foo": "bar"},
                 "file": pathlib.Path("/path/to/file"),
                 "config": config_test.fake_test_config(),
+                "type": "default",
             },
             {
                 "template": "props_template",
@@ -88,6 +89,7 @@ def test_page_frontmatter__get_output_path__no_config():
                 "description": "props_description",
                 "tags": ["tag_a", "tag_b"],
                 "date": datetime.date(2022, 1, 1),
+                "type": "default",
             },
         ),
     ],

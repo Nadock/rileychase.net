@@ -1,7 +1,7 @@
 import math
 import pathlib
 
-import bs4
+import bs4  # type: ignore
 
 from site_generator import config, frontmatter, logging, markdown, template
 

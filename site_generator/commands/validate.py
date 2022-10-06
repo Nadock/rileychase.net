@@ -12,7 +12,7 @@ def validate(cfg: config.SiteGeneratorConfig) -> Callable:
     async def _validate():
         _errors = []
         async for page in markdown.find_markdown(cfg.pages):
-            content, fm = await markdown.load_markdown(page)
+            content, fm = await markdown.load_markdown(cfg, page)
             fm.config = cfg
 
             if not content:
