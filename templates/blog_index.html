@@ -1,15 +1,38 @@
 {% extends "default.html" %}
 
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="/css/blog_index.css">
+{% endblock stylesheets %}
+
 {% block content %}
 
-{% for post in blog_posts %}
-<h3><a href="{{ post.path }}">{{ post.title }}</a></h3>
-<p>
-    <em>{{ post.date }}</em>
-    <span>|</span>
-    <em>{{ post.subtitle }}</em>
-</p>
-<blockquote>{{ post.preview }}</blockquote>
+
+{% for post in blog.posts %}
+<div class="blog_index--post">
+    <h3 class="blog_index--post-title"><a href="{{ post.path }}">{{ post.title }}</a></h3>
+    <p>
+        <em>{{ post.date }}</em>
+        <span>|</span>
+        <em>{{ post.subtitle }}</em>
+    </p>
+    <blockquote>{{ post.preview }}</blockquote>
+</div>
 {% endfor %}
+
+<div class="blog_index--page_controls">
+    <div class="blog_index--page_control">
+        <a {% if blog.current_page==1 %} class="disabled" {% endif %}
+            href="/blog/_/{{ blog.current_page - 1}}/">&lt;</a>
+    </div>
+
+    <div class="blog_index--page_control">
+        <span>{{ blog.current_page }}</span>
+    </div>
+
+    <div class="blog_index--page_control">
+        <a {% if blog.current_page==blog.page_count %} class="disabled" {% endif
+            %}href="/blog/_/{{ blog.current_page + 1}}/">&gt;</a>
+    </div>
+</div>
 
 {% endblock content %}
