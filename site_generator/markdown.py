@@ -6,7 +6,16 @@ from typing import Any, AsyncIterator, Tuple
 import markdown
 import yaml
 
-from site_generator import blog, config, emoji, errors, frontmatter, logging, template
+from site_generator import (
+    blog,
+    config,
+    emoji,
+    errors,
+    frontmatter,
+    logging,
+    pymdx_class_tags,
+    template,
+)
 
 LOGGER = logging.getLogger()
 
@@ -117,6 +126,7 @@ async def render(content: str | None) -> str:
             "pymdownx.tasklist",
             "pymdownx.tilde",
             "nl2br",
+            pymdx_class_tags.ClassTags(),
         ],
         output_format="html",
         extension_configs={
