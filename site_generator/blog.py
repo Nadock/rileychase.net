@@ -98,12 +98,14 @@ async def blog_index_pipeline(
                 "</html>"
             )
 
-            LOGGER.info(f"wrote posts {page} to {page+page_size} to {root_output}")
+            LOGGER.debug(
+                f"wrote blog posts {page} to {page+page_size} to {root_output}"
+            )
         else:
             output = root_output.parent / "_" / str(page + 1) / "index.html"
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_text(html)
 
-            LOGGER.info(f"wrote posts {page} to {page+page_size} to {output}")
+            LOGGER.debug(f"wrote blog posts {page} to {page+page_size} to {output}")
 
     return root_output
