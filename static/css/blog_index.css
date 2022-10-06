@@ -11,6 +11,18 @@
     display: grid;
 }
 
+.blog_index--post h3 {
+    margin-bottom: 0;
+}
+
+.blog_index--post p {
+    margin-bottom: 1em;
+}
+
+.blog_index--post blockquote {
+    margin-bottom: 2em;
+}
+
 .blog_index--posts :first-child {
     margin-top: 0;
 }
