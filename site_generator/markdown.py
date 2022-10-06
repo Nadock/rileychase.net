@@ -23,7 +23,9 @@ async def markdown_pipeline(
         ) from ex
 
 
-async def _markdown_pipeline(cfg, path):
+async def _markdown_pipeline(
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
+) -> pathlib.Path:
     content, fm = await load_markdown(cfg, path)
 
     render_kwargs = {
@@ -31,10 +33,10 @@ async def _markdown_pipeline(cfg, path):
         "props": fm.get_props(),
         "meta": fm.get_meta(),
         "info": get_template_info(cfg),
-        "blog_posts": (
-            await blog.find_blog_posts(cfg, path) if fm.type == "blog_index" else {}
-        ),
     }
+
+    if fm.type == "blog_index":
+        return await blog.blog_index_pipeline(cfg, path, fm, render_kwargs)
 
     html = await template.render_template(
         templates=cfg.templates,
