@@ -73,7 +73,7 @@ jobs:
       # Tear down
       - name: Record deployment success
         if: success()
-        uses: chrnorm/deployment-status@07b3930847f65e71c9c6802ff5a402f6dfb46b86
+        uses: chrnorm/deployment-status@2afb7d27101260f4a764219439564d954d10b5b0
         with:
           token: ${{ github.token }}
           environment-url: ${{ steps.deployment.outputs.environment_url }}
@@ -82,7 +82,7 @@ jobs:
 
       - name: Record deployment failure
         if: failure()
-        uses: chrnorm/deployment-status@07b3930847f65e71c9c6802ff5a402f6dfb46b86
+        uses: chrnorm/deployment-status@2afb7d27101260f4a764219439564d954d10b5b0
         with:
           token: ${{ github.token }}
           environment-url: ${{ steps.deployment.outputs.environment_url }}
