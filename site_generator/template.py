@@ -17,7 +17,7 @@ async def render_template(templates: pathlib.Path, name: str, **render_kwargs) -
 
 
 @jinja2.pass_context
-def _render_filter(ctx: jinja2.runtime.Context, value: str):
+def _render_filter(ctx: jinja2.runtime.Context, value: str) -> str:
     if not value:
         return value
 

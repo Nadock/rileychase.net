@@ -27,7 +27,7 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
     @pydantic.validator("templates", "pages", "static", "base", "output")
     @classmethod
-    def ensure_directory(cls, path: Optional[pathlib.Path]):
+    def ensure_directory(cls, path: Optional[pathlib.Path]) -> pathlib.Path | None:
         """Pydantic validator to ensure the specified path is a directory."""
         if path is None:
             return None

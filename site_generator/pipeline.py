@@ -6,7 +6,7 @@ from site_generator import config, errors, logging, markdown, static
 LOGGER = logging.getLogger()
 
 
-async def pipeline(cfg: config.SiteGeneratorConfig):
+async def pipeline(cfg: config.SiteGeneratorConfig) -> None:
     """Generate the entire site once end-to-end."""
     try:
         shutil.rmtree(cfg.output)

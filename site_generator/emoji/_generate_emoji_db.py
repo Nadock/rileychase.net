@@ -11,7 +11,7 @@ import sys
 import black
 
 
-def main():  # pylint: disable=missing-function-docstring
+def main() -> None:  # pylint: disable=missing-function-docstring
     if len(sys.argv) != 3:
         print(
             "usage: emoji_py_gen.py [gemoji_json_path] [output_path]",
