@@ -9,6 +9,7 @@ updates:
       interval: weekly
       time: "07:00"
       timezone: Australia/Adelaide
+    versioning-strategy: increase-if-necessary
     labels:
       - dependencies
       - python
@@ -31,6 +32,7 @@ updates:
       interval: weekly
       time: "07:00"
       timezone: Australia/Adelaide
+    versioning-strategy: increase-if-necessary
     labels:
       - dependencies
       - nodejs
