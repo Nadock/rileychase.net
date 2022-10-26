@@ -9,7 +9,7 @@
     <img alt="Deploy website" src="https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml/badge.svg">
   </a>
   <a href="https://github.com/Nadock/rileychase.net/blob/main/Pipfile">
-    <img alt="Python 3.10" src="https://img.shields.io/github/pipenv/locked/python-version/Nadock/rileychase.net">
+    <img alt="Python 3.11" src="https://img.shields.io/github/pipenv/locked/python-version/Nadock/rileychase.net">
   </a>
   <a href="https://github.com/psf/black">
     <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
@@ -27,7 +27,7 @@ The rest of this `README` contains notes and instructions for me to run my local
 
 ## Development Environment Setup
 
-To work on the site content or the `site_generator` you will need a working install of Python 3.10 and Pipenv.
+To work on the site content or the `site_generator` you will need a working install of Python 3.11 and Pipenv.
 
 1. Clone the repo
 2. Setup a Pipenv venv with `pipenv install --dev`

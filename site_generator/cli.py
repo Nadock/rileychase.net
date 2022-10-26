@@ -2,6 +2,7 @@ import argparse
 import asyncio
 import pathlib
 import sys
+from typing import Callable
 
 from site_generator import commands, config, errors, logging
 
@@ -9,12 +10,12 @@ from site_generator import commands, config, errors, logging
 class SiteGeneratorCLI:
     # pylint: disable=missing-class-docstring, too-few-public-methods
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.root_parser = argparse.ArgumentParser(
             prog="site_generator", add_help=False
         )
 
-    def _setup_parser(self):
+    def _setup_parser(self) -> None:
         self.root_parser.add_argument(
             "--help",
             "-h",
@@ -94,7 +95,7 @@ class SiteGeneratorCLI:
             help="Validate source file for semantic errors",
         )
 
-    def run(self, argv: list[str]):
+    def run(self, argv: list[str]) -> None:
         """Setup and run `site_generator` CLI from args."""
         self._setup_parser()
 
@@ -119,7 +120,7 @@ class SiteGeneratorCLI:
         except Exception as ex:  # pylint: disable=broad-except
             errors.log_error(ex)
 
-    def _get_command(self, command: str, cfg: config.SiteGeneratorConfig):
+    def _get_command(self, command: str, cfg: config.SiteGeneratorConfig) -> Callable:
         if command == "live":
             return commands.live(cfg)
         if command == "build":

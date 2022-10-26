@@ -11,7 +11,7 @@ class PipelineError(SiteGeneratorError):
     """Pipeline failure for a specific source file."""
 
 
-def log_error(ex: Exception):
+def log_error(ex: Exception) -> None:
     """Log an exception according to what kind of exception it is."""
     if isinstance(ex, SiteGeneratorError):
         LOGGER.error(ex)

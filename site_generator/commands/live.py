@@ -1,6 +1,7 @@
 import asyncio
 import functools
 from http import server
+from typing import Callable
 
 from watchdog import events, observers  # type: ignore
 
@@ -9,7 +10,7 @@ from site_generator import config, errors, logging, pipeline
 LOGGER = logging.getLogger()
 
 
-def live(cfg: config.SiteGeneratorConfig):
+def live(cfg: config.SiteGeneratorConfig) -> Callable:
     """Live CLI command handler; build, serve locally, and rebuild site."""
 
     async def _live():

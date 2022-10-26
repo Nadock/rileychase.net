@@ -1,11 +1,12 @@
 import sys
+from typing import Callable
 
 from site_generator import config, logging, markdown
 
 LOGGER = logging.getLogger()
 
 
-def validate(cfg: config.SiteGeneratorConfig):
+def validate(cfg: config.SiteGeneratorConfig) -> Callable:
     """Validate CLI command handler; check files for semantic validation issues."""
 
     async def _validate():
