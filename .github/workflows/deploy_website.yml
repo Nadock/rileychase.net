@@ -40,7 +40,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v4
         with:
-          python-version: "~3.11.0-0"  # Workaround syntax until setup-python is updated
+          python-version: "3.11"
 
       - name: Install Python dependencies
         run: |
