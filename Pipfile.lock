@@ -679,11 +679,11 @@
         },
         "types-pyyaml": {
             "hashes": [
-                "sha256:70ccaafcf3fb404d57bffc1529fdd86a13e8b4f2cf9fc3ee81a6408ce0ad59d2",
-                "sha256:aaf5e51444c13bd34104695a89ad9c48412599a4f615d65a60e649109714f608"
+                "sha256:1e94e80aafee07a7e798addb2a320e32956a373f376655128ae20637adb2655b",
+                "sha256:6840819871c92deebe6a2067fb800c11b8a063632eb4e3e755914e7ab3604e83"
             ],
             "index": "pypi",
-            "version": "==6.0.12.1"
+            "version": "==6.0.12.2"
         },
         "typing-extensions": {
             "hashes": [
@@ -698,7 +698,7 @@
                 "sha256:3fa96cf423e6987997fc326ae8df396db2a8b7c667747d47ddd8ecba91f4a74e",
                 "sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5' and python_version < '4.0'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5' and python_version < '4'",
             "version": "==1.26.12"
         },
         "wrapt": {
