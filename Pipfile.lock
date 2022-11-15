@@ -293,11 +293,11 @@
         },
         "cfn-lint": {
             "hashes": [
-                "sha256:43e62b872a0deaa1f2ecfc8b4f69ce29ea0fb27373f64e901d7bc0d7a97c15bb",
-                "sha256:fa266e0298f1a36b12a6b155a989db5a2da7a50cb2f760910343577a78592c9a"
+                "sha256:0e962a3dea82ac9f57f5990229c8acee555102e041afb8c74c95032dfa105c6e",
+                "sha256:21769d24815f4d86221100705e14114b03303546905c62bb577a695bc3d50a67"
             ],
             "index": "pypi",
-            "version": "==0.71.0"
+            "version": "==0.71.1"
         },
         "click": {
             "hashes": [
@@ -698,7 +698,7 @@
                 "sha256:3fa96cf423e6987997fc326ae8df396db2a8b7c667747d47ddd8ecba91f4a74e",
                 "sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5' and python_version < '4.0'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4, 3.5' and python_version < '4'",
             "version": "==1.26.12"
         },
         "wrapt": {
