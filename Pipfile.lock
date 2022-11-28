@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2f63cec67b95fe49c3ee1f6457d686c2437483c7a86064ea3e374d61825dc69b"
+            "sha256": "f929b8621f7757c0f8ed5c6b7a2486394d6901beb1cd3e40789446b2852d9878"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -223,6 +223,13 @@
         }
     },
     "develop": {
+        "appdirs": {
+            "hashes": [
+                "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41",
+                "sha256:a841dacd6b99318a741b166adb07e19ee71a274450e68237b4650ca1055ab128"
+            ],
+            "version": "==1.4.4"
+        },
         "astroid": {
             "hashes": [
                 "sha256:10e0ad5f7b79c435179d0d0f0df69998c4eef4597534aae44910db060baeb907",
@@ -568,6 +575,9 @@
             "version": "==2.8.2"
         },
         "pytoolconfig": {
+            "extras": [
+                "global"
+            ],
             "hashes": [
                 "sha256:2512a1f261a40e73cef2e58e786184261b60c802ae7ed01249342b1949ec3aa2",
                 "sha256:825d97b052e58b609c2684b04efeb543075588d33a4916a6dc2ae39676458c7d"
@@ -623,11 +633,11 @@
         },
         "rope": {
             "hashes": [
-                "sha256:27c122389fa5cdffa00c24aa6c63704e0933650dbc7d4d4002537947d6cfb7b7",
-                "sha256:7d5a34235ff4a242b71f249b5617a9c54112e145ba4701a41e2f4f96942e5899"
+                "sha256:9761758c222df9466f08232bc046d182960ffa881c1c53bca9fafff210e8da7c",
+                "sha256:d0514b3cddb1a9e103a040756fb53674828d73df70282b7d7d783a220b0354d8"
             ],
             "index": "pypi",
-            "version": "==1.4.0"
+            "version": "==1.5.1"
         },
         "s3transfer": {
             "hashes": [
