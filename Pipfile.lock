@@ -130,11 +130,11 @@
         },
         "pymdown-extensions": {
             "hashes": [
-                "sha256:1bd4a173095ef8c433b831af1f3cb13c10883be0c100ae613560668e594651f7",
-                "sha256:8e62688a8b1128acd42fa823f3d429d22f4284b5e6dd4d3cd56721559a5a211b"
+                "sha256:0f8fb7b74a37a61cc34e90b2c91865458b713ec774894ffad64353a5fce85cfc",
+                "sha256:ac698c15265680db5eb13cd4342abfcde2079ac01e5486028f47a1b41547b859"
             ],
             "index": "pypi",
-            "version": "==9.8"
+            "version": "==9.9"
         },
         "pyyaml": {
             "hashes": [
