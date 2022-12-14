@@ -28,14 +28,14 @@ tasks:
     sources:
       - ./**/*.py
     cmds:
-      - "{{.PY_PREFIX}} black {{.CLI_ARGS}} site_generator"
+      - "{{.PY_PREFIX}} black {{.CLI_ARGS}} ./site_generator"
 
   black:check:
     desc: Run psf/black code formatting tool in check only mode
     sources:
       - ./**/*.py
     cmds:
-      - "{{.PY_PREFIX}} black {{.CLI_ARGS}} --check site_generator"
+      - "{{.PY_PREFIX}} black {{.CLI_ARGS}} --check ./site_generator"
 
   pylint:
     desc: Lint Python sources with pycqa/pylint
@@ -43,21 +43,21 @@ tasks:
       - ./**/*.py
       - .pylintrc
     cmds:
-      - "{{.PY_PREFIX}} pylint {{.CLI_ARGS}} site_generator"
+      - "{{.PY_PREFIX}} pylint {{.CLI_ARGS}} ./site_generator"
 
   mypy:
     desc: Run python/mypy Python type checking tool
     sources:
       - ./**/*.py
     cmds:
-      - "{{.PY_PREFIX}} mypy {{.CLI_ARGS}} site_generator"
+      - "{{.PY_PREFIX}} mypy {{.CLI_ARGS}} ./site_generator"
 
   pytest:
     desc: Run unit tests via pytest-dev/pytest
     sources:
       - ./**/*.py
     cmds:
-      - "{{.PY_PREFIX}} pytest {{.CLI_ARGS}} site_generator"
+      - "{{.PY_PREFIX}} pytest {{.CLI_ARGS}} ./site_generator"
 
   mdlint:
     desc: Lint markdown sources with DavidAnson/markdownlint
