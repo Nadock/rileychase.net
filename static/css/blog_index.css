@@ -11,8 +11,12 @@
     display: grid;
 }
 
-.blog_index--post h3 {
+.blog_index--post-title {
     margin-bottom: 0;
+}
+
+.blog_index--post-title a {
+    color: var(--site-colour-highlight);
 }
 
 .blog_index--post p {
@@ -51,6 +55,6 @@
 
 .blog_index--page_control .disabled {
     pointer-events: none;
-    border: none;
+    text-decoration: none;
     color: var(--site-colour-lowlight);
 }
