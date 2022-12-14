@@ -15,7 +15,7 @@ def validate(cfg: config.SiteGeneratorConfig) -> Callable:
             content, fm = await markdown.load_markdown(cfg, page)
             fm.config = cfg
 
-            if not content:
+            if not content and fm.get_meta().get("validation", {}).get("content", True):
                 _errors.append(
                     f"{cfg.format_relative_path(page)}: content: page is empty"
                 )
