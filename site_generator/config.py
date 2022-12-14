@@ -20,6 +20,8 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
     default_template: str = "default.html"
 
+    blog_posts_per_page: int = 5
+
     host: str = "localhost"
     port: str = "8000"
 

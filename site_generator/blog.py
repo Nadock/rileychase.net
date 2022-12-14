@@ -66,7 +66,7 @@ async def blog_index_pipeline(
     posts = await find_blog_posts(cfg, path)
     root_output = fm.get_output_path()
 
-    page_size = 10  # TODO: Pull this from config
+    page_size = cfg.blog_posts_per_page
     page_count = math.ceil(len(posts) / page_size)
 
     for page in range(0, len(posts), page_size):
