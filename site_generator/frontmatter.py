@@ -1,6 +1,6 @@
 import datetime
 import pathlib
-from typing import Any
+from typing import Any, Literal
 
 import pydantic
 
@@ -18,9 +18,18 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
     end in `.html` it will have `index.html` appended so the path works as expected
     in browsers.
 
-    `title`, `subtitle`, `description`, and `tags` can each be used to describe the
-    page and it's content. It depends on the template how these are used, for example
-    you can use the `title` to set the `.head.title` DOM field's text.
+    `title`, `subtitle`, `description`, `date`, and `tags` can each be used to describe
+    the page and it's content. It depends on the template how these are used, for
+    example you can use the `title` to set the `.head.title` DOM field's text.
+
+    `type` is a special keyword that enable bespoke page handling. You normally do not
+    need to specify this value, the default has no special meaning. However, you can
+    set the page `type` to one of the following values to enable specific
+    functionality.
+      - `"default"` is the default value and has no special meaning.
+      - `"blog_index"` marks this page as the root page for a blog. When being
+        processed, this file will use the `blog_index` pipeline instead of the default
+        `markdown` pipeline. The file must be named `index.md`.
 
     `meta` is a dict of arbitrary values that can be set on a per-page basis with no
     further validation or prescribed semantic meaning. It depends on the template
@@ -34,6 +43,7 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
     description: str | None = None
     tags: list[str] = pydantic.Field(default_factory=list)
     date: datetime.date | None = None
+    type: Literal["default"] | Literal["blog_index"] = "default"
 
     meta: dict | None = None
 
@@ -119,5 +129,8 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
 
         if not self.description and validation.get("description", True):
             errors.append("no description set")
+
+        if self.type == "blog_index" and self.file.name != "index.md":
+            errors.append("type set to 'blog_index' but file not named `index.md`")
 
         return errors

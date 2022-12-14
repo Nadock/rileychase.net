@@ -6,7 +6,16 @@ from typing import Any, AsyncIterator, Tuple
 import markdown
 import yaml
 
-from site_generator import config, emoji, errors, frontmatter, logging, template
+from site_generator import (
+    blog,
+    config,
+    emoji,
+    errors,
+    frontmatter,
+    logging,
+    pymdx_class_tags,
+    template,
+)
 
 LOGGER = logging.getLogger()
 
@@ -16,43 +25,37 @@ async def markdown_pipeline(
 ) -> pathlib.Path:
     """Process a markdown page into an HTML page."""
     try:
-        content, fm = await load_markdown(path)
+        return await _markdown_pipeline(cfg, path)
     except Exception as ex:
         raise errors.PipelineError(
-            f"Unable to read markdown file {cfg.format_relative_path(path)}: {ex}"
+            f"Render pipeline failure for {cfg.format_relative_path(path)}: {ex}"
         ) from ex
 
-    fm.config = cfg
 
-    template_name = fm.get_template_name()
+async def _markdown_pipeline(
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
+) -> pathlib.Path:
+    content, fm = await load_markdown(cfg, path)
+
+    render_kwargs = {
+        "content": await render(content),
+        "props": fm.get_props(),
+        "meta": fm.get_meta(),
+        "info": get_template_info(cfg),
+    }
+
+    if fm.type == "blog_index":
+        return await blog.blog_index_pipeline(cfg, path, fm, render_kwargs)
+
+    html = await template.render_template(
+        templates=cfg.templates,
+        name=fm.get_template_name(),
+        **render_kwargs,
+    )
+
     output = fm.get_output_path()
     output.parent.mkdir(parents=True, exist_ok=True)
-
-    content = await render(content)
-    props = fm.get_props()
-    meta = fm.get_meta()
-    info = get_template_info(cfg)
-
-    try:
-        html = await template.render_template(
-            templates=cfg.templates,
-            name=template_name,
-            content=content,
-            props=props,
-            meta=meta,
-            info=info,
-        )
-    except Exception as ex:
-        raise errors.PipelineError(
-            f"Rendering HTML for {cfg.format_relative_path(path)} failed: {ex}"
-        ) from ex
-
-    try:
-        output.write_text(html)
-    except Exception as ex:
-        raise errors.PipelineError(
-            f"Failed to write output file {cfg.format_relative_path(output)}: {ex}"
-        ) from ex
+    output.write_text(html)
 
     LOGGER.debug(
         f"Markdown pipeline converted {cfg.format_relative_path(path)} "
@@ -73,7 +76,9 @@ async def find_markdown(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
                 yield pathlib.Path(dirpath) / filename
 
 
-async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontmatter]:
+async def load_markdown(
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
+) -> Tuple[str, frontmatter.PageFrontmatter]:
     """
     Read file at path and extract markdown content and any YAML frontmatter separately.
 
@@ -98,6 +103,7 @@ async def load_markdown(path: pathlib.Path) -> Tuple[str, frontmatter.PageFrontm
     if idx > 0:
         page_fm = yaml.safe_load("".join(lines[1 : idx - 1]))
     fm = frontmatter.PageFrontmatter(file=path, **page_fm)
+    fm.config = cfg
 
     return content, fm
 
@@ -120,6 +126,7 @@ async def render(content: str | None) -> str:
             "pymdownx.tasklist",
             "pymdownx.tilde",
             "nl2br",
+            pymdx_class_tags.ClassTags(),
         ],
         output_format="html",
         extension_configs={

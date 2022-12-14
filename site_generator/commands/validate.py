@@ -12,10 +12,10 @@ def validate(cfg: config.SiteGeneratorConfig) -> Callable:
     async def _validate():
         _errors = []
         async for page in markdown.find_markdown(cfg.pages):
-            content, fm = await markdown.load_markdown(page)
+            content, fm = await markdown.load_markdown(cfg, page)
             fm.config = cfg
 
-            if not content:
+            if not content and fm.get_meta().get("validation", {}).get("content", True):
                 _errors.append(
                     f"{cfg.format_relative_path(page)}: content: page is empty"
                 )
