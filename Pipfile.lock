@@ -195,7 +195,7 @@
                 "sha256:3b2503d3c7084a42b1ebd08116e5f81aadfaea95863628c80a3b774a11b7c759",
                 "sha256:fc53893b3da2c33de295667a0e19f078c14bf86544af307354de5fcf12a3f30d"
             ],
-            "markers": "python_full_version >= '3.6.0'",
+            "markers": "python_version >= '3.6'",
             "version": "==2.3.2.post1"
         },
         "typing-extensions": {
@@ -303,11 +303,11 @@
         },
         "cfn-lint": {
             "hashes": [
-                "sha256:b6559dd44015947b17f3c0b0d5f38a4bbdadccbb13b6000c96f1a22241f2b69c",
-                "sha256:edff172661dbd39049c3b55dc5c500175065582bbe819c408b6315383b022332"
+                "sha256:5bba97284601244e0e955904023a0305a0318ffcd18f2d8514a64eb06bf85619",
+                "sha256:bcdf6db438ad259d50e2aa64a342943329e1471308a2d74a44d9c9d6ca3cfaad"
             ],
             "index": "pypi",
-            "version": "==0.72.7"
+            "version": "==0.72.8"
         },
         "click": {
             "hashes": [
