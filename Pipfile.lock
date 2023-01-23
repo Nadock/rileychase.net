@@ -270,12 +270,12 @@
         },
         "aws-sam-translator": {
             "hashes": [
-                "sha256:5953b973468f72c11ce6fe3ae4c5bea11fb774bf46c91970e3ab4460c5e1798e",
-                "sha256:8bfdb6dd8cdc9b777e54de1924e60eddc6f068218016e28f629db2bd41af953e",
-                "sha256:b7fd46bf28d94d5d5174883534469358edb4612b64a6eff1db884d267a45a6e3"
+                "sha256:627997303bcfb69209bc752f6b5b28b665b07341cec353d3711b05fc30e21ef8",
+                "sha256:74eff244a4923320e5df2f37617d85505356353e6022ae9812c6f0abcfbad5d3",
+                "sha256:9aaa3070a205669fdb3821b0c3eccaba1ff7917327c0e7d23dcc16d131d5dc30"
             ],
             "markers": "python_version >= '3.7' and python_version != '4.0' and python_version <= '4.0'",
-            "version": "==1.57.0"
+            "version": "==1.58.0"
         },
         "black": {
             "hashes": [
@@ -313,11 +313,11 @@
         },
         "cfn-lint": {
             "hashes": [
-                "sha256:5bba97284601244e0e955904023a0305a0318ffcd18f2d8514a64eb06bf85619",
-                "sha256:bcdf6db438ad259d50e2aa64a342943329e1471308a2d74a44d9c9d6ca3cfaad"
+                "sha256:7a4e46e004da81f65ce0d583191db9060dd3b13a79c4969670db5dc8fd505dd9",
+                "sha256:93a82963ee5f58022ceb17eee312aa31f9ae9e9144410491fd32bc105f26fcbd"
             ],
             "index": "pypi",
-            "version": "==0.72.8"
+            "version": "==0.72.9"
         },
         "click": {
             "hashes": [
