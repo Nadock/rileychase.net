@@ -754,11 +754,11 @@
         },
         "types-markdown": {
             "hashes": [
-                "sha256:394e205effefbd12103220f370287ab28e99534f3e12a6408734aae79b7e6119",
-                "sha256:d0cf7706aed5f489a6233406990b7f35c3211882dd69aa034634de1ad367b231"
+                "sha256:2c4e84e81025ca9bfd0d227f03703cdec939fbbd2f0b21c2554031923178d69e",
+                "sha256:6beea6429478c64dcc45f1f420e4e4693f356ff9ec7380f898efe5b3c3472c18"
             ],
             "index": "pypi",
-            "version": "==3.4.2.2"
+            "version": "==3.4.2.3"
         },
         "types-pyyaml": {
             "hashes": [
