@@ -513,7 +513,7 @@
                 "sha256:230d388117af870fce5647a3c52401fcf753e94720e6ea6b4197a5355648885e",
                 "sha256:e435dfa75b1d7195c7b8378c3859f0445cd88c6b0375c181ed66823a9ceb7524"
             ],
-            "markers": "python_version >= '3.8'",
+            "markers": "python_full_version >= '3.8.0'",
             "version": "==2.8.8"
         },
         "packaging": {
@@ -754,11 +754,11 @@
         },
         "types-markdown": {
             "hashes": [
-                "sha256:2c4e84e81025ca9bfd0d227f03703cdec939fbbd2f0b21c2554031923178d69e",
-                "sha256:6beea6429478c64dcc45f1f420e4e4693f356ff9ec7380f898efe5b3c3472c18"
+                "sha256:ae0f9a95694d597ba7a354a03948e8ffde69c74d72113bd5ae589f3d12ac0766",
+                "sha256:b172b8bc1be7647f55b6a9ae8069182693f5890d4ae2281e93f08cc871bbb611"
             ],
             "index": "pypi",
-            "version": "==3.4.2.3"
+            "version": "==3.4.2.4"
         },
         "types-pyyaml": {
             "hashes": [
