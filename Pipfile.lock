@@ -325,11 +325,11 @@
         },
         "cfn-lint": {
             "hashes": [
-                "sha256:1ebe1ec84002ede72031317e25b6137794549c6297193c04c465dc7cc3f9d772",
-                "sha256:2982acf399d3904c303b010ef0436acd7cbf4afbdffa7240b5108dd439ac1f28"
+                "sha256:31b91e994d75a42d0d46e541656cd55d4844b0e405c5054c0a496b6ca35a87ab",
+                "sha256:3ea6423122f60ea2223ed4b0bde1b32c6753de938815c570cd9ce952af420697"
             ],
             "index": "pypi",
-            "version": "==0.73.1"
+            "version": "==0.73.2"
         },
         "click": {
             "hashes": [
@@ -510,11 +510,11 @@
         },
         "networkx": {
             "hashes": [
-                "sha256:230d388117af870fce5647a3c52401fcf753e94720e6ea6b4197a5355648885e",
-                "sha256:e435dfa75b1d7195c7b8378c3859f0445cd88c6b0375c181ed66823a9ceb7524"
+                "sha256:58058d66b1818043527244fab9d41a51fcd7dcc271748015f3c181b8a90c8e2e",
+                "sha256:9a9992345353618ae98339c2b63d8201c381c2944f38a2ab49cb45a4c667e412"
             ],
-            "markers": "python_full_version >= '3.8.0'",
-            "version": "==2.8.8"
+            "markers": "python_version >= '3.8'",
+            "version": "==3.0"
         },
         "packaging": {
             "hashes": [
