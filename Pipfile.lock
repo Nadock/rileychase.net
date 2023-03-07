@@ -148,11 +148,11 @@
         },
         "pymdown-extensions": {
             "hashes": [
-                "sha256:c3d804eb4a42b85bafb5f36436342a5ad38df03878bb24db8855a4aa8b08b765",
-                "sha256:ebb33069bafcb64d5f5988043331d4ea4929325dc678a6bcf247ddfcf96499f8"
+                "sha256:31eaa76ce6f96aabfcea98787c2fff2c5c0611b20a53a94213970cfbf05f02b8",
+                "sha256:562c38eee4ce3f101ce631b804bfc2177a8a76c7e4dc908871fb6741a90257a7"
             ],
             "index": "pypi",
-            "version": "==9.9.2"
+            "version": "==9.10"
         },
         "pyyaml": {
             "hashes": [
@@ -513,7 +513,7 @@
                 "sha256:58058d66b1818043527244fab9d41a51fcd7dcc271748015f3c181b8a90c8e2e",
                 "sha256:9a9992345353618ae98339c2b63d8201c381c2944f38a2ab49cb45a4c667e412"
             ],
-            "markers": "python_version >= '3.8'",
+            "markers": "python_full_version >= '3.8.0'",
             "version": "==3.0"
         },
         "packaging": {
