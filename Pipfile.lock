@@ -325,11 +325,11 @@
         },
         "cfn-lint": {
             "hashes": [
-                "sha256:6dab98b4d241c2aa4ac1ded2c583bc2be1dbf02f0013e38668eca72045699b18",
-                "sha256:9e414b5f0e5f31e6686bba96e2b4b7f9267df5196f7bd1f5ca6473b35070f113"
+                "sha256:417bc31692b6f439e519011154af4478678191c5cc5da39b4ba467affca04645",
+                "sha256:6b3224e33fc56f12e3272c674840aade4c7fe17e136c98332ce8e790b38d7aac"
             ],
             "index": "pypi",
-            "version": "==0.74.1"
+            "version": "==0.74.2"
         },
         "click": {
             "hashes": [
