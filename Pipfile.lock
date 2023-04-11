@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9081d84e806c2b51b4fddca528747c48075334315873cbd7ac5cc29058947f1b"
+            "sha256": "e1f747196aafe7c31e5ba4ca8ff25df15766ee18aca40979bf6f298835b024e2"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -140,11 +140,11 @@
         },
         "pygments": {
             "hashes": [
-                "sha256:b3ed06a9e8ac9a9aae5a6f5dbe78a8a58655d17b43b93c078f094ddc476ae297",
-                "sha256:fa7bd7bd2771287c0de303af8bfdfc731f51bd2c6a47ab69d117138893b82717"
+                "sha256:77a3299119af881904cd5ecd1ac6a66214b6e9bed1f2db16993b54adede64094",
+                "sha256:f7e36cffc4c517fbc252861b9a6e4644ca0e5abadf9a113c72d1358ad09b9500"
             ],
             "index": "pypi",
-            "version": "==2.14.0"
+            "version": "==2.15.0"
         },
         "pymdown-extensions": {
             "hashes": [
@@ -519,7 +519,7 @@
                 "sha256:4f33f68cb2afcf86f28a45f43efc27a9386b535d567d2127f8f61d51dec58d36",
                 "sha256:de346335408f84de0eada6ff9fafafff9bcda11f0a0dfaa931133debb146ab61"
             ],
-            "markers": "python_version >= '3.8'",
+            "markers": "python_full_version >= '3.8.0'",
             "version": "==3.1"
         },
         "packaging": {
@@ -781,7 +781,7 @@
                 "sha256:fdf7ad455f1916b8ea5cdbc482d379f6daf93f3867b4232d14699867a5a13af7",
                 "sha256:fffe57312a358be6ec6baeb43d253c36e5790e436b7bf5b7a38df360363e88e9"
             ],
-            "markers": "python_version >= '3.8'",
+            "markers": "python_full_version >= '3.8.0'",
             "version": "==2023.3.23"
         },
         "rope": {
@@ -821,7 +821,7 @@
                 "sha256:938f984ee2b1e8eae8a07b884c8b7a1146010040fccddc6539c54f401c8f6fcf",
                 "sha256:e32380dce63cb7c0108ed525570092fd45168bdae2faa17e528221ef72e88658"
             ],
-            "markers": "python_version >= '3.8'",
+            "markers": "python_full_version >= '3.8.0'",
             "version": "==1.11.1"
         },
         "tomlkit": {
