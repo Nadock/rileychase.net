@@ -1,0 +1,76 @@
+{# https://jinja.palletsprojects.com/en/3.1.x/templates/ #}
+<!DOCTYPE html>
+<html lang="en-au">
+
+<head>
+    {% block head %}
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ props.description }}">
+    <meta name="color-scheme" content="dark light">
+
+    <meta name="x-rendered-at" content="{{ info.rendered_at }}">
+    <meta name="x-ref" content="{{ info.ref }}">
+
+    <link rel="stylesheet" type="text/css" href="/font/fira_code.css">
+    <link rel="stylesheet" type="text/css" href="/css/base_site_layout.css">
+    <link rel="stylesheet" type="text/css" href="/css/markdown_formatting.css">
+    <link rel="stylesheet" type="text/css" href="/css/code_highlighting.css">
+    {% block stylesheets %}{% endblock stylesheets %}
+
+    <title>{{ props.title }}</title>
+    {% endblock head %}
+</head>
+
+<body>
+    {% block body %}
+    <div class="base">
+
+        <div class="site_header">
+            {% block site_header %}
+            <a class="site_header--title" href="/">
+                <h1 class="site_header--title">rileychase&lt;dot&gt;net</h1>
+            </a>
+            <div class="nav_links">
+                <a href="/">Home</a>
+                {# <a href="/blog">Blog</a> #}
+                <span>|</span>
+                <a href="https://github.com/nadock" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/riley-taylor-chase/" target="_blank">LinkedIn</a>
+            </div>
+            {% endblock site_header %}
+        </div>
+
+        <div class="page_header">
+            {% block page_header %}
+            <h2>{{ props.title }}</h2>
+            <em>{{ props.subtitle }}</em>
+            <p>{{ props.date }}</p>
+            {% endblock page_header %}
+        </div>
+
+        <div class="content">
+            {% block content %}
+            {% autoescape false %}
+            {{ content|render }}
+            {% endautoescape %}
+            {% endblock content %}
+        </div>
+
+        <div class="footer">
+            {% block footer %}
+            <div class="nav_links nav_links--right">
+                <p>{{ info.rendered_at.year }} — Riley Chase &lt;@Nadock&gt;</p>
+                <span>|</span>
+                <a href="/license">LICENSE.md</a>
+                <a href="/privacy">PRIVACY.md</a>
+            </div>
+            {% endblock footer %}
+        </div>
+
+    </div>
+    {% endblock body %}
+</body>
+
+</html>
