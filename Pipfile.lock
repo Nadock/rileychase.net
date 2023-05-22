@@ -148,11 +148,11 @@
         },
         "pymdown-extensions": {
             "hashes": [
-                "sha256:9a77955e63528c2ee98073a1fb3207c1a45607bc74a34ef21acd098f46c3aa8a",
-                "sha256:e6cbe8ace7d8feda30bc4fd6a21a073893a9a0e90c373e92d69ce5b653051f55"
+                "sha256:ae66d84013c5d027ce055693e09a4628b67e9dec5bce05727e45b0918e36f274",
+                "sha256:b44e1093a43b8a975eae17b03c3a77aad4681b3b56fce60ce746dbef1944c8cb"
             ],
             "index": "pypi",
-            "version": "==10.0"
+            "version": "==10.0.1"
         },
         "pyyaml": {
             "hashes": [
@@ -269,11 +269,11 @@
         },
         "aws-sam-translator": {
             "hashes": [
-                "sha256:0b9e9684ea0384fd84f5e722f7fea61896c514b95d3403aa782b69acd485dbbf",
-                "sha256:dc4f38cd7ce2a4875d943bf10ba0745901a3a7b7fec1e40b8d13072641630c58"
+                "sha256:207a216bec1ac3323b58e15ed7231c0f476b1a1a10892c9a6b22784041d32506",
+                "sha256:291fed2f08bad7f38368f4ee8609fce64dfe5c6b1872bb24b93cda1880bc9f7d"
             ],
             "markers": "python_version >= '3.7' and python_version != '4.0' and python_version <= '4.0'",
-            "version": "==1.66.0"
+            "version": "==1.67.0"
         },
         "black": {
             "hashes": [
@@ -308,19 +308,19 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:2da4a4caa789312ae73d29be9d3e79ce3328e3aaf7e9de0da6f243455ad3aae6",
-                "sha256:a49b47621c71adfa952127222809ae50867ae4fd249bb932eb1a98519baefa40"
+                "sha256:d47a68a0ca6599e8711c7da670fbac24085d9d50cfb4f761204f154d2b6fae26",
+                "sha256:f0a78f94a7140b60960898fd86677e4e73cc96bd7f3e5c64fc5cc1818d04c7b8"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.26.134"
+            "version": "==1.26.138"
         },
         "botocore": {
             "hashes": [
-                "sha256:0e907b0cab771ab7c9e25efd6b6bc0041ec1b17eb0bab316fd012ef2f8fd99ba",
-                "sha256:8a070ee14a430bd3c9cd16fd142e5c2900749060490698b2b981d6d9dadf5f1f"
+                "sha256:31edc237088c104f7a05887646bbec31d7459dd2e108fd90cbffa315902817e2",
+                "sha256:3d145f30d10a9c712acee48e7ce906c9456bb25fe50d477c9312c702ccfa50d1"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.29.134"
+            "version": "==1.29.138"
         },
         "cfn-lint": {
             "hashes": [
