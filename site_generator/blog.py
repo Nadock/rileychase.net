@@ -44,7 +44,7 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
         )
 
     # Sort post by their date
-    posts.sort(key=lambda p: p["date"])  # type: ignore
+    posts.sort(key=lambda p: p["date"])
     return posts
 
 
