@@ -104,3 +104,5 @@ Below is a list of all the stuff that I want to add to the site or the generator
   - Would imply also adding a "production" build mode
 - [ ] Conditional recompile
   - ie: only recompile things that have changed
+  - Also maybe look at "de-bouncing" the recompile trigger so a bulk edit of files only triggers one rebuild
+- [ ] Static file filters or glob matching so we can have thing in those directories that aren't in the final deployment
