@@ -88,6 +88,19 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
 
         return path
 
+    def get_page_url(self) -> str:
+        """
+        Determine the URL to this page in the rendered site based on it's output path
+        and the base URL.
+        """
+        if not self.config:
+            raise ValueError(f"{self.__class__.__name__}.config must be set")
+
+        path = "/" + str(self.get_output_path().relative_to(self.config.output))
+        path = path.removesuffix("index.html")
+
+        return self.config.base_url() + path
+
     def get_image_url(self) -> str | None:
         """Returns the `PageFrontmatter.image` value as a fully qualified URL."""
         if not self.config:
@@ -115,6 +128,7 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
                 "subtitle": emoji.replace_emoji(self.subtitle),
                 "description": emoji.replace_emoji(self.description),
                 "image": self.get_image_url(),
+                "url": self.get_page_url(),
             },
         }
         return {k: v for k, v in props.items() if v is not None}

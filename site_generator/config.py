@@ -12,6 +12,8 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
         env_prefix = "SG_"
         orm_mode = True
 
+    command: str
+
     base: pathlib.Path
     templates: pathlib.Path
     pages: pathlib.Path
@@ -61,3 +63,17 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
         if path.is_absolute():
             return str(path)
         return f"./{path}"
+
+    def base_url(self) -> str:
+        """
+        Return the base URL of the site.
+
+        When running in live mode, this assumes `http` and uses both the configured host
+        and port values. Otherwise, this assumes `https` and uses only the host value.
+
+        >>> cfg.base_url()
+        'https://example.com'
+        """
+        scheme = "http" if self.command == "live" else "https"
+        fqdn = f"{self.host}:{self.port}" if self.command == "live" else self.host
+        return f"{scheme}://{fqdn}"

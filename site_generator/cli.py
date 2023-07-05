@@ -85,9 +85,16 @@ class SiteGeneratorCLI:
             help="Port number to listen on when running in live mode.",
         )
 
-        _ = command_parsers.add_parser(
+        build_parser = command_parsers.add_parser(
             "build",
             help="Build a fully rendered site and then exit.",
+        )
+        build_parser.add_argument(
+            "--host",
+            type=str,
+            default="localhost",
+            metavar="HOST",
+            help="Hostname the site will be hosted under.",
         )
 
         _ = command_parsers.add_parser(
@@ -112,7 +119,7 @@ class SiteGeneratorCLI:
         for key, value in cfg.dict().items():
             logger.debug(f"config.{key} = {value}")
 
-        cmd = self._get_command(args.command, cfg)
+        cmd = self._get_command(cfg)
         try:
             asyncio.run(cmd())
         except KeyboardInterrupt:
@@ -120,12 +127,12 @@ class SiteGeneratorCLI:
         except Exception as ex:  # pylint: disable=broad-except
             errors.log_error(ex)
 
-    def _get_command(self, command: str, cfg: config.SiteGeneratorConfig) -> Callable:
-        if command == "live":
+    def _get_command(self, cfg: config.SiteGeneratorConfig) -> Callable:
+        if cfg.command == "live":
             return commands.live(cfg)
-        if command == "build":
+        if cfg.command == "build":
             return commands.build(cfg)
-        if command == "validate":
+        if cfg.command == "validate":
             return commands.validate(cfg)
 
-        raise ValueError(f"Unknown command name '{command}'")
+        raise ValueError(f"Unknown command name '{cfg.command}'")
