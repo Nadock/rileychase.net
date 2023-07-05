@@ -1,0 +1,71 @@
+select = ["ALL"]
+ignore = [
+    # pycodestyle
+    "E501", # line-too-long — Let Black handle this
+
+    # pydocstyle
+    "D100", # public-module
+    "D104", # public-package
+    "D106", # public-nested-class
+    "D107", # missing-init-docstring
+    "D200", # fits-on-one-line
+    "D212", # multi-line-summary-first-line
+    "D205", # blank-line-after-summary
+
+    # flake8-annotations
+    "ANN101", # missing-type-self
+    "ANN102", # missing-type-cls
+    "ANN401", # any-type
+
+    # flake8-blind-except
+    "BLE001", # Prevents `except Exception:` even when you don't need the exception object
+
+    # flake8-bugbear
+    "B008", # function-call-argument-default — Needed in some Starlite patterns
+    "COM",  # flake8-commas — Let Black handle this
+    "DJ",   # flake8-django
+    "PD",   # pandas-vet
+
+    # pylint-refactor
+    "PLR0913", # too-many-arguments
+    "NPY",     # numpy
+
+    # tryceratops
+    "TRY003", # raise-vanilla-args
+    "TRY301", # raise-within-try
+
+    # flake8-errmsg
+    "EM101", # raw-string-in-exception
+    "EM102", # f-string-in-exception
+
+    # flynt
+    "FLY002", # static-join-to-f-string
+
+    # flake8-todos
+    "TD003", # missing-todo-link
+
+    # flake8-fixme
+    "FIX002", # line-contains-todo
+
+    # perflint
+    "PERF401", # manual-list-comprehension
+    "PERF203", # try-except-in-loop
+]
+
+[per-file-ignores]
+"**/*_test.py" = [
+    "S101",
+    "S106",
+    "ANN001",
+    "D103",
+    "ANN201",
+    "E741",
+    "PLR2004",
+    "SLF001",
+    "FBT001",
+]
+"site_generator/emoji/_generate*.py" = ["T201", "ERA001", "PLR2004"]
+
+
+[pydocstyle]
+convention = "google"

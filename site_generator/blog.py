@@ -1,7 +1,7 @@
 import math
 import pathlib
 
-import bs4  # type: ignore
+import bs4
 
 from site_generator import config, frontmatter, logging, markdown, template
 
@@ -93,7 +93,7 @@ async def blog_index_pipeline(
                 "<html>"
                 "<head>"
                 '<meta http-equiv="refresh" content="0; '
-                f'url=/{str(root_output.parent.relative_to(cfg.output))}"/>'
+                f'url=/{root_output.parent.relative_to(cfg.output)!s}"/>'
                 "</head>"
                 "</html>"
             )

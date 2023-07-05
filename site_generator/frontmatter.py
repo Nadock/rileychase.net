@@ -8,7 +8,7 @@ from site_generator import config as _config
 from site_generator import emoji
 
 
-class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
+class PageFrontmatter(pydantic.BaseModel):
     """
     Frontmatter values extracted from markdown page frontmatter content.
 
@@ -43,7 +43,7 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
     description: str | None = None
     tags: list[str] = pydantic.Field(default_factory=list)
     date: datetime.date | None = None
-    type: Literal["default"] | Literal["blog_index"] = "default"
+    type: Literal["default"] | Literal["blog_index"] = "default"  # noqa: A003
 
     meta: dict | None = None
 
@@ -93,11 +93,9 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
         """
         props = {
             **self.dict(exclude={"meta", "config", "file"}),
-            **{
-                "title": emoji.replace_emoji(self.title),
-                "subtitle": emoji.replace_emoji(self.subtitle),
-                "description": emoji.replace_emoji(self.description),
-            },
+            "title": emoji.replace_emoji(self.title),
+            "subtitle": emoji.replace_emoji(self.subtitle),
+            "description": emoji.replace_emoji(self.description),
         }
         return {k: v for k, v in props.items() if v is not None}
 

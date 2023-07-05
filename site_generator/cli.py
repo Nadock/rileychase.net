@@ -2,13 +2,13 @@ import argparse
 import asyncio
 import pathlib
 import sys
-from typing import Callable
+from collections.abc import Callable
 
 from site_generator import commands, config, errors, logging
 
 
 class SiteGeneratorCLI:
-    # pylint: disable=missing-class-docstring, too-few-public-methods
+    """Main CLI logic for the site generator."""
 
     def __init__(self) -> None:
         self.root_parser = argparse.ArgumentParser(
@@ -110,14 +110,14 @@ class SiteGeneratorCLI:
         logger = logging.configure_logging(cfg)
 
         for key, value in cfg.dict().items():
-            logger.debug(f"config.{key} = {value}")
+            logger.debug(f"config.{key} = {value}")  # noqa: G004
 
         cmd = self._get_command(args.command, cfg)
         try:
             asyncio.run(cmd())
         except KeyboardInterrupt:
             pass
-        except Exception as ex:  # pylint: disable=broad-except
+        except Exception as ex:
             errors.log_error(ex)
 
     def _get_command(self, command: str, cfg: config.SiteGeneratorConfig) -> Callable:
