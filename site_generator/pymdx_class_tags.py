@@ -11,7 +11,6 @@ def _set_class_attribute(element: ElementTree.Element):
 
 
 class _ClassTagsProcessor(treeprocessors.Treeprocessor):
-    # pylint: disable=too-few-public-methods
     def __init__(
         self, md: markdown.Markdown, cb: Callable[[ElementTree.Element], None]
     ) -> None:

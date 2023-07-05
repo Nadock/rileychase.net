@@ -5,7 +5,6 @@ import pytest
 
 from site_generator import config_test, frontmatter
 
-# pylint: disable=missing-function-docstring, invalid-name
 
 
 def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:

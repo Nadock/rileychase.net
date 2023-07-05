@@ -16,7 +16,7 @@ def live(cfg: config.SiteGeneratorConfig) -> Callable:
     async def _live():
         try:
             await pipeline.pipeline(cfg)
-        except Exception as ex:  # pylint: disable=broad-except
+        except Exception as ex:
             errors.log_error(ex)
 
         pipeline_runner = PipelineRunner(cfg)
@@ -69,7 +69,6 @@ class LoggingSimpleHTTPRequestHandler(server.SimpleHTTPRequestHandler):
     """`SimpleHTTPRequestHandler` with custom logging output."""
 
     def log_message(self, msg: str, *args) -> None:
-        # pylint: disable=arguments-differ
         LOGGER.info(f"[SERVER] {msg%args}")
 
     def end_headers(self) -> None:
@@ -103,5 +102,5 @@ class PipelineRunner(events.FileSystemEventHandler):
         async with self._lock:
             try:
                 await pipeline.pipeline(self._cfg)
-            except Exception as ex:  # pylint: disable=broad-except
+            except Exception as ex:
                 errors.log_error(ex)

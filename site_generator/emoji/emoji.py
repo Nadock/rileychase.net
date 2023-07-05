@@ -1,7 +1,5 @@
 from .db import EMOJI
 
-# pylint: disable=unused-argument too-many-arguments, invalid-name
-
 
 def to_unicode_emoji(
     index: str = "",

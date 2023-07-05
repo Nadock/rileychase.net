@@ -8,8 +8,6 @@ from site_generator import commands, config, errors, logging
 
 
 class SiteGeneratorCLI:
-    # pylint: disable=missing-class-docstring, too-few-public-methods
-
     def __init__(self) -> None:
         self.root_parser = argparse.ArgumentParser(
             prog="site_generator", add_help=False
@@ -117,7 +115,7 @@ class SiteGeneratorCLI:
             asyncio.run(cmd())
         except KeyboardInterrupt:
             pass
-        except Exception as ex:  # pylint: disable=broad-except
+        except Exception as ex:
             errors.log_error(ex)
 
     def _get_command(self, command: str, cfg: config.SiteGeneratorConfig) -> Callable:

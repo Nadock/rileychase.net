@@ -8,7 +8,7 @@ from site_generator import config as _config
 from site_generator import emoji
 
 
-class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
+class PageFrontmatter(pydantic.BaseModel):
     """
     Frontmatter values extracted from markdown page frontmatter content.
 

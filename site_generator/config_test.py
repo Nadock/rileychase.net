@@ -4,7 +4,6 @@ import pytest
 
 from site_generator import config
 
-# pylint: disable=missing-function-docstring, invalid-name
 
 
 def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:

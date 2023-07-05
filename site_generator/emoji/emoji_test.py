@@ -2,8 +2,6 @@ import pytest
 
 from site_generator.emoji import emoji
 
-# pylint: disable=missing-function-docstring
-
 
 @pytest.mark.parametrize(
     ["test", "expected"],

@@ -156,7 +156,7 @@ def get_template_info(cfg: config.SiteGeneratorConfig) -> dict[str, Any]:
     try:
         ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
         info["ref"] = (cfg.base / ".git" / ref).read_text("utf-8").strip()
-    except Exception as ex:  # pylint: disable=broad-except
+    except Exception as ex:
         LOGGER.warning(f"Unable to read git ref: {ex}")
 
     return info

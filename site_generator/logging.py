@@ -29,6 +29,5 @@ def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:
 
 def getLogger(name: str | None = None) -> logging.Logger:
     """Alias function for `logging.getLogger` that ensures we use the app logger."""
-    # pylint: disable=invalid-name
     name = f"site_generator.{name}" if name else "site_generator"
     return logging.getLogger(name)

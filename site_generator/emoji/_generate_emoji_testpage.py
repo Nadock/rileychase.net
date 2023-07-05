@@ -8,7 +8,7 @@ import pathlib
 import sys
 
 
-def main() -> None:  # pylint: disable=missing-function-docstring
+def main() -> None:
     if len(sys.argv) != 3:
         print(
             "usage: emoji_test_gen.py [gemoji_json_path] [output_path]",
