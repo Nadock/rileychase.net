@@ -1,16 +1,14 @@
+import contextlib
 import pathlib
-from typing import Optional
 
 import pydantic
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class SiteGeneratorConfig(pydantic.BaseSettings):
+class SiteGeneratorConfig(BaseSettings):
     """General configuration values for `site_generator`, populated from CLI args."""
 
-    class Config(pydantic.BaseConfig):
-        # pylint: disable=missing-class-docstring, too-few-public-methods
-        env_prefix = "SG_"
-        orm_mode = True
+    model_config = SettingsConfigDict(env_prefix="SG_", from_attributes=True)
 
     command: str
 
@@ -29,19 +27,19 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
     verbose: bool = False
 
-    @pydantic.validator("templates", "pages", "static", "base", "output")
+    @pydantic.field_validator("templates", "pages", "static", "base", "output")
     @classmethod
-    def ensure_directory(cls, path: Optional[pathlib.Path]) -> pathlib.Path | None:
+    def ensure_directory(cls, path: pathlib.Path | None) -> pathlib.Path | None:
         """Pydantic validator to ensure the specified path is a directory."""
         if path is None:
             return None
 
         path = path.absolute()
 
-        if path.exists():
-            assert path.is_dir(), f"{path} is a file, expected directory"
-        else:
+        if not path.exists():
             path.mkdir(parents=True)
+        elif not path.is_dir():
+            raise ValueError(f"{path} is a file, expected directory")
 
         return path
 
@@ -55,10 +53,8 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
         if isinstance(path, str):
             path = pathlib.Path(path)
 
-        try:
+        with contextlib.suppress(Exception):
             path = path.relative_to(self.base)
-        except Exception:  # pylint: disable=broad-except
-            pass
 
         if path.is_absolute():
             return str(path)

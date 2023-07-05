@@ -1,7 +1,7 @@
 import asyncio
 import functools
+from collections.abc import Callable
 from http import server
-from typing import Callable
 
 from watchdog import events, observers
 
@@ -13,10 +13,10 @@ LOGGER = logging.getLogger()
 def live(cfg: config.SiteGeneratorConfig) -> Callable:
     """Live CLI command handler; build, serve locally, and rebuild site."""
 
-    async def _live():
+    async def _live() -> None:
         try:
             await pipeline.pipeline(cfg)
-        except Exception as ex:  # pylint: disable=broad-except
+        except Exception as ex:
             errors.log_error(ex)
 
         pipeline_runner = PipelineRunner(cfg)
@@ -68,11 +68,10 @@ def live(cfg: config.SiteGeneratorConfig) -> Callable:
 class LoggingSimpleHTTPRequestHandler(server.SimpleHTTPRequestHandler):
     """`SimpleHTTPRequestHandler` with custom logging output."""
 
-    def log_message(self, msg: str, *args) -> None:
-        # pylint: disable=arguments-differ
+    def log_message(self, msg: str, *args: list) -> None:  # noqa: D102
         LOGGER.info(f"[SERVER] {msg%args}")
 
-    def end_headers(self) -> None:
+    def end_headers(self) -> None:  # noqa: D102
         self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
         self.send_header("Pragma", "no-cache")
         self.send_header("Expires", "0")
@@ -87,15 +86,15 @@ class PipelineRunner(events.FileSystemEventHandler):
     instance of this class.
     """
 
-    def __init__(self, cfg: config.SiteGeneratorConfig):
+    def __init__(self, cfg: config.SiteGeneratorConfig) -> None:
         super().__init__()
         self._cfg = cfg
         self._lock = asyncio.Lock()
 
-    def on_any_event(self, event):
+    def on_any_event(self, event: events.FileSystemEvent) -> None:  # noqa: D102
         asyncio.run(self.run(event))
 
-    async def run(self, event: events.FileSystemEvent):
+    async def run(self, event: events.FileSystemEvent) -> None:
         """Run the main `site_generator` pipeline."""
         LOGGER.info(
             f"File change detected in {self._cfg.format_relative_path(event.src_path)}"
@@ -103,5 +102,5 @@ class PipelineRunner(events.FileSystemEventHandler):
         async with self._lock:
             try:
                 await pipeline.pipeline(self._cfg)
-            except Exception as ex:  # pylint: disable=broad-except
+            except Exception as ex:
                 errors.log_error(ex)

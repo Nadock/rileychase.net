@@ -1,7 +1,8 @@
 import datetime
 import os
 import pathlib
-from typing import Any, AsyncIterator, Tuple
+from collections.abc import AsyncIterator
+from typing import Any
 
 import markdown
 import yaml
@@ -37,7 +38,7 @@ async def _markdown_pipeline(
 ) -> pathlib.Path:
     content, fm = await load_markdown(cfg, path)
 
-    render_kwargs = {
+    render_kwargs: dict[str, Any] = {
         "content": await render(content),
         "props": fm.get_props(),
         "meta": fm.get_meta(),
@@ -78,7 +79,7 @@ async def find_markdown(path: pathlib.Path) -> AsyncIterator[pathlib.Path]:
 
 async def load_markdown(
     cfg: config.SiteGeneratorConfig, path: pathlib.Path
-) -> Tuple[str, frontmatter.PageFrontmatter]:
+) -> tuple[str, frontmatter.PageFrontmatter]:
     """
     Read file at path and extract markdown content and any YAML frontmatter separately.
 
@@ -90,7 +91,7 @@ async def load_markdown(
 
     # Detect end of frontmatter — idx points to frontmatter end delimiter line
     idx = 0
-    if len(lines) > 2 and lines[0] == "---\n":
+    if len(lines) > 2 and lines[0] == "---\n":  # noqa: PLR2004
         while idx < len(lines):
             idx += 1
             if idx + 1 < len(lines) and lines[idx] in ["---\n", "...\n"]:
@@ -142,21 +143,22 @@ async def render(content: str | None) -> str:
     return md.convert(content)
 
 
-def get_template_info(cfg: config.SiteGeneratorConfig) -> dict[str, Any]:
+def get_template_info(
+    cfg: config.SiteGeneratorConfig,
+) -> dict[str, str | datetime.datetime]:
     """
     Populate and return a `dict` of general purpose information about an individual
     template render.
     """
-    info: dict[str, Any] = {
-        "rendered_at": datetime.datetime.now().astimezone(),
-        "ref": None,
+    info: dict[str, str | datetime.datetime] = {
+        "rendered_at": datetime.datetime.now().astimezone(),  # noqa: DTZ005
     }
 
     git_head = cfg.base / ".git" / "HEAD"
     try:
         ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
         info["ref"] = (cfg.base / ".git" / ref).read_text("utf-8").strip()
-    except Exception as ex:  # pylint: disable=broad-except
+    except Exception as ex:
         LOGGER.warning(f"Unable to read git ref: {ex}")
 
     return info

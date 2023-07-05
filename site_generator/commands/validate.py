@@ -1,5 +1,5 @@
 import sys
-from typing import Callable
+from collections.abc import Callable
 
 from site_generator import config, logging, markdown
 
@@ -9,7 +9,7 @@ LOGGER = logging.getLogger()
 def validate(cfg: config.SiteGeneratorConfig) -> Callable:
     """Validate CLI command handler; check files for semantic validation issues."""
 
-    async def _validate():
+    async def _validate() -> None:
         _errors = []
         async for page in markdown.find_markdown(cfg.pages):
             content, fm = await markdown.load_markdown(cfg, page)

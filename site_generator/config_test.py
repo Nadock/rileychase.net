@@ -4,10 +4,8 @@ import pytest
 
 from site_generator import config
 
-# pylint: disable=missing-function-docstring, invalid-name
 
-
-def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:
+def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:  # noqa: ANN003
     if "base" not in kwargs:
         kwargs["base"] = pathlib.Path(".")
     if "templates" not in kwargs:
@@ -22,18 +20,19 @@ def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:
 
 
 @pytest.mark.parametrize(
-    "path, expected",
+    ("path", "expected"),
     [
         (None, None),
         (pathlib.Path("."), pathlib.Path(".").absolute()),
     ],
 )
 def test_config__ensure_directory(path, expected):
-    assert config.SiteGeneratorConfig.ensure_directory(path) == expected
+    actual = config.SiteGeneratorConfig.ensure_directory(path)  # type: ignore[call-arg]
+    assert actual == expected
 
 
 @pytest.mark.parametrize(
-    "base, path, expected",
+    ("base", "path", "expected"),
     [
         (pathlib.Path("."), pathlib.Path("./test").absolute(), "./test"),
         (pathlib.Path("."), "test", "./test"),
