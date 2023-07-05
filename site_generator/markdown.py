@@ -143,13 +143,15 @@ async def render(content: str | None) -> str:
     return md.convert(content)
 
 
-def get_template_info(cfg: config.SiteGeneratorConfig) -> dict[str, str]:
+def get_template_info(
+    cfg: config.SiteGeneratorConfig,
+) -> dict[str, str | datetime.datetime]:
     """
     Populate and return a `dict` of general purpose information about an individual
     template render.
     """
-    info: dict[str, str] = {
-        "rendered_at": datetime.datetime.now().astimezone().isoformat(),  # noqa: DTZ005
+    info: dict[str, str | datetime.datetime] = {
+        "rendered_at": datetime.datetime.now().astimezone(),  # noqa: DTZ005
     }
 
     git_head = cfg.base / ".git" / "HEAD"
