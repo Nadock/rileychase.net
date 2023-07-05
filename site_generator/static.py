@@ -1,7 +1,7 @@
 import os
 import pathlib
 import shutil
-from typing import AsyncIterator
+from collections.abc import AsyncIterator
 
 from site_generator import config, errors, logging
 

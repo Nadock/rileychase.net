@@ -16,7 +16,7 @@ async def pipeline(cfg: config.SiteGeneratorConfig) -> None:
     except Exception as ex:
         raise errors.PipelineError(
             f"Cannot clear output directory {cfg.format_relative_path(cfg.output)}: {ex}"
-        )
+        ) from ex
 
     tasks = []
     async for page in markdown.find_markdown(cfg.pages):

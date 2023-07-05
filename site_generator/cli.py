@@ -2,12 +2,14 @@ import argparse
 import asyncio
 import pathlib
 import sys
-from typing import Callable
+from collections.abc import Callable
 
 from site_generator import commands, config, errors, logging
 
 
 class SiteGeneratorCLI:
+    """Main CLI logic for the site generator."""
+
     def __init__(self) -> None:
         self.root_parser = argparse.ArgumentParser(
             prog="site_generator", add_help=False
@@ -108,7 +110,7 @@ class SiteGeneratorCLI:
         logger = logging.configure_logging(cfg)
 
         for key, value in cfg.dict().items():
-            logger.debug(f"config.{key} = {value}")
+            logger.debug(f"config.{key} = {value}")  # noqa: G004
 
         cmd = self._get_command(args.command, cfg)
         try:

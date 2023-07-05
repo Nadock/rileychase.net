@@ -4,7 +4,7 @@ from site_generator.emoji import emoji
 
 
 @pytest.mark.parametrize(
-    ["test", "expected"],
+    ("test", "expected"),
     [
         ("", ""),
         (None, None),

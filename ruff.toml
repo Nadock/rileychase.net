@@ -64,6 +64,8 @@ ignore = [
     "SLF001",
     "FBT001",
 ]
+"site_generator/emoji/_generate*.py" = ["T201", "ERA001", "PLR2004"]
+
 
 [pydocstyle]
 convention = "google"

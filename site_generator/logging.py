@@ -27,7 +27,7 @@ def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:
     return app
 
 
-def getLogger(name: str | None = None) -> logging.Logger:
+def getLogger(name: str | None = None) -> logging.Logger:  # noqa: N802
     """Alias function for `logging.getLogger` that ensures we use the app logger."""
     name = f"site_generator.{name}" if name else "site_generator"
     return logging.getLogger(name)

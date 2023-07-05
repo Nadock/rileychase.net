@@ -1,3 +1,6 @@
+import contextlib
+from typing import Any
+
 from .db import EMOJI
 
 
@@ -10,20 +13,22 @@ def to_unicode_emoji(
     title: str = "",
     category: str = "",
     options: dict | None = None,
-    md=None,
+    md: Any = None,
 ) -> str:
     """
     Convert markdown emoji marker into Unicode emoji character.
 
     Raises a `KeyError` if the `shortname` does not exist in the emoji DB.
     """
+    del index, alias, uc, alt, title, category, options, md
     shortname = shortname.removeprefix(":")
     shortname = shortname.removesuffix(":")
     return EMOJI[shortname]
 
 
-def to_markdown_db(options, md) -> dict:
+def to_markdown_db(options: Any, md: Any) -> dict:
     """Return the Unicode emoji DB in the structure required for markdown conversion."""
+    del options, md
     return {
         "name": "unicode",
         "emoji": {
@@ -54,10 +59,8 @@ def replace_emoji(content: str | None) -> str | None:
     for word in content.split(" "):
         emoji = None
         if word.startswith(":") and word.endswith(":"):
-            try:
+            with contextlib.suppress(KeyError):
                 emoji = to_unicode_emoji(shortname=word)
-            except KeyError:
-                pass
 
         words.append(emoji or word)
 

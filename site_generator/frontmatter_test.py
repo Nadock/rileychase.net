@@ -6,15 +6,14 @@ import pytest
 from site_generator import config_test, frontmatter
 
 
-
-def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:
+def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:  # noqa: ANN003
     if "file" not in kwargs:
         kwargs["file"] = pathlib.Path("./pages/test.md").absolute()
     return frontmatter.PageFrontmatter(**kwargs)
 
 
 @pytest.mark.parametrize(
-    "fm_kwargs, cfg_kwargs ,expected",
+    ("fm_kwargs", "cfg_kwargs", "expected"),
     [
         ({}, {}, "default.html"),
         ({"template": "foo.html"}, {}, "foo.html"),
@@ -30,13 +29,13 @@ def test_page_frontmatter__get_template_name(fm_kwargs, cfg_kwargs, expected):
 
 
 def test_page_frontmatter__get_template_name__no_config():
-    with pytest.raises(ValueError):
-        fm = fake_page_frontmatter()
+    fm = fake_page_frontmatter()
+    with pytest.raises(ValueError, match="config must be set"):
         fm.get_template_name()
 
 
 @pytest.mark.parametrize(
-    "fm_kwargs, cfg_kwargs, expected",
+    ("fm_kwargs", "cfg_kwargs", "expected"),
     [
         ({}, {}, "test.html"),
         ({"path": "foo/bar/baz.html"}, {}, "foo/bar/baz.html"),
@@ -53,13 +52,13 @@ def test_page_frontmatter__get_output_path(fm_kwargs, cfg_kwargs, expected):
 
 
 def test_page_frontmatter__get_output_path__no_config():
-    with pytest.raises(ValueError):
-        fm = fake_page_frontmatter()
+    fm = fake_page_frontmatter()
+    with pytest.raises(ValueError, match="config must be set"):
         fm.get_output_path()
 
 
 @pytest.mark.parametrize(
-    "fm_kwargs, expected",
+    ("fm_kwargs", "expected"),
     [
         ({}, {"tags": [], "type": "default"}),
         (
