@@ -1,6 +1,7 @@
 import datetime
 import pathlib
 from typing import Any, Literal
+from urllib import parse
 
 import pydantic
 
@@ -22,6 +23,8 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
     the page and it's content. It depends on the template how these are used, for
     example you can use the `title` to set the `.head.title` DOM field's text.
 
+    `image` is a URL or path to an image to use in the Open Graph preview.
+
     `type` is a special keyword that enable bespoke page handling. You normally do not
     need to specify this value, the default has no special meaning. However, you can
     set the page `type` to one of the following values to enable specific
@@ -40,6 +43,7 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
     path: str | None = None
     title: str | None = None
     subtitle: str | None = None
+    image: str | None = None
     description: str | None = None
     tags: list[str] = pydantic.Field(default_factory=list)
     date: datetime.date | None = None
@@ -84,6 +88,19 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
 
         return path
 
+    def get_image_url(self) -> str | None:
+        """Returns the `PageFrontmatter.image` value as a fully qualified URL."""
+        if not self.config:
+            raise ValueError(f"{self.__class__.__name__}.config must be set")
+
+        if not self.image:
+            return None
+        if parse.urlparse(self.image).hostname:
+            return self.image
+
+        image = self.image if self.image.startswith("/") else "/" + self.image
+        return self.config.base_url() + image
+
     def get_props(self) -> dict[str, Any]:
         """
         Return the frontmatter properties as a `dict` of values.
@@ -97,6 +114,7 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
                 "title": emoji.replace_emoji(self.title),
                 "subtitle": emoji.replace_emoji(self.subtitle),
                 "description": emoji.replace_emoji(self.description),
+                "image": self.get_image_url(),
             },
         }
         return {k: v for k, v in props.items() if v is not None}
@@ -126,6 +144,9 @@ class PageFrontmatter(pydantic.BaseModel):  # pylint: disable=no-member
 
         if not self.subtitle and validation.get("subtitle", True):
             errors.append("no subtitle set")
+
+        if not self.image and validation.get("image", True):
+            errors.append("no image set")
 
         if not self.description and validation.get("description", True):
             errors.append("no description set")
