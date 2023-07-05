@@ -2,14 +2,13 @@ import contextlib
 import pathlib
 
 import pydantic
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class SiteGeneratorConfig(pydantic.BaseSettings):
+class SiteGeneratorConfig(BaseSettings):
     """General configuration values for `site_generator`, populated from CLI args."""
 
-    class Config(pydantic.BaseConfig):
-        env_prefix = "SG_"
-        orm_mode = True
+    model_config = SettingsConfigDict(env_prefix="SG_", from_attributes=True)
 
     base: pathlib.Path
     templates: pathlib.Path
