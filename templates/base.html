@@ -14,11 +14,20 @@
     <meta name="x-ref" content="{{ info.ref }}">
 
     {% block opengraph %}
+    {% if props.title %}
     <meta property="og:title" content="{{ props.title }}">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="TBD"> {# TODO: Need new frontmatter #}
-    <meta property="og:url" content="TBD"> {# TODO: Need templating support #}
+    {% endif %}
+
+    {% if props.image %}
+    <meta property="og:image" content="{{ props.image }}">
+    {% endif %}
+
+    {% if props.subtitle %}
     <meta property="og:description" content="{{ props.subtitle }}">
+    {% endif %}
+
+    <meta property="og:url" content="{{ props.url }}">
+    <meta property="og:type" content="website">
     <meta property="og:locale" content="en_AU">
     <meta property="og:site_name" content="rileychase.net">
     {% endblock opengraph %}
