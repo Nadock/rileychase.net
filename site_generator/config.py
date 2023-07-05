@@ -2,14 +2,13 @@ import contextlib
 import pathlib
 
 import pydantic
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-class SiteGeneratorConfig(pydantic.BaseSettings):
+class SiteGeneratorConfig(BaseSettings):
     """General configuration values for `site_generator`, populated from CLI args."""
 
-    class Config(pydantic.BaseConfig):
-        env_prefix = "SG_"
-        orm_mode = True
+    model_config = SettingsConfigDict(env_prefix="SG_", from_attributes=True)
 
     base: pathlib.Path
     templates: pathlib.Path
@@ -26,7 +25,7 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
     verbose: bool = False
 
-    @pydantic.validator("templates", "pages", "static", "base", "output")
+    @pydantic.field_validator("templates", "pages", "static", "base", "output")
     @classmethod
     def ensure_directory(cls, path: pathlib.Path | None) -> pathlib.Path | None:
         """Pydantic validator to ensure the specified path is a directory."""
@@ -35,11 +34,10 @@ class SiteGeneratorConfig(pydantic.BaseSettings):
 
         path = path.absolute()
 
-        if path.exists():
-            # TODO(Nadock): Refactor out the use of assert when upgrading to Pydantic v2
-            assert path.is_dir(), f"{path} is a file, expected directory"  # noqa: S101
-        else:
+        if not path.exists():
             path.mkdir(parents=True)
+        elif not path.is_dir():
+            raise ValueError(f"{path} is a file, expected directory")
 
         return path
 

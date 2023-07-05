@@ -27,7 +27,8 @@ def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:  # noqa: ANN003
     ],
 )
 def test_config__ensure_directory(path, expected):
-    assert config.SiteGeneratorConfig.ensure_directory(path) == expected
+    actual = config.SiteGeneratorConfig.ensure_directory(path)  # type: ignore[call-arg]
+    assert actual == expected
 
 
 @pytest.mark.parametrize(

@@ -92,7 +92,7 @@ class PageFrontmatter(pydantic.BaseModel):
         the rendered output, like the `title`.
         """
         props = {
-            **self.dict(exclude={"meta", "config", "file"}),
+            **self.model_dump(exclude={"meta", "config", "file"}),
             "title": emoji.replace_emoji(self.title),
             "subtitle": emoji.replace_emoji(self.subtitle),
             "description": emoji.replace_emoji(self.description),
