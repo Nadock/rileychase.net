@@ -57,7 +57,7 @@ Validate the site pages contents for valid content and front matter information.
 
 The following tools run on every PR and must succeed before a branch can be merged to `main`.
 
-- `pylint`, `mypy`, and `black --check` are run to validate code quality.
+- `ruff`, `mypy`, and `black --check` are run to validate code quality.
 - Unit tests are run with `pytest`.
 - The `site_generator validate` command is run to check page front matter.
 - Markdown content is validated by `markdownlint` — install Node.js dependencies for this tool.

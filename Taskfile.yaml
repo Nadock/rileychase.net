@@ -17,7 +17,7 @@ tasks:
     cmds:
       - task: black:check
       - task: mypy
-      - task: pylint
+      - task: ruff
       - task: pytest
       - task: validate
       - task: mdlint
@@ -37,13 +37,13 @@ tasks:
     cmds:
       - "{{.PY_PREFIX}} black {{.CLI_ARGS}} --check ./site_generator"
 
-  pylint:
-    desc: Lint Python sources with pycqa/pylint
+  ruff:
+    desc: Lint Python sources with astral-sh/ruff
     sources:
       - ./**/*.py
-      - .pylintrc
+      - ruff.toml
     cmds:
-      - "{{.PY_PREFIX}} pylint {{.CLI_ARGS}} ./site_generator"
+      - "{{.PY_PREFIX}} ruff check {{.CLI_ARGS}} */**.py"
 
   mypy:
     desc: Run python/mypy Python type checking tool
