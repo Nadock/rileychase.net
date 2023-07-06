@@ -9,22 +9,74 @@ from site_generator import config as _config
 from site_generator import emoji
 
 
-class PageFrontmatter(pydantic.BaseModel):
+class OpenGraphFrontmatter(pydantic.BaseModel):
+    """Page Open Graph details extracted from markdown frontmatter content."""
+
+    title: str | None = None
+    """The og:title for this page, defaults to the page title if not set."""
+
+    image: str | None = None
+    """The og:image for this page."""
+
+    description: str | None = None
+    """The og:description for this page, defaults to the page subtitle if not set."""
+
+    url: str | None = None
+    """The og:url for this page, defaults to the computed page URL if not set."""
+
+    type: str | None = None  # noqa: A003
+    """The og:type for this page, defaults to `"website"` if not set."""
+
+    locale: str | None = None
+    """The og:locale for this page, defaults to the locale in config if not set.."""
+
+    site_name: str | None = None
     """
-    Frontmatter values extracted from markdown page frontmatter content.
+    The og:site_name for this page, defaults to the site name in config if not set.
+    """
 
-    `template` is the name of the template to use when rendering this file
 
-    `path` the path under which the page served in the output. If this path does not
-    end in `.html` it will have `index.html` appended so the path works as expected
-    in browsers.
+class PageFrontmatter(pydantic.BaseModel):
+    """Page details extracted from markdown frontmatter content."""
 
-    `title`, `subtitle`, `description`, `date`, and `tags` can each be used to describe
-    the page and it's content. It depends on the template how these are used, for
-    example you can use the `title` to set the `.head.title` DOM field's text.
+    template: str | None = None
+    """The name of the template to use when rendering this file."""
 
-    `image` is a URL or path to an image to use in the Open Graph preview.
+    path: str | None = None
+    """
+    The path under which the page served in the output. If this path does not end in
+    `.html` it will have `index.html` appended so it works as expected in browsers.
+    """
 
+    title: str | None = None
+    """The title for this page."""
+
+    subtitle: str | None = None
+    """The subtitle for this page."""
+
+    description: str | None = None
+    """The meta description for this page."""
+
+    tags: list[str] = pydantic.Field(default_factory=list)
+    """Classification tags for this page's content."""
+
+    date: datetime.date | None = None
+    """The original publication date for this page."""
+
+    og: OpenGraphFrontmatter | None = None
+    """
+    Open Graph details. Some values are auto populated from `title`, `subtitle`, `date`,
+    and other sources.
+    """
+
+    meta: dict | None = None
+    """
+    Arbitrary values that can be set on a per-page basis with no further validation or
+    prescribed semantic meaning. It depends on the template how these values are used.
+    """
+
+    type: Literal["default"] | Literal["blog_index"] = "default"  # noqa: A003
+    """
     `type` is a special keyword that enable bespoke page handling. You normally do not
     need to specify this value, the default has no special meaning. However, you can
     set the page `type` to one of the following values to enable specific
@@ -33,23 +85,7 @@ class PageFrontmatter(pydantic.BaseModel):
       - `"blog_index"` marks this page as the root page for a blog. When being
         processed, this file will use the `blog_index` pipeline instead of the default
         `markdown` pipeline. The file must be named `index.md`.
-
-    `meta` is a dict of arbitrary values that can be set on a per-page basis with no
-    further validation or prescribed semantic meaning. It depends on the template
-    how these values are used.
     """
-
-    template: str | None = None
-    path: str | None = None
-    title: str | None = None
-    subtitle: str | None = None
-    image: str | None = None
-    description: str | None = None
-    tags: list[str] = pydantic.Field(default_factory=list)
-    date: datetime.date | None = None
-    type: Literal["default"] | Literal["blog_index"] = "default"  # noqa: A003
-
-    meta: dict | None = None
 
     # The following fields are populated automatically, don't need to be in the
     # template frontmatter, and aren't included in template rendering.
@@ -101,18 +137,32 @@ class PageFrontmatter(pydantic.BaseModel):
 
         return self.config.base_url() + path
 
-    def get_image_url(self) -> str | None:
-        """Returns the `PageFrontmatter.image` value as a fully qualified URL."""
+    def get_open_graph(self) -> OpenGraphFrontmatter:
+        """
+        Returns the Open Graph frontmatter for this page with default values applied.
+
+        The values actually provided via frontmatter from the source file remain
+        unmodified in `self.og`.
+        """
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        if not self.image:
-            return None
-        if parse.urlparse(self.image).hostname:
-            return self.image
+        og = self.og or OpenGraphFrontmatter()
 
-        image = self.image if self.image.startswith("/") else "/" + self.image
-        return self.config.base_url() + image
+        # Make OG image URL fully qualified if it isn't already
+        if og.image and not parse.urlparse(og.image).hostname:
+            image = og.image if og.image.startswith("/") else "/" + og.image
+            og.image = self.config.base_url() + "/" + image
+
+        # Set default values for OG properties
+        og.title = og.title or self.title
+        og.description = og.description or self.subtitle
+        og.url = og.url or self.get_page_url()
+        og.type = og.url or "website"
+        og.locale = og.locale or self.config.locale
+        og.site_name = og.site_name or self.config.site_name
+
+        return og
 
     def get_props(self) -> dict[str, Any]:
         """
@@ -126,8 +176,7 @@ class PageFrontmatter(pydantic.BaseModel):
             "title": emoji.replace_emoji(self.title),
             "subtitle": emoji.replace_emoji(self.subtitle),
             "description": emoji.replace_emoji(self.description),
-            "image": self.get_image_url(),
-            "url": self.get_page_url(),
+            "og": self.get_open_graph(),
         }
         return {k: v for k, v in props.items() if v is not None}
 
@@ -156,9 +205,6 @@ class PageFrontmatter(pydantic.BaseModel):
 
         if not self.subtitle and validation.get("subtitle", True):
             errors.append("no subtitle set")
-
-        if not self.image and validation.get("image", True):
-            errors.append("no image set")
 
         if not self.description and validation.get("description", True):
             errors.append("no description set")
