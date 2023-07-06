@@ -14,19 +14,22 @@
     <meta name="x-ref" content="{{ info.ref }}">
 
     {% block opengraph %}
-    {% if props.title %}
-    <meta property="og:title" content="{{ props.title }}">
+    {% if props.og.title %}
+    <meta property="og:title" content="{{ props.og.title }}">
     {% endif %}
 
-    {% if props.image %}
-    <meta property="og:image" content="{{ props.image }}">
+    {% if props.og.image %}
+    <meta property="og:image" content="{{ props.og.image }}">
     {% endif %}
 
-    {% if props.subtitle %}
-    <meta property="og:description" content="{{ props.subtitle }}">
+    {% if props.og.description %}
+    <meta property="og:description" content="{{ props.og.description }}">
     {% endif %}
 
-    <meta property="og:url" content="{{ props.url }}">
+    {% if props.og.url %}
+    <meta property="og:url" content="{{ props.og.url }}">
+    {% endif %}
+
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_AU">
     <meta property="og:site_name" content="rileychase.net">
