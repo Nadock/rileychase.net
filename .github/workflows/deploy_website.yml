@@ -65,7 +65,7 @@ jobs:
 
       # Publish
       - name: Deploy Website
-        run: aws s3 sync ./output s3://${{ secrets.BUCKET_NAME }}/website --exclude "**/*.md"
+        run: aws s3 sync ./output s3://${{ secrets.BUCKET_NAME }}/website --exclude "**/*.md" --delete
 
       - name: Invalidate Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --path "/*"
