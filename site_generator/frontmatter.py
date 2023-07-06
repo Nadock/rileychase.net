@@ -24,7 +24,7 @@ class OpenGraphFrontmatter(pydantic.BaseModel):
     url: str | None = None
     """The og:url for this page, defaults to the computed page URL if not set."""
 
-    type: str | None = None  # noqa: A003
+    type: str = "website"  # noqa: A003
     """The og:type for this page, defaults to `"website"` if not set."""
 
     locale: str | None = None
@@ -158,7 +158,6 @@ class PageFrontmatter(pydantic.BaseModel):
         og.title = og.title or self.title
         og.description = og.description or self.subtitle
         og.url = og.url or self.get_page_url()
-        og.type = og.url or "website"
         og.locale = og.locale or self.config.locale
         og.site_name = og.site_name or self.config.site_name
 
