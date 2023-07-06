@@ -27,6 +27,9 @@ class SiteGeneratorConfig(BaseSettings):
 
     verbose: bool = False
 
+    locale: str | None = None
+    site_name: str | None = None
+
     @pydantic.field_validator("templates", "pages", "static", "base", "output")
     @classmethod
     def ensure_directory(cls, path: pathlib.Path | None) -> pathlib.Path | None:

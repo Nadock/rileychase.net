@@ -62,6 +62,20 @@ class SiteGeneratorCLI:
             action="store_true",
             help="Enable verbose logging output.",
         )
+        self.root_parser.add_argument(
+            "--site-name",
+            type=str,
+            default=None,
+            metavar="NAME",
+            help="The name for this site, used in Open Graph tags.",
+        )
+        self.root_parser.add_argument(
+            "--locale",
+            type=str,
+            default=None,
+            metavar="LOCALE",
+            help="The locale of this website, used in Open Graph tags.",
+        )
 
         command_parsers = self.root_parser.add_subparsers(dest="command")
 
