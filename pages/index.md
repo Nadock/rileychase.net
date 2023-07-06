@@ -1,9 +1,11 @@
 ---
 title: Hi, I'm Riley
+description: Welcome to my little corner of the internet. Right now there's not much here, but that might change in the future.
+og:
+  description: Welcome to my little corner of the internet. Right now there's not much here, but that might change in the future.
 meta:
   validation:
-    subtitle: False
-    description: False
+    subtitle: false
 ---
 
 Hi :wave:

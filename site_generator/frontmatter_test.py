@@ -60,10 +60,28 @@ def test_page_frontmatter__get_output_path__no_config():
 @pytest.mark.parametrize(
     ("fm_kwargs", "expected"),
     [
-        ({}, {"tags": [], "type": "default"}),
+        (
+            {},
+            {
+                "tags": [],
+                "type": "default",
+                "og": frontmatter.OpenGraphFrontmatter(
+                    url="https://localhost/test.html", type="website"
+                ),
+            },
+        ),
         (
             {"title": "test title", "subtitle": None},
-            {"title": "test title", "tags": [], "type": "default"},
+            {
+                "title": "test title",
+                "tags": [],
+                "type": "default",
+                "og": frontmatter.OpenGraphFrontmatter(
+                    title="test title",
+                    url="https://localhost/test.html",
+                    type="website",
+                ),
+            },
         ),
         (
             {
@@ -88,10 +106,17 @@ def test_page_frontmatter__get_output_path__no_config():
                 "tags": ["tag_a", "tag_b"],
                 "date": datetime.date(2022, 1, 1),
                 "type": "default",
+                "og": frontmatter.OpenGraphFrontmatter(
+                    title="props_title",
+                    description="props_subtitle",
+                    url="https://localhost/props_path/",
+                    type="website",
+                ),
             },
         ),
     ],
 )
 def test_page_frontmatter__get_props(fm_kwargs, expected):
     fm = fake_page_frontmatter(**fm_kwargs)
+    fm.config = config_test.fake_test_config()
     assert fm.get_props() == expected

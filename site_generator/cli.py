@@ -62,6 +62,20 @@ class SiteGeneratorCLI:
             action="store_true",
             help="Enable verbose logging output.",
         )
+        self.root_parser.add_argument(
+            "--site-name",
+            type=str,
+            default=None,
+            metavar="NAME",
+            help="The name for this site, used in Open Graph tags.",
+        )
+        self.root_parser.add_argument(
+            "--locale",
+            type=str,
+            default=None,
+            metavar="LOCALE",
+            help="The locale of this website, used in Open Graph tags.",
+        )
 
         command_parsers = self.root_parser.add_subparsers(dest="command")
 
@@ -85,9 +99,16 @@ class SiteGeneratorCLI:
             help="Port number to listen on when running in live mode.",
         )
 
-        _ = command_parsers.add_parser(
+        build_parser = command_parsers.add_parser(
             "build",
             help="Build a fully rendered site and then exit.",
+        )
+        build_parser.add_argument(
+            "--host",
+            type=str,
+            default="localhost",
+            metavar="HOST",
+            help="Hostname the site will be hosted under.",
         )
 
         _ = command_parsers.add_parser(
@@ -112,7 +133,7 @@ class SiteGeneratorCLI:
         for key, value in cfg.dict().items():
             logger.debug(f"config.{key} = {value}")  # noqa: G004
 
-        cmd = self._get_command(args.command, cfg)
+        cmd = self._get_command(cfg)
         try:
             asyncio.run(cmd())
         except KeyboardInterrupt:
@@ -120,12 +141,12 @@ class SiteGeneratorCLI:
         except Exception as ex:
             errors.log_error(ex)
 
-    def _get_command(self, command: str, cfg: config.SiteGeneratorConfig) -> Callable:
-        if command == "live":
+    def _get_command(self, cfg: config.SiteGeneratorConfig) -> Callable:
+        if cfg.command == "live":
             return commands.live(cfg)
-        if command == "build":
+        if cfg.command == "build":
             return commands.build(cfg)
-        if command == "validate":
+        if cfg.command == "validate":
             return commands.validate(cfg)
 
-        raise ValueError(f"Unknown command name '{command}'")
+        raise ValueError(f"Unknown command name '{cfg.command}'")

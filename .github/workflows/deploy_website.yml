@@ -61,11 +61,11 @@ jobs:
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \
-               build
+               build -- --host rileychase.net
 
       # Publish
       - name: Deploy Website
-        run: aws s3 sync ./output s3://${{ secrets.BUCKET_NAME }}/website
+        run: aws s3 sync ./output s3://${{ secrets.BUCKET_NAME }}/website --exclude "**/*.md" --delete
 
       - name: Invalidate Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --path "/*"
