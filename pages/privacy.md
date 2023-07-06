@@ -1,8 +1,8 @@
 ---
 title: Privacy
 subtitle: This website doesn't know what you do in the dark
-date: 2022-09-16
 description: Privacy policy information for this website rileychase.net.
+date: 2022-09-16
 path: /privacy
 ---
 
