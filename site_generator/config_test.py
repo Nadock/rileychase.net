@@ -16,6 +16,8 @@ def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:  # noqa: ANN003
         kwargs["static"] = pathlib.Path("./static")
     if "output" not in kwargs:
         kwargs["output"] = pathlib.Path("./output")
+    if "command" not in kwargs:
+        kwargs["command"] = "build"
     return config.SiteGeneratorConfig(**kwargs)
 
 
