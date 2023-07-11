@@ -23,7 +23,7 @@ LOGGER = logging.getLogger()
 
 async def markdown_pipeline(
     cfg: config.SiteGeneratorConfig, path: pathlib.Path
-) -> pathlib.Path:
+) -> pathlib.Path | None:
     """Process a markdown page into an HTML page."""
     try:
         return await _markdown_pipeline(cfg, path)
@@ -35,8 +35,11 @@ async def markdown_pipeline(
 
 async def _markdown_pipeline(
     cfg: config.SiteGeneratorConfig, path: pathlib.Path
-) -> pathlib.Path:
+) -> pathlib.Path | None:
     content, fm = await load_markdown(cfg, path)
+    if fm.type == "debug" and not cfg.debug_pages:
+        LOGGER.debug(f"Skipping debug markdown page: {path}")
+        return None
 
     render_kwargs: dict[str, Any] = {
         "content": await render(content),

@@ -79,24 +79,31 @@ class SiteGeneratorCLI:
 
         command_parsers = self.root_parser.add_subparsers(dest="command")
 
-        dev_parser = command_parsers.add_parser(
+        live_parser = command_parsers.add_parser(
             "live",
             help="Run a live reload server version of the site.",
         )
-        dev_parser.add_argument(
+        live_parser.add_argument(
             "--host",
             type=str,
             default="localhost",
             metavar="HOST",
             help="Hostname to listen at when running in live mode.",
         )
-        dev_parser.add_argument(
+        live_parser.add_argument(
             "--port",
             "-p",
             type=str,
             default="8000",
             metavar="PORT",
             help="Port number to listen on when running in live mode.",
+        )
+        live_parser.add_argument(
+            "--exclude-debug",
+            action="store_false",
+            dest="debug_pages",
+            default=True,
+            help="Exclude debug type pages that would normally be included.",
         )
 
         build_parser = command_parsers.add_parser(
@@ -109,6 +116,13 @@ class SiteGeneratorCLI:
             default="localhost",
             metavar="HOST",
             help="Hostname the site will be hosted under.",
+        )
+        build_parser.add_argument(
+            "--include-debug",
+            action="store_true",
+            dest="debug_pages",
+            default=False,
+            help="Include debug type pages that would normally be excluded.",
         )
 
         validate_parser = command_parsers.add_parser(

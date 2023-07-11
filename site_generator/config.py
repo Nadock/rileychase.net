@@ -30,6 +30,8 @@ class SiteGeneratorConfig(BaseSettings):
     dead_links: bool = False
     allowed_links: list[re.Pattern] = pydantic.Field(..., default_factory=list)
 
+    debug_pages: bool = True
+
     locale: str | None = None
     site_name: str | None = None
 
