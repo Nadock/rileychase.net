@@ -1,4 +1,5 @@
 import asyncio
+import contextlib
 import pathlib
 from collections.abc import AsyncGenerator
 from urllib import parse
@@ -125,16 +126,19 @@ class Validator:
         """
         async with self._lock:
             if link not in self._link_cache:
-                self._link_cache[link] = await self._client.head(link)
+                with contextlib.suppress(Exception):
+                    self._link_cache[link] = await self._client.head(link)
 
-        resp = self._link_cache[link]
-
-        if 200 <= resp.status_code < 300:  # noqa: PLR2004
+        resp = self._link_cache.get(link)
+        if resp and 200 <= resp.status_code < 300:  # noqa: PLR2004
             return None
 
         return errors.ValidationError(
             file=path,
-            error=f"dead link: {link}: HTTP {resp.status_code}",
+            error=(
+                f"dead link: {link}: "
+                + (f"HTTP {resp.status_code}" if resp else "no response")
+            ),
             line=line,
             char=pos,
         )

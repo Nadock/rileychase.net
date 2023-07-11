@@ -14,7 +14,10 @@ def validate(cfg: config.SiteGeneratorConfig) -> Callable:
 
         count = 0
         async for error in validation.Validator(cfg).validate():
-            LOGGER.error(error)
+            error_msg = f"[{error.file.relative_to(cfg.base)}] {error.error}"
+            if error.line and error.char:
+                error_msg += f" on line {error.line}, column {error.char}"
+            LOGGER.error(error_msg)
             count += 1
 
         if count > 0:
