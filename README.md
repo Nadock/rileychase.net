@@ -102,7 +102,7 @@ Below is a list of all the stuff that I want to add to the site or the generator
 - [x] Enable auto-escaping where possible
 - [x] OpenGraph social link preview headers
 - [x] Dead link detection
-- [ ] Non production pages
+- [x] Non production pages
   - Would imply also adding a "production" build mode
 - [x] Conditional recompile
   - ie: only recompile things that have changed
