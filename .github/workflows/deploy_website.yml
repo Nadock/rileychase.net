@@ -61,8 +61,7 @@ jobs:
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \
-               build
-          task validate:links
+               build validate:links
 
       # Publish
       - name: Deploy Website
