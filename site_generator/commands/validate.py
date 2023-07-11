@@ -1,7 +1,7 @@
 import sys
 from collections.abc import Callable
 
-from site_generator import config, logging, markdown
+from site_generator import config, logging, validation
 
 LOGGER = logging.getLogger()
 
@@ -9,27 +9,21 @@ LOGGER = logging.getLogger()
 def validate(cfg: config.SiteGeneratorConfig) -> Callable:
     """Validate CLI command handler; check files for semantic validation issues."""
 
-    async def _validate() -> None:
-        _errors = []
-        async for page in markdown.find_markdown(cfg.pages):
-            content, fm = await markdown.load_markdown(cfg, page)
-            fm.config = cfg
+    async def validate() -> None:
+        LOGGER.info("Starting site validation")
 
-            if not content and fm.get_meta().get("validation", {}).get("content", True):
-                _errors.append(
-                    f"{cfg.format_relative_path(page)}: content: page is empty"
-                )
+        count = 0
+        async for error in validation.Validator(cfg).validate():
+            error_msg = f"[{error.file.relative_to(cfg.base)}] {error.error}"
+            if error.line and error.char:
+                error_msg += f" on line {error.line}, column {error.char}"
+            LOGGER.error(error_msg)
+            count += 1
 
-            for fm_err in fm.validate_frontmatter():
-                _errors.append(
-                    f"{cfg.format_relative_path(page)}: frontmatter: {fm_err}"
-                )
+        if count > 0:
+            LOGGER.error(f"{count} validation error{'s' if count > 1 else ''} found")
+            sys.exit(count)
 
-        if not _errors:
-            return
+        LOGGER.info("No validation errors found")
 
-        for err in _errors:
-            LOGGER.error(err)
-        sys.exit(1)
-
-    return _validate
+    return validate

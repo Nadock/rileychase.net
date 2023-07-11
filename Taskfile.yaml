@@ -19,8 +19,9 @@ tasks:
       - task: mypy
       - task: ruff
       - task: pytest
-      - task: validate
       - task: mdlint
+      - task: build
+      - task: validate:links
       - task: aws:lint
 
   black:
@@ -61,12 +62,17 @@ tasks:
   build:
     desc: Run the site_generator in single build mode
     cmds:
-      - "{{.PY_PREFIX}} python -m site_generator build {{.CLI_ARGS}}"
+      - "{{.PY_PREFIX}} python -m site_generator build --host rileychase.net {{.CLI_ARGS}}"
 
   validate:
     desc: Run the inbuilt site_generator validator
     cmds:
       - "{{.PY_PREFIX}} python -m site_generator validate {{.CLI_ARGS}}"
+
+  validate:links:
+    desc: Run the inbuilt site_generator validator with dead link detection enabled
+    cmds:
+      - "{{.PY_PREFIX}} python -m site_generator validate --dead-links --allow-link '.*linkedin.com/.*' --allow-link '.*zendesk.com.*' {{.CLI_ARGS}}"
 
   emoji:
     desc: Update emoji files

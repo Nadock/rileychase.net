@@ -1,5 +1,6 @@
 import contextlib
 import pathlib
+import re
 
 import pydantic
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -11,24 +12,46 @@ class SiteGeneratorConfig(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="SG_", from_attributes=True)
 
     command: str
+    """The CLI command that was invoked to run the site generator."""
+    verbose: bool = False
+    """Enable verbose debug logging."""
+    debug_pages: bool = True
+    """Include `debug` type pages in the generated site output."""
 
     base: pathlib.Path
+    """The base directory the site generator is running from."""
     templates: pathlib.Path
+    """The root directory from which to discover Jinja templates."""
     pages: pathlib.Path
-    output: pathlib.Path
+    """The root directory from which to discover source markdown pages."""
     static: pathlib.Path
+    """The root directory from which to discover static files."""
+    output: pathlib.Path
+    """The root directory to write out generated site files."""
 
     default_template: str = "default.html"
+    """The default template name, used when a page doesn't specify a template."""
 
     blog_posts_per_page: int = 5
+    """
+    The maximum number of blog posts to display per page when generating a `blog_index`
+    type page.
+    """
 
     host: str = "localhost"
+    """The host to serve the live site at."""
     port: str = "8000"
+    """The port to serve the live site at."""
 
-    verbose: bool = False
+    dead_links: bool = False
+    """Enable dead link detection for the `validation` CLI command."""
+    allowed_links: list[re.Pattern] = pydantic.Field(..., default_factory=list)
+    """Patterns for URLs that are allowed without checking in dead link detection."""
 
     locale: str | None = None
+    """The site locale for OpenGraph tags or other purposes."""
     site_name: str | None = None
+    """The site name for OpenGraph tags or other purposes."""
 
     @pydantic.field_validator("templates", "pages", "static", "base", "output")
     @classmethod

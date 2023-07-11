@@ -1,5 +1,7 @@
 import asyncio
+import datetime
 import functools
+import time
 from collections.abc import Callable
 from http import server
 
@@ -82,25 +84,38 @@ class PipelineRunner(events.FileSystemEventHandler):
     """
     `watchdog` events handler that reruns the site pipeline on any change.
 
-    Additionally, `PipelineRunner` ensures that only one pipeline is running per
-    instance of this class.
+    The pipeline only runs once within each `window` of time, any additional events
+    within that time window are ignored.
     """
 
-    def __init__(self, cfg: config.SiteGeneratorConfig) -> None:
+    def __init__(
+        self,
+        cfg: config.SiteGeneratorConfig,
+        window: datetime.timedelta = datetime.timedelta(milliseconds=100),
+    ) -> None:
         super().__init__()
-        self._cfg = cfg
+        self.config = cfg
+        self.window = window
         self._lock = asyncio.Lock()
+        self._last_run: int = 0
 
     def on_any_event(self, event: events.FileSystemEvent) -> None:  # noqa: D102
-        asyncio.run(self.run(event))
+        relative_path = self.config.format_relative_path(event.src_path)
+        window_end = self._last_run + int(self.window.total_seconds() * 1_000_000_000)
+        now = time.time_ns()
 
-    async def run(self, event: events.FileSystemEvent) -> None:
+        if window_end >= now:
+            LOGGER.info(f"Skipping: {event.event_type}: {relative_path}")
+            return
+
+        LOGGER.info(f"Building: {event.event_type}: {relative_path}")
+        asyncio.run(self.run_pipeline())
+        self._last_run = now
+
+    async def run_pipeline(self) -> None:
         """Run the main `site_generator` pipeline."""
-        LOGGER.info(
-            f"File change detected in {self._cfg.format_relative_path(event.src_path)}"
-        )
         async with self._lock:
             try:
-                await pipeline.pipeline(self._cfg)
+                await pipeline.pipeline(self.config)
             except Exception as ex:
                 errors.log_error(ex)

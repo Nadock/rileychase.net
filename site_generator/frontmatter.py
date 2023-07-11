@@ -8,6 +8,8 @@ import pydantic
 from site_generator import config as _config
 from site_generator import emoji
 
+PageType = Literal["default"] | Literal["blog_index"] | Literal["debug"]
+
 
 class OpenGraphFrontmatter(pydantic.BaseModel):
     """Page Open Graph details extracted from markdown frontmatter content."""
@@ -75,16 +77,19 @@ class PageFrontmatter(pydantic.BaseModel):
     prescribed semantic meaning. It depends on the template how these values are used.
     """
 
-    type: Literal["default"] | Literal["blog_index"] = "default"  # noqa: A003
+    type: PageType = "default"  # noqa: A003
     """
     `type` is a special keyword that enable bespoke page handling. You normally do not
     need to specify this value, the default has no special meaning. However, you can
     set the page `type` to one of the following values to enable specific
     functionality.
-      - `"default"` is the default value and has no special meaning.
-      - `"blog_index"` marks this page as the root page for a blog. When being
-        processed, this file will use the `blog_index` pipeline instead of the default
-        `markdown` pipeline. The file must be named `index.md`.
+
+    - `default` is the default value and has no special meaning.
+    - `blog_index` marks this page as the root page for a blog. When being processed, this
+    file will use the `blog_index` pipeline instead of the default `markdown` pipeline.
+    The file must be named `index.md`.
+    - `debug` marks this page for local preview only, not to be included in the full site
+    build.
     """
 
     # The following fields are populated automatically, don't need to be in the

@@ -16,7 +16,7 @@ async def render_template(
     env.filters["render"] = _render_filter
 
     template = env.get_or_select_template(name)
-    return template.render(**render_kwargs)
+    return tidy_html(template.render(**render_kwargs))
 
 
 @jinja2.pass_context
@@ -33,3 +33,19 @@ def _render_filter(ctx: jinja2.runtime.Context, value: str) -> str:
     except Exception as ex:
         LOGGER.error(f"Failed to render template {value=}: {ex}")
         raise
+
+
+def tidy_html(content: str) -> str:
+    """
+    Simple HTML transformations to make output content tidy-er.
+
+    Current transformations performed:
+    - Lines with no non-whitespace characters are removed
+    - Repeated line breaks are collapsed
+    """
+    lines = []
+    for source_line in content.splitlines():
+        line = source_line.rstrip()
+        if line:
+            lines.append(line)
+    return "\n".join(lines)

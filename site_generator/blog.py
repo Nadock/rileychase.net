@@ -25,6 +25,9 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
         content, fm = await markdown.load_markdown(cfg, post)
         if not fm.date:
             raise ValueError("Cannot render blog post without a date")
+        if fm.type == "debug" and not cfg.debug_pages:
+            LOGGER.debug(f"Skipping debug blog page: {path}")
+            continue
 
         # Generate a preview of the post
         content = await markdown.render(content)
@@ -44,7 +47,7 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
         )
 
     # Sort post by their date
-    posts.sort(key=lambda p: p["date"])
+    posts.sort(key=lambda p: p["date"], reverse=True)
     return posts
 
 
