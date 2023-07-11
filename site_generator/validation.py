@@ -4,7 +4,7 @@ from collections.abc import AsyncGenerator
 from urllib import parse
 
 import aiofile
-import aiostream
+import aiostream  # type: ignore[import]
 import bs4
 import httpx
 
