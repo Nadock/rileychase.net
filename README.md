@@ -96,15 +96,15 @@ To deploy updates to this template run `task aws:acm:deploy`. This workflow reli
 Below is a list of all the stuff that I want to add to the site or the generator tool. Just because it's listed here doesn't mean I will do it though — again, this is just for me.
 
 - [ ] Decide on what we actually want for our favicon
-- [ ] Blog support (view list)
+- [x] Blog support (view list)
   - [ ] Tags support (view list, jump to page)
 - [x] Support rendering Jinja elements in page contents
 - [x] Enable auto-escaping where possible
-- [ ] OpenGraph social link preview headers
-- [ ] Dead link detection
+- [x] OpenGraph social link preview headers
+- [x] Dead link detection
 - [ ] Non production pages
   - Would imply also adding a "production" build mode
-- [ ] Conditional recompile
+- [x] Conditional recompile
   - ie: only recompile things that have changed
   - Also maybe look at "de-bouncing" the recompile trigger so a bulk edit of files only triggers one rebuild
-- [ ] Static file filters or glob matching so we can have thing in those directories that aren't in the final deployment
+- [x] Static file filters or glob matching so we can have thing in those directories that aren't in the final deployment
