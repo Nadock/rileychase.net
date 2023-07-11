@@ -1,5 +1,6 @@
 import contextlib
 import pathlib
+import re
 
 import pydantic
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -26,6 +27,8 @@ class SiteGeneratorConfig(BaseSettings):
     port: str = "8000"
 
     verbose: bool = False
+    dead_links: bool = False
+    allowed_links: list[re.Pattern] = pydantic.Field(..., default_factory=list)
 
     locale: str | None = None
     site_name: str | None = None

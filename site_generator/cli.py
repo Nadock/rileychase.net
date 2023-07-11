@@ -111,9 +111,23 @@ class SiteGeneratorCLI:
             help="Hostname the site will be hosted under.",
         )
 
-        _ = command_parsers.add_parser(
+        validate_parser = command_parsers.add_parser(
             "validate",
             help="Validate source file for semantic errors",
+        )
+        validate_parser.add_argument(
+            "--dead-links",
+            default=False,
+            action="store_true",
+            help="Check a website build for any dead links.",
+        )
+        validate_parser.add_argument(
+            "--allow-link",
+            default=[],
+            action="append",
+            dest="allowed_links",
+            type=str,
+            help="Regex pattern for a URL that is explicitly allowed.",
         )
 
     def run(self, argv: list[str]) -> None:
@@ -127,7 +141,7 @@ class SiteGeneratorCLI:
 
         args.base = pathlib.Path(".").resolve()
 
-        cfg = config.SiteGeneratorConfig.from_orm(args)
+        cfg = config.SiteGeneratorConfig.model_validate(args)
         logger = logging.configure_logging(cfg)
 
         for key, value in cfg.dict().items():
