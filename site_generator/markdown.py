@@ -42,7 +42,7 @@ async def _markdown_pipeline(
         "content": await render(content),
         "props": fm.get_props(),
         "meta": fm.get_meta(),
-        "info": get_template_info(cfg),
+        "info": get_template_info(cfg, path),
     }
 
     if fm.type == "blog_index":
@@ -84,7 +84,7 @@ async def load_markdown(
     Read file at path and extract markdown content and any YAML frontmatter separately.
 
     This does not parse the markdown content in any way, but does parse the YAML
-    frontmatter into a `dict` using `yaml.safe_load`.
+    frontmatter into `frontmatter.PageFrontmatter` using `yaml.safe_load`.
     """
     with path.open("r", encoding="utf-8") as file:
         lines = file.readlines()
@@ -144,16 +144,26 @@ async def render(content: str | None) -> str:
 
 
 def get_template_info(
-    cfg: config.SiteGeneratorConfig,
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
 ) -> dict[str, str | datetime.datetime]:
     """
     Populate and return a `dict` of general purpose information about an individual
     template render.
     """
-    info: dict[str, str | datetime.datetime] = {
-        "rendered_at": datetime.datetime.now().astimezone(),  # noqa: DTZ005
-    }
+    info: dict[str, str | datetime.datetime] = {}
 
+    # Output render timestamp
+    info["rendered_at"] = datetime.datetime.now().astimezone()  # noqa: DTZ005
+
+    # Source file last modified time
+    try:
+        info["modified_at"] = datetime.datetime.fromtimestamp(  # noqa: DTZ006
+            os.path.getmtime(path)
+        ).astimezone()
+    except OSError as ex:
+        LOGGER.warning(f"Unable to read file modified time: {ex}")
+
+    # Current git SHA
     git_head = cfg.base / ".git" / "HEAD"
     try:
         ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
