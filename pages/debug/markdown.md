@@ -92,7 +92,7 @@ this is some words in a paragraph
 
 [I'm a reference-style link][Arbitrary case-insensitive reference text]
 
-[I'm a relative reference to a repository file](../blob/master/LICENSE)
+[I'm a relative reference to a repository file](../../license)
 
 [You can use numbers for reference-style link definitions][1]
 
@@ -220,7 +220,7 @@ Raw unicode emoji 👍
 
 short name :+1:
 
-[More emoji](/emoji_test.html)
+[More emoji](/debug/emoji)
 
 
 ### Line wrap

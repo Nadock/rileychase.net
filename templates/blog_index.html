@@ -22,8 +22,8 @@
 
 <div class="blog_index--page_controls">
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==1 %} class="disabled" {% endif %}
-            href="/blog/_/{{ blog.current_page - 1}}/">&lt;</a>
+        <a {% if blog.current_page==1 %} class="disabled" {% else %} href="/blog/_/{{ blog.current_page - 1}}/" {% endif
+            %}>&lt;</a>
     </div>
 
     <div class="blog_index--page_control">
@@ -31,8 +31,8 @@
     </div>
 
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==blog.page_count %} class="disabled" {% endif
-            %}href="/blog/_/{{ blog.current_page + 1}}/">&gt;</a>
+        <a {% if blog.current_page==blog.page_count %} class="disabled" {% else %}
+            href="/blog/_/{{ blog.current_page + 1}}/" {% endif %}>&gt;</a>
     </div>
 </div>
 
