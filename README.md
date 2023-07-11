@@ -90,21 +90,3 @@ To deploy updates to this template run `task aws:gh-actions:deploy`. This workfl
 The CloudFormation template `:/aws/acm_cert_cfn.yml` contains the ACM Certificate used by CloudFront to serve our site contents at [rileychase.net](https://rileychase.net).
 
 To deploy updates to this template run `task aws:acm:deploy`. This workflow relies on the `.env` values `DOMAIN_NAME` and `HOSTED_ZONE_ID`.
-
-## To Do
-
-Below is a list of all the stuff that I want to add to the site or the generator tool. Just because it's listed here doesn't mean I will do it though — again, this is just for me.
-
-- [ ] Decide on what we actually want for our favicon
-- [x] Blog support (view list)
-  - [ ] Tags support (view list, jump to page)
-- [x] Support rendering Jinja elements in page contents
-- [x] Enable auto-escaping where possible
-- [x] OpenGraph social link preview headers
-- [x] Dead link detection
-- [x] Non production pages
-  - Would imply also adding a "production" build mode
-- [x] Conditional recompile
-  - ie: only recompile things that have changed
-  - Also maybe look at "de-bouncing" the recompile trigger so a bulk edit of files only triggers one rebuild
-- [x] Static file filters or glob matching so we can have thing in those directories that aren't in the final deployment
