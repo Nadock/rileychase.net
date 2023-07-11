@@ -109,12 +109,11 @@ class PipelineRunner(events.FileSystemEventHandler):
             return
 
         LOGGER.info(f"Building: {event.event_type}: {relative_path}")
-        asyncio.run(self.run(event))
+        asyncio.run(self.run_pipeline())
         self._last_run = now
 
-    async def run(self, event: events.FileSystemEvent) -> None:
+    async def run_pipeline(self) -> None:
         """Run the main `site_generator` pipeline."""
-        del event
         async with self._lock:
             try:
                 await pipeline.pipeline(self.config)
