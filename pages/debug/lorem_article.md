@@ -1,4 +1,5 @@
 ---
+type: debug
 title: Lorem ipsum
 subtitle: Elementum sagittis vitae
 description: dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua

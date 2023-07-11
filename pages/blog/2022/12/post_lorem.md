@@ -1,4 +1,5 @@
 ---
+type: debug
 title: Test Post, Please Ignore
 subtitle: If you're seeing this, no you're not.
 description: dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua

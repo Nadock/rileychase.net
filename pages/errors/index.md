@@ -1,4 +1,5 @@
 ---
+type: debug
 title: Error Pages
 subtitle: You're not actually supposed to see this 😱
 template: error.html
