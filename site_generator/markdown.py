@@ -156,11 +156,11 @@ def get_template_info(
     info: dict[str, str | datetime.datetime] = {}
 
     # Output render timestamp
-    info["rendered_at"] = datetime.datetime.now().astimezone()  # noqa: DTZ005
+    info["rendered_at"] = datetime.datetime.now().astimezone()
 
     # Source file last modified time
     try:
-        info["modified_at"] = datetime.datetime.fromtimestamp(  # noqa: DTZ006
+        info["modified_at"] = datetime.datetime.fromtimestamp(
             os.path.getmtime(path)
         ).astimezone()
     except OSError as ex:
