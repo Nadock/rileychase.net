@@ -67,6 +67,10 @@ The following tools run on every PR and must succeed before a branch can be merg
 
 All of these checks can be run locally with `task ci`.
 
+#### Temporary `cfn-lint` Workaround
+
+Currently `cfn-lint` is incompatible with Pydantic v2 (via a dependency of theirs). Until that is resolved, we can't install `cfn-lint` and Pydantic in the same Pipenv environment. To work around this for now, please install `cfn-lint` manually in a separate Python environment or rely on the pull request checks to run the Cloudformation linting.
+
 ### Deploys
 
 On every merge to main, if the site contents was modified, the site will be built and uploaded to AWS S3. Then an invalidation is run on the CloudFront Distribution that hosts the site so the new content appears to users.
