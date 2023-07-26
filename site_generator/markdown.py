@@ -161,7 +161,7 @@ def get_template_info(
     # Source file last modified time
     try:
         info["modified_at"] = datetime.datetime.fromtimestamp(
-            os.path.getmtime(path)
+            path.stat().st_mtime
         ).astimezone()
     except OSError as ex:
         LOGGER.warning(f"Unable to read file modified time: {ex}")
