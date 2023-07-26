@@ -7,7 +7,7 @@ from site_generator import config
 
 def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:  # noqa: ANN003
     if "base" not in kwargs:
-        kwargs["base"] = pathlib.Path(".")
+        kwargs["base"] = pathlib.Path()
     if "templates" not in kwargs:
         kwargs["templates"] = pathlib.Path("./templates")
     if "pages" not in kwargs:
@@ -25,7 +25,7 @@ def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:  # noqa: ANN003
     ("path", "expected"),
     [
         (None, None),
-        (pathlib.Path("."), pathlib.Path(".").absolute()),
+        (pathlib.Path(), pathlib.Path().absolute()),
     ],
 )
 def test_config__ensure_directory(path, expected):
@@ -36,9 +36,9 @@ def test_config__ensure_directory(path, expected):
 @pytest.mark.parametrize(
     ("base", "path", "expected"),
     [
-        (pathlib.Path("."), pathlib.Path("./test").absolute(), "./test"),
-        (pathlib.Path("."), "test", "./test"),
-        (pathlib.Path("."), "/usr/bin/true", "/usr/bin/true"),
+        (pathlib.Path(), pathlib.Path("./test").absolute(), "./test"),
+        (pathlib.Path(), "test", "./test"),
+        (pathlib.Path(), "/usr/bin/true", "/usr/bin/true"),
     ],
 )
 def test_config__format_relative_path(base, path, expected):

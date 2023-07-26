@@ -153,7 +153,7 @@ class SiteGeneratorCLI:
             self.root_parser.print_help(sys.stderr)
             return
 
-        args.base = pathlib.Path(".").resolve()
+        args.base = pathlib.Path().resolve()
 
         cfg = config.SiteGeneratorConfig.model_validate(args)
         logger = logging.configure_logging(cfg)
