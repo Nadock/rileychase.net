@@ -175,7 +175,7 @@
                 "sha256:539cc1d13202e33ca466e88b2807e29f4c13049d6d87031a3c110744495cb082",
                 "sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9"
             ],
-            "markers": "python_full_version >= '3.6.0'",
+            "markers": "python_version >= '3.6'",
             "version": "==2023.7.22"
         },
         "h11": {
@@ -247,11 +247,11 @@
         },
         "markdown": {
             "hashes": [
-                "sha256:065fd4df22da73a625f14890dd77eb8040edcbd68794bcd35943be14490608b2",
-                "sha256:8bf101198e004dc93e84a12a7395e31aac6a9c9942848ae1d99b9d72cf9b3520"
+                "sha256:225c6123522495d4119a90b3a3ba31a1e87a70369e03f14799ea9c0d7183a3d6",
+                "sha256:a4c1b65c0957b4bd9e7d86ddc7b3c9868fb9670660f6f99f6d1bca8954d5a941"
             ],
             "index": "pypi",
-            "version": "==3.4.3"
+            "version": "==3.4.4"
         },
         "markupsafe": {
             "hashes": [
