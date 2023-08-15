@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import argparse
 import asyncio
 import pathlib
 import sys
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from site_generator import commands, config, errors, logging
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class SiteGeneratorCLI:
@@ -159,7 +164,7 @@ class SiteGeneratorCLI:
         logger = logging.configure_logging(cfg)
 
         for key, value in cfg.dict().items():
-            logger.debug(f"config.{key} = {value}")  # noqa: G004
+            logger.debug(f"config.{key} = {value}")
 
         cmd = self._get_command(cfg)
         try:

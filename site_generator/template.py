@@ -1,9 +1,13 @@
-import pathlib
-from typing import Any
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
 
 import jinja2
 
 from site_generator import logging
+
+if TYPE_CHECKING:
+    import pathlib
 
 LOGGER = logging.getLogger()
 
@@ -30,8 +34,8 @@ def _render_filter(ctx: jinja2.runtime.Context, value: str) -> str:
     try:
         template = ctx.eval_ctx.environment.from_string(value)
         return template.render(**ctx.get_all())
-    except Exception as ex:
-        LOGGER.error(f"Failed to render template {value=}: {ex}")
+    except Exception:
+        LOGGER.exception(f"Failed to render template {value=}")
         raise
 
 

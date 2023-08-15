@@ -1,7 +1,11 @@
+from __future__ import annotations
+
 import logging
 import sys
+from typing import TYPE_CHECKING
 
-from site_generator import config
+if TYPE_CHECKING:
+    from site_generator import config
 
 
 def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:

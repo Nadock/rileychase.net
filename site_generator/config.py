@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import contextlib
 import pathlib
-import re
+import re  # noqa: TCH003
 
 import pydantic
 from pydantic_settings import BaseSettings, SettingsConfigDict
