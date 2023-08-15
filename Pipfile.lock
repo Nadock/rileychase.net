@@ -175,7 +175,7 @@
                 "sha256:539cc1d13202e33ca466e88b2807e29f4c13049d6d87031a3c110744495cb082",
                 "sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_full_version >= '3.6.0'",
             "version": "==2023.7.22"
         },
         "h11": {
@@ -426,11 +426,11 @@
         },
         "pydantic-settings": {
             "hashes": [
-                "sha256:342337fff50b23585e807a86dec85037900972364435c55c2fc00d16ff080539",
-                "sha256:6183a2abeab465d5a3ab69758e9a22d38b0cc2ba193f0b85f6971a252ea630f6"
+                "sha256:962dc3672495aad6ae96a4390fac7e593591e144625e5112d359f8f67fb75945",
+                "sha256:ddd907b066622bd67603b75e2ff791875540dc485b7307c4fffc015719da8625"
             ],
             "index": "pypi",
-            "version": "==2.0.2"
+            "version": "==2.0.3"
         },
         "pygments": {
             "hashes": [
