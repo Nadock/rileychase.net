@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 import datetime
 import os
 import pathlib
-from collections.abc import AsyncIterator
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import markdown
 import yaml
@@ -17,6 +18,9 @@ from site_generator import (
     pymdx_class_tags,
     template,
 )
+
+if TYPE_CHECKING:
+    from collections.abc import AsyncIterator
 
 LOGGER = logging.getLogger()
 

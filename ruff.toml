@@ -50,6 +50,9 @@ ignore = [
     # perflint
     "PERF401", # manual-list-comprehension
     "PERF203", # try-except-in-loop
+
+    # flake8-logging-format
+    "G004", # logging-f-string
 ]
 
 [per-file-ignores]

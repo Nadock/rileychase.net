@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import asyncio
 import contextlib
-import pathlib
-from collections.abc import AsyncGenerator
+from typing import TYPE_CHECKING
 from urllib import parse
 
 import aiofile
@@ -10,6 +11,10 @@ import bs4
 import httpx
 
 from site_generator import config, errors, markdown
+
+if TYPE_CHECKING:
+    import pathlib
+    from collections.abc import AsyncGenerator
 
 
 class Validator:

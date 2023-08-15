@@ -1,4 +1,6 @@
-import datetime
+from __future__ import annotations
+
+import datetime  # noqa: TCH003
 import pathlib
 from typing import Any, Literal
 from urllib import parse
@@ -8,7 +10,7 @@ import pydantic
 from site_generator import config as _config
 from site_generator import emoji
 
-PageType = Literal["default"] | Literal["blog_index"] | Literal["debug"]
+PageType = Literal["default", "blog_index", "debug"]
 
 
 class OpenGraphFrontmatter(pydantic.BaseModel):
