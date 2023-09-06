@@ -22,7 +22,7 @@ jobs:
     steps:
       # Set up
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create deployment
         uses: chrnorm/deployment-action@d42cde7132fcec920de534fffc3be83794335c00
