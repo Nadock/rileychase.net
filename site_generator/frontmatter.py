@@ -194,7 +194,8 @@ class PageFrontmatter(pydantic.BaseModel):
         in the page render but are used in other parts of the process, such as the
         `path` meta property.
         """
-        return self.dict(include={"meta"}).get("meta", {})
+        meta = self.model_dump(include={"meta"}).get("meta", {})
+        return meta if isinstance(meta, dict) else {}
 
     def validate_frontmatter(self) -> list[str]:
         """

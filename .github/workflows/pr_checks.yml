@@ -14,7 +14,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - uses: actions/setup-node@v3
         with:
@@ -42,21 +42,3 @@ jobs:
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \
                ci
-
-  # Temporaroly run cfn-lint seperately while it is incompatiable with Pydantic v2
-  cfn-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install Python dependencies
-        run: pip install cfn-lint==v0.78.2
-
-      - name: cfn-lint
-        run: cfn-lint --include-checks I -- ./aws/**/*.yml

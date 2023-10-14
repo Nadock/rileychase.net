@@ -22,7 +22,7 @@ tasks:
       - task: mdlint
       - task: build
       - task: validate:links
-      # - task: aws:lint  # cfn-lint currently incompatible with Pydantic v2
+      - task: aws:lint
 
   black:
     desc: Run psf/black code formatting tool
@@ -82,10 +82,7 @@ tasks:
   aws:lint:
     desc: Run cfn-lint across all templates
     cmds:
-      # - "{{.PY_PREFIX}} pipenv run cfn-lint --include-checks I -- ./aws/**/*.yml"
-      - echo "cfn-lint is current unavailable via task due to incompatibility with Pydantic v2, please install and run it manually."
-      - echo ">>> cfn-lint --include-checks I -- ./aws/**/*.yml"
-      - exit 1
+      - "{{.PY_PREFIX}} pipenv run cfn-lint --include-checks I -- ./aws/**/*.yml"
 
   aws:website:validate:
     desc: Validate the website_cfn.yml CloudFormation template
