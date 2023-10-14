@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from urllib import parse
 
 import aiofile
-import aiostream  # type: ignore[import]
+import aiostream
 import bs4
 import httpx
 
