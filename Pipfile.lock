@@ -1351,12 +1351,12 @@
         },
         "types-markdown": {
             "hashes": [
-                "sha256:8c2f5526bba29feee24040d4694ced554d09ae46d1f1523b2b739558beabae42",
-                "sha256:f1ff987576f347ec83aca0c2ced45e64e1deb771e0a6189744480013ccb59c96"
+                "sha256:be47d35cbe61d458bd17aec127f1da233cd6ed96fa9a131c710378a4e8857030",
+                "sha256:c23569d33718475dfae25c0036c6e6866f409e7077ee8a0728ab3db263d8e4a5"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.7'",
-            "version": "==3.5.0.0"
+            "markers": "python_version >= '3.8'",
+            "version": "==3.5.0.20240106"
         },
         "types-pyyaml": {
             "hashes": [
