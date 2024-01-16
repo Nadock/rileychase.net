@@ -28,7 +28,7 @@ class OpenGraphFrontmatter(pydantic.BaseModel):
     url: str | None = None
     """The og:url for this page, defaults to the computed page URL if not set."""
 
-    type: str = "website"  # noqa: A003
+    type: str = "website"
     """The og:type for this page, defaults to `"website"` if not set."""
 
     locale: str | None = None
@@ -79,7 +79,7 @@ class PageFrontmatter(pydantic.BaseModel):
     prescribed semantic meaning. It depends on the template how these values are used.
     """
 
-    type: PageType = "default"  # noqa: A003
+    type: PageType = "default"
     """
     `type` is a special keyword that enable bespoke page handling. You normally do not
     need to specify this value, the default has no special meaning. However, you can
