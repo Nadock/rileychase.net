@@ -18,6 +18,18 @@ Parameters:
 Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            # W3045 — "Controlling access to an S3 bucket should be done with bucket policies"
+            #
+            # While this is probably better, some work to understand how to correctly
+            # provision a bucket policy that has the same effect without breaking the
+            # CloudFront access (among other things) is required.
+            #
+            # https://github.com/Nadock/rileychase.net/issues/242
+            - W3045
     Properties:
       AccessControl: Private
       BucketEncryption:
