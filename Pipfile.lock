@@ -27,12 +27,12 @@
         },
         "aiostream": {
             "hashes": [
-                "sha256:055aa4bc49d72cff70e6325bc29732a0e2766dfdc6414cd38e77d23345788aa9",
-                "sha256:a45eff6f9e4c3e338441ce69d309a4f739fff7bb626cfe602a2669049d797973"
+                "sha256:054660370be9d37f6fe3ece3851009240416bd082e469fd90cc8673d3818cf71",
+                "sha256:b71b519a2d66c38f0872403ab86417955b77352f08d9ad02ad46fc3926b389f4"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==0.5.1"
+            "version": "==0.5.2"
         },
         "annotated-types": {
             "hashes": [
