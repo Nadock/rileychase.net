@@ -33,7 +33,7 @@ jobs:
           initial-status: in_progress
 
       - name: Setup go-task/task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
         with:
           version: 3.x
 
