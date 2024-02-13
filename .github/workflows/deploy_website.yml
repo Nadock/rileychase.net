@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create deployment
-        uses: chrnorm/deployment-action@d42cde7132fcec920de534fffc3be83794335c00
+        uses: chrnorm/deployment-action@55729fcebec3d284f60f5bcabbd8376437d696b1
         id: deployment
         with:
           token: ${{ github.token }}
