@@ -34,7 +34,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version-file: .python-version
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
