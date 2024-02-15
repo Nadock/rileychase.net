@@ -6,9 +6,8 @@ file.
 
 import json
 import pathlib
+import subprocess
 import sys
-
-import black
 
 
 def main() -> None:
@@ -46,7 +45,8 @@ def main() -> None:
 
     lines.append("}")
 
-    dest.write_text(black.format_str("\n".join(lines), mode=black.Mode()), "utf-8")
+    dest.write_text("\n".join(lines), encoding="utf-8")
+    subprocess.run(f"ruff format {dest.absolute()}", check=True, shell=True)  # noqa: S602
 
 
 if __name__ == "__main__":
