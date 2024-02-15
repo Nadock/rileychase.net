@@ -19,18 +19,12 @@ jobs:
       id-token: write
       contents: read
       deployments: write
+    environment:
+      name: production
+      url: https://rileychase.net
     steps:
-      # Set up
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Create deployment
-        uses: chrnorm/deployment-action@55729fcebec3d284f60f5bcabbd8376437d696b1
-        id: deployment
-        with:
-          token: ${{ github.token }}
-          environment-url: https://rileychase.net
-          initial-status: in_progress
 
       - name: Setup go-task/task
         uses: arduino/setup-task@v2
@@ -40,7 +34,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version-file: .python-version
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -55,7 +49,6 @@ jobs:
           echo "$(pipenv --venv)/bin" >> $GITHUB_PATH
           echo "PIPENV_ACTIVE=1" >> $GITHUB_ENV
 
-      # Build
       - name: Build Website
         run: |
           task --output group \
@@ -63,28 +56,8 @@ jobs:
                --output-group-end "::endgroup::" \
                build validate:links
 
-      # Publish
       - name: Deploy Website
         run: aws s3 sync ./output s3://${{ secrets.BUCKET_NAME }}/website --exclude "**/*.md" --delete
 
       - name: Invalidate Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --path "/*"
-
-      # Tear down
-      - name: Record deployment success
-        if: success()
-        uses: chrnorm/deployment-status@2afb7d27101260f4a764219439564d954d10b5b0
-        with:
-          token: ${{ github.token }}
-          environment-url: ${{ steps.deployment.outputs.environment_url }}
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-          state: success
-
-      - name: Record deployment failure
-        if: failure()
-        uses: chrnorm/deployment-status@2afb7d27101260f4a764219439564d954d10b5b0
-        with:
-          token: ${{ github.token }}
-          environment-url: ${{ steps.deployment.outputs.environment_url }}
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-          state: failure

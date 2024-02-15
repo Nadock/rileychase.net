@@ -15,15 +15,16 @@ async def pipeline(cfg: config.SiteGeneratorConfig) -> None:
         LOGGER.debug(f"{cfg.format_relative_path(cfg.output)} cleared")
     except Exception as ex:
         raise errors.PipelineError(
-            f"Cannot clear output directory {cfg.format_relative_path(cfg.output)}: {ex}"
+            f"Cannot clear output directory {cfg.format_relative_path(cfg.output)}: "
+            f"{ex}"
         ) from ex
 
     tasks = []
     async for page in markdown.find_markdown(cfg.pages):
-        tasks.append(markdown.markdown_pipeline(cfg, page))
+        tasks.append(markdown.markdown_pipeline(cfg, page))  # noqa: PERF401
 
     async for file in static.find_static(cfg.static):
-        tasks.append(static.static_pipeline(cfg, file))
+        tasks.append(static.static_pipeline(cfg, file))  # noqa: PERF401
 
     await asyncio.gather(*tasks)
     time_en = time.time_ns()

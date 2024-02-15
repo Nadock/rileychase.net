@@ -6,7 +6,7 @@ import pytest
 from site_generator import config_test, frontmatter
 
 
-def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:  # noqa: ANN003
+def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:
     if "file" not in kwargs:
         kwargs["file"] = pathlib.Path("./pages/test.md").absolute()
     return frontmatter.PageFrontmatter(**kwargs)
@@ -21,14 +21,16 @@ def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:  # noqa: ANN
         ({"template": "foo.html"}, {"default_template": "bar.html"}, "foo.html"),
     ],
 )
-def test_page_frontmatter__get_template_name(fm_kwargs, cfg_kwargs, expected):
+def test_page_frontmatter__get_template_name(
+    fm_kwargs: dict, cfg_kwargs: dict, expected: str
+) -> None:
     fm = fake_page_frontmatter(**fm_kwargs)
     fm.config = config_test.fake_test_config(**cfg_kwargs)
 
     assert fm.get_template_name() == expected
 
 
-def test_page_frontmatter__get_template_name__no_config():
+def test_page_frontmatter__get_template_name__no_config() -> None:
     fm = fake_page_frontmatter()
     with pytest.raises(ValueError, match="config must be set"):
         fm.get_template_name()
@@ -44,14 +46,16 @@ def test_page_frontmatter__get_template_name__no_config():
         ({"path": "/foo/bar/baz"}, {}, "foo/bar/baz/index.html"),
     ],
 )
-def test_page_frontmatter__get_output_path(fm_kwargs, cfg_kwargs, expected):
+def test_page_frontmatter__get_output_path(
+    fm_kwargs: dict, cfg_kwargs: dict, expected: str
+) -> None:
     fm = fake_page_frontmatter(**fm_kwargs)
     fm.config = config_test.fake_test_config(**cfg_kwargs)
 
     assert fm.get_output_path() == fm.config.output / expected
 
 
-def test_page_frontmatter__get_output_path__no_config():
+def test_page_frontmatter__get_output_path__no_config() -> None:
     fm = fake_page_frontmatter()
     with pytest.raises(ValueError, match="config must be set"):
         fm.get_output_path()
@@ -116,7 +120,7 @@ def test_page_frontmatter__get_output_path__no_config():
         ),
     ],
 )
-def test_page_frontmatter__get_props(fm_kwargs, expected):
+def test_page_frontmatter__get_props(fm_kwargs: dict, expected: dict) -> None:
     fm = fake_page_frontmatter(**fm_kwargs)
     fm.config = config_test.fake_test_config()
     assert fm.get_props() == expected

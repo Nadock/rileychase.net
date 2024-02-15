@@ -10,22 +10,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Tooling installs
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version-file: .python-version
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
 
       - name: Setup go-task/task
         uses: arduino/setup-task@v2
         with:
           version: 3.x
 
-      # Dependency installs
       - name: Install Python dependencies
         run: |
           pip install pipenv

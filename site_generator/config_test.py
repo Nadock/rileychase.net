@@ -5,7 +5,7 @@ import pytest
 from site_generator import config
 
 
-def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:  # noqa: ANN003
+def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:
     if "base" not in kwargs:
         kwargs["base"] = pathlib.Path()
     if "templates" not in kwargs:
@@ -28,7 +28,9 @@ def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:  # noqa: ANN003
         (pathlib.Path(), pathlib.Path().absolute()),
     ],
 )
-def test_config__ensure_directory(path, expected):
+def test_config__ensure_directory(
+    path: pathlib.Path | None, expected: pathlib.Path | None
+) -> None:
     actual = config.SiteGeneratorConfig.ensure_directory(path)  # type: ignore[call-arg]
     assert actual == expected
 
@@ -41,6 +43,8 @@ def test_config__ensure_directory(path, expected):
         (pathlib.Path(), "/usr/bin/true", "/usr/bin/true"),
     ],
 )
-def test_config__format_relative_path(base, path, expected):
+def test_config__format_relative_path(
+    base: pathlib.Path, path: pathlib.Path | str, expected: str
+) -> None:
     cfg = fake_test_config(base=base)
     assert cfg.format_relative_path(path) == expected

@@ -6,9 +6,8 @@ file.
 
 import json
 import pathlib
+import subprocess
 import sys
-
-import black
 
 
 def main() -> None:
@@ -42,11 +41,12 @@ def main() -> None:
 
     for emoji_record in emoji_db:
         for alias in emoji_record["aliases"]:
-            lines.append(f'    "{alias}": "{emoji_record["emoji"]}",')
+            lines.append(f'    "{alias}": "{emoji_record["emoji"]}",')  # noqa: PERF401
 
     lines.append("}")
 
-    dest.write_text(black.format_str("\n".join(lines), mode=black.Mode()), "utf-8")
+    dest.write_text("\n".join(lines), encoding="utf-8")
+    subprocess.run(f"ruff format {dest.absolute()}", check=True, shell=True)  # noqa: S602
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+# Must not be in a type checking block for Pydantic
 import datetime  # noqa: TCH003
 import pathlib
 from typing import Any, Literal
@@ -87,11 +88,11 @@ class PageFrontmatter(pydantic.BaseModel):
     functionality.
 
     - `default` is the default value and has no special meaning.
-    - `blog_index` marks this page as the root page for a blog. When being processed, this
-    file will use the `blog_index` pipeline instead of the default `markdown` pipeline.
-    The file must be named `index.md`.
-    - `debug` marks this page for local preview only, not to be included in the full site
-    build.
+    - `blog_index` marks this page as the root page for a blog. When being processed,
+       this file will use the `blog_index` pipeline instead of the default `markdown`
+       pipeline. The file must be named `index.md`.
+    - `debug` marks this page for local preview only, not to be included in the full
+       site build.
     """
 
     # The following fields are populated automatically, don't need to be in the

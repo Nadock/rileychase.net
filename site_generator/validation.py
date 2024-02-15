@@ -69,9 +69,10 @@ class Validator:
             self._link_cache = {}
 
         # Discover all *.html files
-        streams = []
-        for path in self.cfg.output.glob("**/*.html"):
-            streams.append(self._validate_dead_links(path))
+        streams = [
+            self._validate_dead_links(path)
+            for path in self.cfg.output.glob("**/*.html")
+        ]
 
         # Yield all errors as they are found
         async with aiostream.stream.merge(*streams).stream() as stream:
@@ -115,9 +116,7 @@ class Validator:
             async with aiofile.async_open(p, encoding="utf-8") as file:
                 return (p, await file.read())
 
-        coros = []
-        for path in self.cfg.output.glob("**/*.html"):
-            coros.append(_read_file(path))
+        coros = [_read_file(path) for path in self.cfg.output.glob("**/*.html")]
 
         for coro in asyncio.as_completed(coros):
             yield await coro

@@ -11,9 +11,6 @@
   <a href="https://github.com/Nadock/rileychase.net/blob/main/Pipfile">
     <img alt="Python 3.12" src="https://img.shields.io/github/pipenv/locked/python-version/Nadock/rileychase.net">
   </a>
-  <a href="https://github.com/psf/black">
-    <img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
-  </a>
   <a href="https://github.com/astral-sh/ruff">
     <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json" alt="Ruff" style="max-width:100%;">
   </a>
@@ -59,7 +56,7 @@ Validate the site pages contents for valid content and front matter information.
 
 The following tools run on every PR and must succeed before a branch can be merged to `main`.
 
-- `ruff`, `mypy`, and `black --check` are run to validate code quality.
+- `ruff` & `mypy` are run to validate code quality.
 - Unit tests are run with `pytest`.
 - The `site_generator validate` command is run to check page front matter.
 - Markdown content is validated by `markdownlint` — install Node.js dependencies for this tool.
