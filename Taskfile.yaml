@@ -15,29 +15,24 @@ tasks:
   ci:
     desc: Run all tasks required to merge code into the main branch
     cmds:
-      - task: black:check
-      - task: mypy
-      - task: ruff
+      - task: ruff:check
       - task: pytest
+      - task: mypy
       - task: mdlint
       - task: build
       - task: validate:links
       - task: aws:lint
 
-  black:
-    desc: Run psf/black code formatting tool
+  ruff:check:
+    desc: Check linting and formatting of Python sources with `astral-sh/ruff`.
     cmds:
-      - "{{.PY_PREFIX}} black {{.CLI_ARGS}} ./site_generator"
+      - "{{.PY_PREFIX}} ruff check {{.CLI_ARGS}} ."
+      - "{{.PY_PREFIX}} ruff format --check {{.CLI_ARGS}} ."
 
-  black:check:
-    desc: Run psf/black code formatting tool in check only mode
+  ruff:fix:
+    desc: Fix linting errors in Python sources with `astral-sh/ruff`.
     cmds:
-      - "{{.PY_PREFIX}} black {{.CLI_ARGS}} --check ./site_generator"
-
-  ruff:
-    desc: Lint Python sources with astral-sh/ruff
-    cmds:
-      - "{{.PY_PREFIX}} ruff check {{.CLI_ARGS}} */**.py"
+      - "{{.PY_PREFIX}} ruff check --fix {{.CLI_ARGS}} ."
 
   mypy:
     desc: Run python/mypy Python type checking tool

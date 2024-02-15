@@ -42,7 +42,7 @@ def main() -> None:
 
     for emoji_record in emoji_db:
         for alias in emoji_record["aliases"]:
-            lines.append(f'    "{alias}": "{emoji_record["emoji"]}",')
+            lines.append(f'    "{alias}": "{emoji_record["emoji"]}",')  # noqa: PERF401
 
     lines.append("}")
 

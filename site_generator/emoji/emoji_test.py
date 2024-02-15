@@ -17,5 +17,5 @@ from site_generator.emoji import emoji
         (":not_an_emoji:", ":not_an_emoji:"),
     ],
 )
-def test_replace_emoji(test, expected):
+def test_replace_emoji(test: str, expected: str) -> None:
     assert emoji.replace_emoji(test) == expected
