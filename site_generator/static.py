@@ -19,7 +19,8 @@ async def static_pipeline(
         output = (cfg.output / path.relative_to(cfg.static)).absolute()
     except Exception as ex:
         raise errors.PipelineError(
-            f"Cannot compute output location for static file {cfg.format_relative_path(path)}: {ex}"
+            f"Cannot compute output location for static file "
+            f"{cfg.format_relative_path(path)}: {ex}"
         ) from ex
 
     try:
@@ -27,7 +28,8 @@ async def static_pipeline(
         output = shutil.copy(path, output)
     except Exception as ex:
         raise errors.PipelineError(
-            f"Unable to write static file {cfg.format_relative_path(path)} to output: {ex}"
+            f"Unable to write static file {cfg.format_relative_path(path)} to output: "
+            f"{ex}"
         ) from ex
 
     LOGGER.debug(

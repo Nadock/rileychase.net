@@ -1,0 +1,55 @@
+[tool.ruff]
+target-version = "py312"
+exclude = []
+lint.select = ["ALL"]
+lint.ignore = [
+    # Docstrings
+    "D100", # undocumented-public-module
+    "D104", # undocumented-public-package
+    "D105", # undocumented-magic-method
+    "D107", # undocumented-public-init
+    "D200", # fits-on-one-line
+    "D205", # blank-line-after-summary
+    "D212", # multi-line-summary-first-line
+
+    # Type annotations
+    "ANN101", # missing-type-self
+    "ANN102", # missing-type-cls
+    "ANN401", # any-type
+
+    # Code design
+    "A001",    # builtin-variable-shadowing
+    "A002",    # builtin-argument-shadowing
+    "A003",    # builtin-attribute-shadowing
+    "BLE001",  # blind-except
+    "EM101",   # raw-string-in-exception
+    "EM102",   # f-string-in-exception
+    "ERA001",  # commented-out-code
+    "G004",    # logging-f-string
+    "PLR0913", # too-many-arguments
+    "TRY003",  # raise-vanilla-args
+
+    # Meta
+    "FIX002", # line-contains-todo
+    "TD003",  # missing-todo-link
+    "E741",   # ambiguous-variable-name
+
+    # Formatter conflicts
+    "ISC001", # single-line-implicit-string-concatenation
+    "COM812", # missing-trailing-comma
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/*_test.py" = [
+    "S101",   # assert
+    "D103",   # undocumented-public-function
+    "ANN003", # missing-type-kwargs
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+
+[tool.mypy]
+show_error_codes = true
+pretty = true
