@@ -194,6 +194,23 @@ Resources:
       FunctionCode: |
         function handler(event) {
             var request = event.request;
+
+            // Redirect users on alternate domains back to the primary domain.
+            var host = event.request.headers.host.value;
+            if (host !== 'rileychase.net') {
+              var location = 'https://rileychase.net'
+              if (!request.uri.startsWith('/')) {
+                location += '/'
+              }
+              location += request.uri
+
+              return {
+                statusCode: 302,
+                statusDescription: 'Found',
+                headers: { 'location': { value: location } }
+              }
+            }
+
             var uri = request.uri;
             var leaf = uri.split("/")[uri.split("/").length - 1];
 
