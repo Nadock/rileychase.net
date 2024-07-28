@@ -52,7 +52,7 @@ def live(cfg: config.SiteGeneratorConfig) -> Callable:
 
         # Start serving content
         handler = functools.partial(
-            LoggingSimpleHTTPRequestHandler, directory=cfg.output
+            LoggingSimpleHTTPRequestHandler, directory=str(cfg.output.resolve())
         )
         try:
             with server.ThreadingHTTPServer((cfg.host, int(cfg.port)), handler) as srv:
