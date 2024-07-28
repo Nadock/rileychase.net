@@ -28,6 +28,8 @@ Resources:
           Value: rileychase.net
         - Key: STAGE
           Value: production
+      SubjectAlternativeNames:
+        - taylorchase.net
 
 
 Outputs:
