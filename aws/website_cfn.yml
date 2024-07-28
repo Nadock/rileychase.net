@@ -80,6 +80,9 @@ Resources:
       DistributionConfig:
         Aliases:
           - !Ref DomainName
+          # This is not portable, if you're copying this you'll want to remove the
+          # additional domains below.
+          - taylorchase.net
         Comment: !Ref AWS::StackName
         CustomErrorResponses:
           - ErrorCode: 400
@@ -216,14 +219,14 @@ Resources:
           AliasTarget:
             DNSName: !GetAtt WebsiteDistribution.DomainName
             EvaluateTargetHealth: false
-            # The  following HosteZoneId is always used for alias records pointing to CF.
+            # The following HosteZoneId is always used for alias records pointing to CF.
             HostedZoneId: Z2FDTNDATAQYW2
         - Name: !Ref DomainName
           Type: AAAA
           AliasTarget:
             DNSName: !GetAtt WebsiteDistribution.DomainName
             EvaluateTargetHealth: false
-            # The  following HosteZoneId is always used for alias records pointing to CF.
+            # The following HosteZoneId is always used for alias records pointing to CF.
             HostedZoneId: Z2FDTNDATAQYW2
 
 
