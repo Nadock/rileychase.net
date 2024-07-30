@@ -447,12 +447,12 @@
         },
         "pymdown-extensions": {
             "hashes": [
-                "sha256:3ab1db5c9e21728dabf75192d71471f8e50f216627e9a1fa9535ecb0231b9940",
-                "sha256:f938326115884f48c6059c67377c46cf631c733ef3629b6eed1349989d1b30cb"
+                "sha256:6ff740bcd99ec4172a938970d42b96128bdc9d4b9bcad72494f29921dc69b753",
+                "sha256:d323f7e90d83c86113ee78f3fe62fc9dee5f56b54d912660703ea1816fed5626"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==10.8.1"
+            "version": "==10.9"
         },
         "python-dotenv": {
             "hashes": [
