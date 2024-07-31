@@ -28,6 +28,10 @@ Resources:
           Value: rileychase.net
         - Key: STAGE
           Value: production
+      SubjectAlternativeNames:
+        - rileychase.au
+        - taylorchase.au
+        - taylorchase.net
 
 
 Outputs:

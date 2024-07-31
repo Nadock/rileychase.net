@@ -80,6 +80,11 @@ Resources:
       DistributionConfig:
         Aliases:
           - !Ref DomainName
+          # This is not portable, if you're copying this you'll want to remove the
+          # additional domains below.
+          - rileychase.au
+          - taylorchase.net
+          - taylorchase.au
         Comment: !Ref AWS::StackName
         CustomErrorResponses:
           - ErrorCode: 400
@@ -191,6 +196,23 @@ Resources:
       FunctionCode: |
         function handler(event) {
             var request = event.request;
+
+            // Redirect users on alternate domains back to the primary domain.
+            var host = event.request.headers.host.value;
+            if (host !== 'rileychase.net') {
+              var location = 'https://rileychase.net'
+              if (!request.uri.startsWith('/')) {
+                location += '/'
+              }
+              location += request.uri
+
+              return {
+                statusCode: 302,
+                statusDescription: 'Found',
+                headers: { 'location': { value: location } }
+              }
+            }
+
             var uri = request.uri;
             var leaf = uri.split("/")[uri.split("/").length - 1];
 
@@ -216,14 +238,14 @@ Resources:
           AliasTarget:
             DNSName: !GetAtt WebsiteDistribution.DomainName
             EvaluateTargetHealth: false
-            # The  following HosteZoneId is always used for alias records pointing to CF.
+            # The following HosteZoneId is always used for alias records pointing to CF.
             HostedZoneId: Z2FDTNDATAQYW2
         - Name: !Ref DomainName
           Type: AAAA
           AliasTarget:
             DNSName: !GetAtt WebsiteDistribution.DomainName
             EvaluateTargetHealth: false
-            # The  following HosteZoneId is always used for alias records pointing to CF.
+            # The following HosteZoneId is always used for alias records pointing to CF.
             HostedZoneId: Z2FDTNDATAQYW2
 
 
