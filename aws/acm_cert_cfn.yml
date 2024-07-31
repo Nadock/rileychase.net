@@ -29,6 +29,8 @@ Resources:
         - Key: STAGE
           Value: production
       SubjectAlternativeNames:
+        - rileychase.au
+        - taylorchase.au
         - taylorchase.net
 
 
