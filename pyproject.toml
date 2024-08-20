@@ -33,6 +33,7 @@ lint.ignore = [
     "FIX002", # line-contains-todo
     "TD003",  # missing-todo-link
     "E741",   # ambiguous-variable-name
+    "ICN001", # unconventional-import-alias
 
     # Formatter conflicts
     "ISC001", # single-line-implicit-string-concatenation
