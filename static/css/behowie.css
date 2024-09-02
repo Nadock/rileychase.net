@@ -1,0 +1,19 @@
+#canvas {
+    display: none;
+}
+
+.camera {
+    display: grid;
+    grid-column: auto auto;
+    grid-row: auto auto;
+}
+
+.camera--video {
+    outline: red solid 1px;
+}
+
+.camera--button {}
+
+.camera--button.hidden {
+    display: none;
+}

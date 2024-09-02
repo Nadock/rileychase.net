@@ -1,0 +1,37 @@
+{% extends "default.html" %}
+
+{% block stylesheets %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="/css/behowie.css">
+{% endblock stylesheets %}
+
+{% block scripts %}
+<script type="text/javascript" src="/js/behowie.js"></script>
+{% endblock scripts %}
+
+{% block content %}
+
+{#
+TODO:
+- Seperate buttons for starting and taking a photo
+- Take front and back images
+- Hide camera stram when images taken, add button for retake to clear image and restore take photo button
+- Get BeHowie ID from URL
+- POST images and ID back to Howie
+#}
+
+<div class="camera" id="video-container">
+    <video class="camera--video" id="video" playsinline>Video stream not available.</video>
+    <button class="camera--button" id="startButton">BeHowie</button>
+    <button class="camera--button hidden" id="flipButton">Flip</button>
+    <button class="camera--button hidden" id="captureButton">Capture</button>
+</div>
+
+<canvas id="canvas"></canvas>
+<div class="output">
+    <img id="userPhoto" alt="The screen capture will appear in this box." />
+    <img id="environmentPhoto" alt="The screen capture will appear in this box." />
+</div>
+
+
+{% endblock content %}

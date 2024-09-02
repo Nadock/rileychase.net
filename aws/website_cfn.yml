@@ -170,7 +170,7 @@ Resources:
             Override: true
             Preload: true
           ContentSecurityPolicy:
-            ContentSecurityPolicy: "default-src 'self';"
+            ContentSecurityPolicy: "default-src 'self'; script-src 'self'; img-src *;"
             Override: true
           ContentTypeOptions:
             Override: true

@@ -54,13 +54,15 @@ def live(cfg: config.SiteGeneratorConfig) -> Callable:
         handler = functools.partial(
             LoggingSimpleHTTPRequestHandler, directory=str(cfg.output.resolve())
         )
-        try:
-            with server.ThreadingHTTPServer((cfg.host, int(cfg.port)), handler) as srv:
+        with server.ThreadingHTTPServer((cfg.host, int(cfg.port)), handler) as srv:
+            try:
                 LOGGER.info(f"Live server listening at: http://{cfg.host}:{cfg.port}")
                 srv.serve_forever()
-        except KeyboardInterrupt:
-            pass
-        finally:
+            except KeyboardInterrupt:
+                pass
+
+            LOGGER.info("Shutting down...")
+            srv.shutdown()
             observer.stop()
             observer.join()
 

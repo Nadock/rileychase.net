@@ -25,7 +25,7 @@ async def static_pipeline(
 
     try:
         output.parent.mkdir(parents=True, exist_ok=True)
-        output = shutil.copy(path, output)
+        output = shutil.copy2(path, output)
     except Exception as ex:
         raise errors.PipelineError(
             f"Unable to write static file {cfg.format_relative_path(path)} to output: "

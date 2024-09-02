@@ -69,6 +69,14 @@ tasks:
     cmds:
       - "{{.PY_PREFIX}} python -m site_generator validate --dead-links --allow-link '.*linkedin.com/.*' --allow-link '.*zendesk.com.*' {{.CLI_ARGS}}"
 
+  deploy:
+    desc: Build, validate, and deploy the website content
+    cmds:
+      - task: build
+      - task: validate:links
+      - aws s3 sync ./output s3://$BUCKET_NAME/website --exclude "**/*.md" --delete
+      - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --path "/*"
+
   emoji:
     desc: Update emoji files
     cmds:
