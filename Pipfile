@@ -18,7 +18,7 @@ pydantic-settings = "~=2.4.0"
 pygments = "~=2.18.0"
 pymdown-extensions = "~=10.0"
 pyyaml = "~=6.0"
-watchdog = "~=4.0.0"
+watchdog = "~=5.0.1"
 
 [dev-packages]
 cfn-lint = "~=1.10.3"
