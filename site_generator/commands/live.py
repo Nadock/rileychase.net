@@ -27,13 +27,13 @@ def live(cfg: config.SiteGeneratorConfig) -> Callable:
         observer = observers.Observer()
         observer.schedule(
             pipeline_runner,
-            cfg.pages,
+            str(cfg.pages.resolve()),
             recursive=True,
         )
         LOGGER.debug(f"Watching {cfg.format_relative_path(cfg.pages)} for file changes")
         observer.schedule(
             pipeline_runner,
-            cfg.templates,
+            str(cfg.templates.resolve()),
             recursive=True,
         )
         LOGGER.debug(
@@ -41,7 +41,7 @@ def live(cfg: config.SiteGeneratorConfig) -> Callable:
         )
         observer.schedule(
             pipeline_runner,
-            cfg.static,
+            str(cfg.static.resolve()),
             recursive=True,
         )
         LOGGER.debug(
