@@ -71,13 +71,16 @@ class SiteGeneratorConfig(BaseSettings):
 
         return path
 
-    def format_relative_path(self, path: pathlib.Path | str) -> str:
+    def format_relative_path(self, path: pathlib.Path | str | bytes) -> str:
         """
         Call `path.relative_to(SiteGeneratorConfig.base)` and return the result.
 
         If any error occurs while calling `relative_to` the original `path` is returned
         unmodified.
         """
+        if isinstance(path, bytes):
+            path = pathlib.Path(path.decode("utf-8"))
+
         if isinstance(path, str):
             path = pathlib.Path(path)
 
