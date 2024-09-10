@@ -609,28 +609,28 @@
         },
         "boto3": {
             "hashes": [
-                "sha256:bdfb8dd2564e5cf2f5095fb8e3a0a4612202654c1196692dddd9bc48aadc7657",
-                "sha256:f5834dd908edda56c3da86b908693c7cd1c17c2f8150de736e9e90c56ecc78f6"
+                "sha256:5e286daa84f945e4c57b133fc96bd2abbcf4066e5d4e63c591ce5e949913d6fd",
+                "sha256:c8e3567a843bee89b826b71916748088386ccd48014f0f55f56288215a686048"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==1.35.11"
+            "version": "==1.35.15"
         },
         "botocore": {
             "hashes": [
-                "sha256:e9b647b6cf1f63fd701c27433802d1c4342838a37fd152b40fe53b967fd19af4",
-                "sha256:f5f671f8f9566f28bed496017ea94d275ca5c253e9e4f91cd56cb7a293e37d0c"
+                "sha256:a01a7668941c9276ca7697fb0b09a47ab1f13e585c5ca6551270528f4e086de8",
+                "sha256:bbfe4f6cd417d1d097900db062f1017e5185775acdeccd0eff1ec0f499633242"
             ],
             "markers": "python_version >= '3.8'",
-            "version": "==1.35.11"
+            "version": "==1.35.15"
         },
         "cfn-lint": {
             "hashes": [
-                "sha256:1febc11b11d3def800ea61d3bc4b7dbf5a338c92ce4fbf4443643d5935fb031b",
-                "sha256:97fbae3c9ff4ca905f97e8fc2687a915a193d28610c71e84eb093c58108b3fc2"
+                "sha256:14c2faa79b421c0ceeb09e201f225ff984efea39b1dd34ba98979e4107b709d9",
+                "sha256:30fac1eec8acb1fb5f66300c8f2e17aaffad9788ccb7dc7f12bd0aee571300d1"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==1.12.1"
+            "version": "==1.12.4"
         },
         "iniconfig": {
             "hashes": [
