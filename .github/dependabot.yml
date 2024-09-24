@@ -10,6 +10,11 @@ updates:
       time: "07:00"
       timezone: Australia/Adelaide
     versioning-strategy: increase-if-necessary
+    groups:
+      python-prod:
+        dependency-type: production
+      python-dev:
+        dependency-type: development
     labels:
       - dependencies
       - python
