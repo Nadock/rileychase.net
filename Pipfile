@@ -7,7 +7,7 @@ verify_ssl = true
 python_version = "3.12"
 
 [packages]
-aiofile = "~=3.8.7"
+aiofile = "~=3.9.0"
 aiostream = "~=0.6.1"
 beautifulsoup4 = "~=4.12.0"
 httpx = {extras = ["brotli", "http2"], version = "~=0.27.0"}
