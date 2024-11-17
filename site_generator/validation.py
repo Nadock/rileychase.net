@@ -133,7 +133,11 @@ class Validator:
                 with contextlib.suppress(Exception):
                     self._link_cache[link] = await self._client.head(link)
 
-        resp = self._link_cache.get(link)
+                    if self._link_cache[link].status_code >= 300:  # noqa: PLR2004
+                        # Fallback GET request
+                        self._link_cache[link] = await self._client.get(link)
+
+        resp = self._link_cache[link]
         if resp and 200 <= resp.status_code < 300:  # noqa: PLR2004
             return None
 
