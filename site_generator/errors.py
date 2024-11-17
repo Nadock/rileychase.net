@@ -1,13 +1,8 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
+import pathlib
 
 import pydantic
 
 from site_generator import logging
-
-if TYPE_CHECKING:
-    import pathlib
 
 LOGGER = logging.getLogger()
 
