@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import contextlib
 import pathlib
-import re  # noqa: TCH003
+import re  # noqa: TC003
 
 import pydantic
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -47,7 +47,7 @@ class SiteGeneratorConfig(BaseSettings):
 
     dead_links: bool = False
     """Enable dead link detection for the `validation` CLI command."""
-    allowed_links: list[re.Pattern] = pydantic.Field(..., default_factory=list)
+    allowed_links: list[re.Pattern] = pydantic.Field(default_factory=list)
     """Patterns for URLs that are allowed without checking in dead link detection."""
 
     locale: str | None = None
