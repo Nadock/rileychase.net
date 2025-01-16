@@ -33,6 +33,7 @@ tasks:
     desc: Fix linting errors in Python sources with `astral-sh/ruff`.
     cmds:
       - "{{.PY_PREFIX}} ruff check --fix {{.CLI_ARGS}} ."
+      - "{{.PY_PREFIX}} ruff format {{.CLI_ARGS}} ."
 
   mypy:
     desc: Run python/mypy Python type checking tool
