@@ -160,13 +160,13 @@ def get_template_info(
     info: dict[str, str | datetime.datetime] = {}
 
     # Output render timestamp
-    info["rendered_at"] = datetime.datetime.now().astimezone()
+    info["rendered_at"] = datetime.datetime.now(datetime.UTC)
 
     # Source file last modified time
     try:
         info["modified_at"] = datetime.datetime.fromtimestamp(
-            path.stat().st_mtime
-        ).astimezone()
+            path.stat().st_mtime, datetime.UTC
+        )
     except OSError as ex:
         LOGGER.warning(f"Unable to read file modified time: {ex}")
 

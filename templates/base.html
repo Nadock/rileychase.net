@@ -11,6 +11,7 @@
     <meta name="color-scheme" content="dark light">
 
     <meta name="x-rendered-at" content="{{ info.rendered_at.isoformat() }}">
+    <meta name="x-modified-at" content="{{ info.modified_at.isoformat() }}">
     <meta name="x-ref" content="{{ info.ref }}">
 
     {% block opengraph %}
@@ -85,7 +86,15 @@
         <div class="footer">
             {% block footer %}
             <div class="nav_links nav_links--right">
-                <p>{{ info.rendered_at.year }} — Riley Chase &lt;@Nadock&gt;</p>
+                <p>
+                    <span
+                        title="Rendered {{ info.rendered_at.strftime('%Y-%m-%d') }} at {{ info.rendered_at.strftime('%H:%M:%S %Z') }}">
+                        {{ info.rendered_at.year }}
+                    </span>
+                    <span title="{{ info.ref[:7] }}">—</span>
+                    Riley Chase
+                    &lt;@Nadock&gt;
+                </p>
                 <span>|</span>
                 <a href="/license">LICENSE</a>
                 <a href="/privacy">PRIVACY</a>
