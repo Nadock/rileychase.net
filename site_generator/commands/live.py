@@ -71,7 +71,7 @@ class LoggingSimpleHTTPRequestHandler(server.SimpleHTTPRequestHandler):
     """`SimpleHTTPRequestHandler` with custom logging output."""
 
     def log_message(self, msg: str, *args: list) -> None:  # noqa: D102
-        LOGGER.info(f"[SERVER] {msg%args}")
+        LOGGER.info(f"[SERVER] {msg % args}")
 
     def end_headers(self) -> None:  # noqa: D102
         self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
