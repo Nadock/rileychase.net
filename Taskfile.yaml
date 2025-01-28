@@ -70,7 +70,7 @@ tasks:
     deps:
       - build
     cmds:
-      - "{{.PY_PREFIX}} python -m site_generator validate --dead-links --allow-link '.*linkedin.com/.*' --allow-link '.*zendesk.com' --allow-link 'https://www.canva.com' {{.CLI_ARGS}}"
+      - "{{.PY_PREFIX}} python -m site_generator validate --dead-links --allow-link 'https://www.linkedin.com/.*' --allow-link 'https://zendesk.com' --allow-link 'https://www.canva.com' {{.CLI_ARGS}}"
 
   emoji:
     desc: Update emoji files
