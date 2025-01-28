@@ -12,7 +12,7 @@ Welcome to my little corner of the internet. Right now there's not much here, bu
 
 ## My Professional Life :office_worker:
 
-At work I'm a Software Engineer and I currently work for [Zendesk](https://www.zendesk.com), a very cool company that doesn't make desks. If you're interested in my work life you should checkout my [LinkedIn](https://www.linkedin.com/in/riley-taylor-chase/) or my [GitHub](https://github.com/nadock/) profile.
+At work I'm a Software Engineer and I currently work for [Canva](https://www.canva.com), a very cool company that doesn't make canvases. If you're interested in my work life you should checkout my [LinkedIn](https://www.linkedin.com/in/riley-taylor-chase/) or my [GitHub](https://github.com/nadock/) profile.
 
 ## Other Software Stuff :computer:
 
