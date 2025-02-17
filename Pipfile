@@ -21,7 +21,7 @@ pyyaml = "~=6.0"
 watchdog = "~=6.0.0"
 
 [dev-packages]
-cfn-lint = "~=1.24.0"
+cfn-lint = "~=1.25.1"
 isort = "~=6.0.0"
 mypy = "~=1.0"
 pytest = "~=8.3.1"
