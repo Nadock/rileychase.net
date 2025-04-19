@@ -26,28 +26,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+
       - name: Setup go-task/task
         uses: arduino/setup-task@v2
         with:
           version: 3.x
 
-      - name: Setup python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version-file: .python-version
+          enable-cache: true
+          cache-dependency-glob: uv.lock
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_ROLE_ARN }}
           aws-region: ap-southeast-2
-
-      - name: Install Python dependencies
-        run: |
-          pip install pipenv
-          pipenv install --dev
-          echo "$(pipenv --venv)/bin" >> $GITHUB_PATH
-          echo "PIPENV_ACTIVE=1" >> $GITHUB_ENV
 
       - name: Build Website
         run: |

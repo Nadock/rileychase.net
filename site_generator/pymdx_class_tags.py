@@ -1,24 +1,22 @@
 from collections.abc import Callable
-from xml.etree import ElementTree
+from xml.etree import ElementTree as ET
 
 import markdown
 from markdown import treeprocessors
 
 
-def _set_class_attribute(element: ElementTree.Element) -> None:
+def _set_class_attribute(element: ET.Element) -> None:
     if element.tag != "div":
         element.set("class", f"content--{element.tag}")
 
 
 class _ClassTagsProcessor(treeprocessors.Treeprocessor):
-    def __init__(
-        self, md: markdown.Markdown, cb: Callable[[ElementTree.Element], None]
-    ) -> None:
+    def __init__(self, md: markdown.Markdown, cb: Callable[[ET.Element], None]) -> None:
         super().__init__(md)
         self.md: markdown.Markdown = md
         self._cb = cb
 
-    def run(self, root: ElementTree.Element) -> None:
+    def run(self, root: ET.Element) -> None:
         for element in root.iter():
             self._cb(element)
 
