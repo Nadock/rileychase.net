@@ -6,11 +6,6 @@ dotenv:
   - .env
 
 
-vars:
-  PY_PREFIX:
-    sh: if [[ ${PIPENV_ACTIVE:-} != "1" ]]; then echo "pipenv run"; fi
-
-
 tasks:
   ci:
     desc: Run all tasks required to merge code into the main branch
@@ -26,24 +21,24 @@ tasks:
   ruff:check:
     desc: Check linting and formatting of Python sources with `astral-sh/ruff`.
     cmds:
-      - "{{.PY_PREFIX}} ruff check {{.CLI_ARGS}} ."
-      - "{{.PY_PREFIX}} ruff format --check {{.CLI_ARGS}} ."
+      - uv run ruff check {{.CLI_ARGS}} .
+      - uv run ruff format --check {{.CLI_ARGS}} .
 
   ruff:fix:
     desc: Fix linting errors in Python sources with `astral-sh/ruff`.
     cmds:
-      - "{{.PY_PREFIX}} ruff check --fix {{.CLI_ARGS}} ."
-      - "{{.PY_PREFIX}} ruff format {{.CLI_ARGS}} ."
+      - uv run ruff check --fix {{.CLI_ARGS}} .
+      - uv run ruff format {{.CLI_ARGS}} .
 
   mypy:
     desc: Run python/mypy Python type checking tool
     cmds:
-      - "{{.PY_PREFIX}} mypy {{.CLI_ARGS}} ./site_generator"
+      - uv run mypy {{.CLI_ARGS}} ./site_generator
 
   pytest:
     desc: Run unit tests via pytest-dev/pytest
     cmds:
-      - "{{.PY_PREFIX}} pytest {{.CLI_ARGS}} ./site_generator"
+      - uv run pytest {{.CLI_ARGS}} ./site_generator
 
   mdlint:
     desc: Lint markdown sources with DavidAnson/markdownlint
@@ -53,24 +48,24 @@ tasks:
   live:
     desc: Run the site_generator in live rebuild mode
     cmds:
-      - "{{.PY_PREFIX}} python -m site_generator live {{.CLI_ARGS}}"
+      - uv run python -m site_generator live {{.CLI_ARGS}}
 
   build:
     desc: Run the site_generator in single build mode
     cmds:
-      - "{{.PY_PREFIX}} python -m site_generator build --host rileychase.net {{.CLI_ARGS}}"
+      - uv run python -m site_generator build --host rileychase.net {{.CLI_ARGS}}
 
   validate:
     desc: Run the inbuilt site_generator validator
     cmds:
-      - "{{.PY_PREFIX}} python -m site_generator validate {{.CLI_ARGS}}"
+      - uv run python -m site_generator validate {{.CLI_ARGS}}
 
   validate:links:
     desc: Run the inbuilt site_generator validator with dead link detection enabled
     deps:
       - build
     cmds:
-      - "{{.PY_PREFIX}} python -m site_generator validate --dead-links --allow-link 'https://www.linkedin.com/.*' --allow-link 'https://zendesk.com' --allow-link 'https://www.canva.com' {{.CLI_ARGS}}"
+      - uv run python -m site_generator validate --dead-links --allow-link 'https://www.linkedin.com/.*' --allow-link 'https://zendesk.com' --allow-link 'https://www.canva.com' {{.CLI_ARGS}}
 
   emoji:
     desc: Update emoji files
@@ -80,7 +75,7 @@ tasks:
   aws:lint:
     desc: Run cfn-lint across all templates
     cmds:
-      - "{{.PY_PREFIX}} pipenv run cfn-lint --include-checks I -- ./aws/**/*.yml"
+      - uv run cfn-lint --include-checks I -- ./aws/**/*.yml
 
   aws:website:validate:
     desc: Validate the website_cfn.yml CloudFormation template

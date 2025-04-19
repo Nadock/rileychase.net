@@ -1,7 +1,9 @@
 name: Pull Request Checks
 
+
 on:
   pull_request: {}
+
 
 jobs:
   pr_checks:
@@ -24,12 +26,11 @@ jobs:
         with:
           version: 3.x
 
-      - name: Install Python dependencies
-        run: |
-          pip install pipenv
-          pipenv install --dev
-          echo "$(pipenv --venv)/bin" >> $GITHUB_PATH
-          echo "PIPENV_ACTIVE=1" >> $GITHUB_ENV
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
 
       - name: Install Node dependencies
         run: npm install
