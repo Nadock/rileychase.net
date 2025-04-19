@@ -137,7 +137,7 @@ class Validator:
                         # Fallback GET request
                         self._link_cache[link] = await self._client.get(link)
 
-        resp = self._link_cache[link]
+        resp = self._link_cache.get(link)
         if resp and 200 <= resp.status_code < 300:  # noqa: PLR2004
             return None
 
