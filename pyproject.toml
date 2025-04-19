@@ -50,13 +50,13 @@ lint.ignore = [
     "ANN401", # any-type
 
     # Code design
-    "A001",    # builtin-variable-shadowing
-    "A002",    # builtin-argument-shadowing
-    "A003",    # builtin-attribute-shadowing
-    "BLE001",  # blind-except
-    "EM101",   # raw-string-in-exception
-    "EM102",   # f-string-in-exception
-    "ERA001",  # commented-out-code
+    "A001",   # builtin-variable-shadowing
+    "A002",   # builtin-argument-shadowing
+    "A003",   # builtin-attribute-shadowing
+    "BLE001", # blind-except
+    "EM101",  # raw-string-in-exception
+    "EM102",  # f-string-in-exception
+    # "ERA001",  # commented-out-code
     "G004",    # logging-f-string
     "PLR0913", # too-many-arguments
     "TRY003",  # raise-vanilla-args
@@ -65,7 +65,6 @@ lint.ignore = [
     "FIX002", # line-contains-todo
     "TD003",  # missing-todo-link
     "E741",   # ambiguous-variable-name
-    "ICN001", # unconventional-import-alias
 
     # Formatter conflicts
     "ISC001", # single-line-implicit-string-concatenation
@@ -81,6 +80,7 @@ lint.ignore = [
 "site_generator/emoji/_generate*.py" = [
     "T201",    # print
     "PLR2004", # magic-value-comparison
+    "ERA001",  # commented-out-code
 ]
 "site_generator/emoji/db.py" = [
     "RUF001", # ambiguous-unicode-character-string

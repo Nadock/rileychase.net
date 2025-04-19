@@ -28,7 +28,7 @@ class Validator:
             http2=True, timeout=10.0, follow_redirects=True, max_redirects=10
         )
 
-    async def validate(self) -> AsyncGenerator[errors.ValidationError, None]:
+    async def validate(self) -> AsyncGenerator[errors.ValidationError]:
         """
         Run all of the configured site validators, yielding validation errors as they
         are discovered.
@@ -41,7 +41,7 @@ class Validator:
             async for error in stream:
                 yield error
 
-    async def validate_markdown(self) -> AsyncGenerator[errors.ValidationError, None]:
+    async def validate_markdown(self) -> AsyncGenerator[errors.ValidationError]:
         """
         Validate markdown sources, yielding validation errors as they are discovered.
         """
@@ -54,7 +54,7 @@ class Validator:
             for error in fm.validate_frontmatter():
                 yield errors.ValidationError(file=page, error=f"frontmatter: {error}")
 
-    async def validate_dead_links(self) -> AsyncGenerator[errors.ValidationError, None]:
+    async def validate_dead_links(self) -> AsyncGenerator[errors.ValidationError]:
         """
         Validate output HTML for dead links, yielding validation errors as they are
         discovered.
@@ -81,7 +81,7 @@ class Validator:
 
     async def _validate_dead_links(
         self, path: pathlib.Path
-    ) -> AsyncGenerator[errors.ValidationError, None]:
+    ) -> AsyncGenerator[errors.ValidationError]:
         # Load and parse the HTML, then find all the `<a>` tags
         async with aiofile.async_open(path, encoding="utf-8") as file:
             content = await file.read()
@@ -111,7 +111,7 @@ class Validator:
             if error is not None:
                 yield error
 
-    async def _read_html_output(self) -> AsyncGenerator[tuple[pathlib.Path, str], None]:
+    async def _read_html_output(self) -> AsyncGenerator[tuple[pathlib.Path, str]]:
         async def _read_file(p: pathlib.Path) -> tuple[pathlib.Path, str]:
             async with aiofile.async_open(p, encoding="utf-8") as file:
                 return (p, await file.read())
