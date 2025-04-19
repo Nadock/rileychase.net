@@ -1,5 +1,4 @@
 [tool.ruff]
-target-version = "py312"
 exclude = []
 lint.select = ["ALL"]
 lint.ignore = [
