@@ -8,11 +8,14 @@
   <a href="https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml">
     <img alt="Deploy website" src="https://github.com/Nadock/rileychase.net/actions/workflows/deploy_website.yml/badge.svg">
   </a>
-  <a href="https://github.com/Nadock/rileychase.net/blob/main/Pipfile">
-    <img alt="Python 3.12" src="https://img.shields.io/github/pipenv/locked/python-version/Nadock/rileychase.net">
+  <a href="https://github.com/Nadock/rileychase.net/blob/main/pyproject.toml">
+    <img alt="Python 3.12" src="https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2FNadock%2Frileychase.net%2Frefs%2Fheads%2Fchore%2Ftooling-upgrades%2Fpyproject.toml">
   </a>
   <a href="https://github.com/astral-sh/ruff">
-    <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json" alt="Ruff" style="max-width:100%;">
+    <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json" alt="Ruff">
+  </a>
+  <a href="https://github.com/astral-sh/uv">
+    <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json" alt="uv">
   </a>
 </p>
 
@@ -26,13 +29,7 @@ The rest of this `README` contains notes and instructions for me to run my local
 
 ## Development Environment Setup
 
-To work on the site content or the `site_generator` you will need a working install of Python 3.12 and Pipenv.
-
-1. Clone the repo
-2. Setup a Pipenv venv with `pipenv install --dev`
-3. Make sure you're using the Pipenv venv with `pipenv shell`
-
-Additionally, I'd recommend you install the [`task` CLI](https://taskfile.dev) as the included `:/Taskfile.yaml` file contains many helpful development shortcut commands. (Think a `Makefile` that sucks way less)
+To work on the site content or the `site_generator` you will need a working install of [`uv`](https://github.com/astral-sh/uv) and [`task`](https://taskfile.dev).
 
 ## Site Generator Usage
 
@@ -63,10 +60,6 @@ The following tools run on every PR and must succeed before a branch can be merg
 - AWS CloudFormation is linted with `cfn-lint`.
 
 All of these checks can be run locally with `task ci`.
-
-#### Temporary `cfn-lint` Workaround
-
-Currently `cfn-lint` is incompatible with Pydantic v2 (via a dependency of theirs). Until that is resolved, we can't install `cfn-lint` and Pydantic in the same Pipenv environment. To work around this for now, please install `cfn-lint` manually in a separate Python environment or rely on the pull request checks to run the Cloudformation linting.
 
 ### Deploys
 
