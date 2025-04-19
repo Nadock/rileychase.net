@@ -99,7 +99,7 @@ class SiteGeneratorCLI:
             "--port",
             "-p",
             type=str,
-            default="8000",
+            default="8080",
             metavar="PORT",
             help="Port number to listen on when running in live mode.",
         )
