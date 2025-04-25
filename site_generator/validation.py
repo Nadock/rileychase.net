@@ -30,7 +30,7 @@ class Validator:
         Run all of the configured site validators, yielding validation errors as they
         are discovered.
         """
-        async with aiohttp.ClientSession(timeout=10) as session:
+        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(10)) as session:
             streams = [self.validate_markdown()]
             if self.cfg.dead_links:
                 streams.append(self.validate_dead_links(session))
