@@ -71,7 +71,8 @@ async def _serve_live_site(cfg: config.SiteGeneratorConfig) -> None:
     except Exception:  # noqa: S110
         pass
     finally:
-        proc.kill()
+        with contextlib.suppress(Exception):
+            proc.kill()
 
     if code != 0:
         raise RuntimeError(f"Dev server subprocess exited early with exit code {code}")
