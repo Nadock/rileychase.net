@@ -1,6 +1,7 @@
-import sys
+import asyncio
+import contextlib
 
 from site_generator import cli
 
-c = cli.SiteGeneratorCLI()
-c.run(sys.argv[1:])
+with contextlib.suppress(KeyboardInterrupt):
+    asyncio.run(cli.main())

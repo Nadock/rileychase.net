@@ -42,7 +42,7 @@ class SiteGeneratorConfig(BaseSettings):
 
     host: str = "localhost"
     """The host to serve the live site at."""
-    port: str = "8000"
+    port: int = 8080
     """The port to serve the live site at."""
 
     dead_links: bool = False

@@ -6,9 +6,10 @@ readme = "README.md"
 requires-python = ">=3.13.1"
 dependencies = [
     "aiofile>=3.9.0",
+    "aiohttp-devtools>=1.1.2",
+    "aiohttp[speedups]>=3.11.18",
     "aiostream>=0.6.4",
     "beautifulsoup4>=4.13.4",
-    "httpx[brotli,http2]>=0.28.1",
     "jinja2>=3.1.6",
     "markdown>=3.8",
     "pydantic>=2.11.3",
@@ -16,7 +17,7 @@ dependencies = [
     "pygments>=2.19.1",
     "pymdown-extensions>=10.14.3",
     "pyyaml>=6.0.2",
-    "watchdog>=6.0.0",
+    "watchfiles>=1.0.5",
 ]
 
 [dependency-groups]
