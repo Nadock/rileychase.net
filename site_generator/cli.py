@@ -177,7 +177,7 @@ def setup_argparse() -> argparse.ArgumentParser:
         "--exclude-debug",
         action="store_false",
         dest="debug_pages",
-        default=True,
+        default=False,
         help="Exclude debug type pages that would normally be included.",
     )
     parser.add_argument(
