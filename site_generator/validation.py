@@ -6,9 +6,9 @@ from typing import TYPE_CHECKING
 from urllib import parse
 
 import aiofile
+import aiohttp
 import aiostream
 import bs4
-import httpx
 
 from site_generator import config, errors, markdown
 
@@ -23,23 +23,21 @@ class Validator:
     def __init__(self, cfg: config.SiteGeneratorConfig) -> None:
         self.cfg = cfg
         self._lock = asyncio.Lock()
-        self._link_cache: dict[str, httpx.Response] = {}
-        self._client = httpx.AsyncClient(
-            http2=True, timeout=10.0, follow_redirects=True, max_redirects=10
-        )
+        self._link_cache: dict[str, aiohttp.ClientResponse] = {}
 
     async def validate(self) -> AsyncGenerator[errors.ValidationError]:
         """
         Run all of the configured site validators, yielding validation errors as they
         are discovered.
         """
-        streams = [self.validate_markdown()]
-        if self.cfg.dead_links:
-            streams.append(self.validate_dead_links())
+        async with aiohttp.ClientSession(timeout=10) as session:
+            streams = [self.validate_markdown()]
+            if self.cfg.dead_links:
+                streams.append(self.validate_dead_links(session))
 
-        async with aiostream.stream.merge(*streams).stream() as stream:
-            async for error in stream:
-                yield error
+            async with aiostream.stream.merge(*streams).stream() as stream:
+                async for error in stream:
+                    yield error
 
     async def validate_markdown(self) -> AsyncGenerator[errors.ValidationError]:
         """
@@ -54,7 +52,9 @@ class Validator:
             for error in fm.validate_frontmatter():
                 yield errors.ValidationError(file=page, error=f"frontmatter: {error}")
 
-    async def validate_dead_links(self) -> AsyncGenerator[errors.ValidationError]:
+    async def validate_dead_links(
+        self, session: aiohttp.ClientSession
+    ) -> AsyncGenerator[errors.ValidationError]:
         """
         Validate output HTML for dead links, yielding validation errors as they are
         discovered.
@@ -70,7 +70,7 @@ class Validator:
 
         # Discover all *.html files
         streams = [
-            self._validate_dead_links(path)
+            self._validate_dead_links(path=path, session=session)
             for path in self.cfg.output.glob("**/*.html")
         ]
 
@@ -80,7 +80,7 @@ class Validator:
                 yield error
 
     async def _validate_dead_links(
-        self, path: pathlib.Path
+        self, *, path: pathlib.Path, session: aiohttp.ClientSession
     ) -> AsyncGenerator[errors.ValidationError]:
         # Load and parse the HTML, then find all the `<a>` tags
         async with aiofile.async_open(path, encoding="utf-8") as file:
@@ -98,11 +98,19 @@ class Validator:
 
             if parse.urlparse(link).hostname:
                 coros.append(
-                    self._validate_web_link(path, link, tag.sourceline, tag.sourcepos)
+                    self._validate_web_link(
+                        path=path,
+                        link=link,
+                        line=tag.sourceline,
+                        pos=tag.sourcepos,
+                        session=session,
+                    )
                 )
             else:
                 coros.append(
-                    self._validate_site_link(path, link, tag.sourceline, tag.sourcepos)
+                    self._validate_site_link(
+                        path=path, link=link, line=tag.sourceline, pos=tag.sourcepos
+                    )
                 )
 
         # Yield results as they become available
@@ -122,7 +130,13 @@ class Validator:
             yield await coro
 
     async def _validate_web_link(
-        self, path: pathlib.Path, link: str, line: int | None, pos: int | None
+        self,
+        *,
+        path: pathlib.Path,
+        link: str,
+        line: int | None,
+        pos: int | None,
+        session: aiohttp.ClientSession,
     ) -> errors.ValidationError | None:
         """
         Validate a link to an external site by performing a `HTTP HEAD` operation and
@@ -131,28 +145,28 @@ class Validator:
         async with self._lock:
             if link not in self._link_cache:
                 with contextlib.suppress(Exception):
-                    self._link_cache[link] = await self._client.head(link)
+                    self._link_cache[link] = await session.head(link)
 
-                    if self._link_cache[link].status_code >= 300:  # noqa: PLR2004
+                    if self._link_cache[link].status >= 300:  # noqa: PLR2004
                         # Fallback GET request
-                        self._link_cache[link] = await self._client.get(link)
+                        self._link_cache[link] = await session.get(link)
 
         resp = self._link_cache.get(link)
-        if resp and 200 <= resp.status_code < 300:  # noqa: PLR2004
+        if resp and 200 <= resp.status < 300:  # noqa: PLR2004
             return None
 
         return errors.ValidationError(
             file=path,
             error=(
                 f"dead link: {link}: "
-                + (f"HTTP {resp.status_code}" if resp else "no response")
+                + (f"HTTP {resp.status}" if resp else "no response")
             ),
             line=line,
             char=pos,
         )
 
     async def _validate_site_link(
-        self, path: pathlib.Path, link: str, line: int | None, pos: int | None
+        self, *, path: pathlib.Path, link: str, line: int | None, pos: int | None
     ) -> errors.ValidationError | None:
         """
         Validate a link to another page on this site by determining it's destination and
