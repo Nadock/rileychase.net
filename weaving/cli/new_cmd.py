@@ -74,6 +74,7 @@ async def page(
     frontmatter = frontmatter or Frontmatter()
 
     fm = types.PageFrontmatter(
+        type="default",
         title=frontmatter.title,
         subtitle=frontmatter.subtitle,
         description=frontmatter.description,
@@ -103,6 +104,7 @@ async def post(
     frontmatter = frontmatter or Frontmatter()
 
     fm = types.PageFrontmatter(
+        type="blog_post",
         title=frontmatter.title,
         subtitle=frontmatter.subtitle,
         description=frontmatter.description,
