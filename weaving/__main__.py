@@ -1,6 +1,6 @@
 import sys
 
-from weaving import cli, error, log
+from weaving import cli, errors, log
 
 try:
     cli.app.meta()
@@ -8,7 +8,7 @@ try:
 except KeyboardInterrupt:
     pass
 
-except error.WeavingError as ex:
+except errors.WeavingError as ex:
     log.logger().error(ex)
     sys.exit(1)
 

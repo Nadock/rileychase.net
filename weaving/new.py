@@ -3,7 +3,7 @@ import pathlib
 import aiofile
 import yaml
 
-from weaving import error, types
+from weaving import errors, types
 
 
 async def new_markdown(path: pathlib.Path, fm: types.PageFrontmatter) -> pathlib.Path:
@@ -43,7 +43,7 @@ async def new_html(path: pathlib.Path) -> pathlib.Path:
 
 async def _write_new_file(path: pathlib.Path, content: str) -> pathlib.Path:
     if path.exists():
-        raise error.WeavingError(f"File already exists: {path}")
+        raise errors.WeavingError(f"File already exists: {path}")
 
     path.parent.mkdir(exist_ok=True, parents=True)
     async with aiofile.async_open(path, "w") as f:
