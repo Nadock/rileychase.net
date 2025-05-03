@@ -1,6 +1,13 @@
-from typing import Literal
+import datetime
+from typing import Annotated, Literal
 
 import pydantic
+
+from weaving import emoji
+
+EmojiStr = Annotated[
+    str, pydantic.PlainSerializer(lambda s: emoji.replace_emoji(s), return_type=str)
+]
 
 PageType = Literal["default", "blog_index", "blog_post"]
 
@@ -44,13 +51,13 @@ class PageFrontmatter(pydantic.BaseModel):
     template: str = "default.html"
     """The name of the template to use when rendering the page."""
 
-    title: str | None = None
+    title: EmojiStr = ""
     """The title for the page."""
 
-    subtitle: str | None = None
+    subtitle: EmojiStr = ""
     """The subtitle for the page."""
 
-    description: str | None = None
+    description: EmojiStr = ""
     """The meta description for this page."""
 
     og: OpenGraphFrontmatter | None = None
@@ -59,8 +66,16 @@ class PageFrontmatter(pydantic.BaseModel):
     and other sources.
     """
 
-    meta: dict | None = None
+    meta: dict = pydantic.Field(default_factory=dict)
     """
     Arbitrary values that can be set on a per-page basis with no further validation or
     prescribed semantic meaning. It depends on the template how these values are used.
     """
+
+
+class TemplateContext(pydantic.BaseModel):
+    content: str
+    frontmatter: PageFrontmatter
+    rendered_at: datetime.datetime
+    modified_at: datetime.datetime
+    git_ref: str | None

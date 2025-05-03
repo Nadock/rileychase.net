@@ -2,6 +2,7 @@ import asyncio
 import logging
 
 import cyclopts
+import jinja2
 from rich import logging as rich_logging
 
 
@@ -22,7 +23,7 @@ def configure(*, verbose: bool) -> None:
                 markup=True,
                 rich_tracebacks=True,
                 show_path=False,
-                tracebacks_suppress=[cyclopts, asyncio],
+                tracebacks_suppress=[cyclopts, asyncio, jinja2],
             )
         ],
     )

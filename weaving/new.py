@@ -3,10 +3,10 @@ import pathlib
 import aiofile
 import yaml
 
-from weaving import errors, types
+from weaving import errors, models
 
 
-async def new_markdown(path: pathlib.Path, fm: types.PageFrontmatter) -> pathlib.Path:
+async def new_markdown(path: pathlib.Path, fm: models.PageFrontmatter) -> pathlib.Path:
     """Create a new markdown file with the provided frontmatter."""
     fm_data = fm.model_dump(
         exclude_none=True,

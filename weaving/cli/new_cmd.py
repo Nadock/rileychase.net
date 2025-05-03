@@ -3,7 +3,7 @@ from typing import Annotated
 
 import cyclopts
 
-from weaving import log, new, types
+from weaving import log, models, new
 
 from . import cli
 
@@ -73,7 +73,7 @@ async def page(
     site = site or cli.SiteConfig()
     frontmatter = frontmatter or Frontmatter()
 
-    fm = types.PageFrontmatter(
+    fm = models.PageFrontmatter(
         type="default",
         title=frontmatter.title,
         subtitle=frontmatter.subtitle,
@@ -103,7 +103,7 @@ async def post(
     site = site or cli.SiteConfig()
     frontmatter = frontmatter or Frontmatter()
 
-    fm = types.PageFrontmatter(
+    fm = models.PageFrontmatter(
         type="blog_post",
         title=frontmatter.title,
         subtitle=frontmatter.subtitle,

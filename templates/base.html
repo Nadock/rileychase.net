@@ -7,28 +7,28 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ props.description }}">
+    <meta name="descriptionx" content="{{ context.frontmatter.description }}">
     <meta name="color-scheme" content="dark light">
 
-    <meta name="x-rendered-at" content="{{ info.rendered_at.isoformat() }}">
-    <meta name="x-modified-at" content="{{ info.modified_at.isoformat() }}">
-    <meta name="x-ref" content="{{ info.ref }}">
+    <meta name="x-rendered-at" content="{{ context.rendered_at.isoformat() }}">
+    <meta name="x-modified-at" content="{{ context.modified_at.isoformat() }}">
+    <meta name="x-ref" content="{{ git_ref }}">
 
     {% block opengraph %}
-    {% if props.og.title %}
-    <meta property="og:title" content="{{ props.og.title }}">
+    {% if context.frontmatter.og.title %}
+    <meta property="og:title" content="{{ context.frontmatter.og.title }}">
     {% endif %}
 
-    {% if props.og.image %}
-    <meta property="og:image" content="{{ props.og.image }}">
+    {% if context.frontmatter.og.image %}
+    <meta property="og:image" content="{{ context.frontmatter.og.image }}">
     {% endif %}
 
-    {% if props.og.description %}
-    <meta property="og:description" content="{{ props.og.description }}">
+    {% if context.frontmatter.og.description %}
+    <meta property="og:description" content="{{ context.frontmatter.og.description }}">
     {% endif %}
 
-    {% if props.og.url %}
-    <meta property="og:url" content="{{ props.og.url }}">
+    {% if context.frontmatter.og.url %}
+    <meta property="og:url" content="{{ context.frontmatter.og.url }}">
     {% endif %}
 
     <meta property="og:type" content="website">
@@ -43,7 +43,7 @@
     <link rel="stylesheet" type="text/css" href="/css/code_highlighting.css">
     {% endblock stylesheets %}
 
-    <title>{{ props.title }}</title>
+    <title>{{ context.frontmatter.title }}</title>
     {% endblock head %}
 </head>
 
@@ -69,16 +69,16 @@
 
         <div class="page_header">
             {% block page_header %}
-            <h2>{{ props.title }}</h2>
-            <em>{{ props.subtitle }}</em>
-            <p>{{ props.date }}</p>
+            <h2>{{ context.frontmatter.title }}</h2>
+            <em>{{ context.frontmatter.subtitle }}</em>
+            <p>{{ context.frontmatter.date }}</p>
             {% endblock page_header %}
         </div>
 
         <div class="content">
             {% block content %}
             {% autoescape false %}
-            {{ content|render }}
+            {{ content }}
             {% endautoescape %}
             {% endblock content %}
         </div>
@@ -88,10 +88,10 @@
             <div class="nav_links nav_links--right">
                 <p>
                     <span
-                        title="Rendered {{ info.rendered_at.strftime('%Y-%m-%d') }} at {{ info.rendered_at.strftime('%H:%M:%S %Z') }}">
-                        {{ info.rendered_at.year }}
+                        title="Rendered {{ context.rendered_at.strftime('%Y-%m-%d') }} at {{ context.rendered_at.strftime('%H:%M:%S %Z') }}">
+                        {{ context.rendered_at.year }}
                     </span>
-                    <span title="{{ info.ref[:7] }}">—</span>
+                    <span title="{{ context.git_ref[:7] }}">—</span>
                     Riley Chase
                     &lt;@Nadock&gt;
                 </p>
