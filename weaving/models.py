@@ -9,7 +9,7 @@ EmojiStr = Annotated[
     str, pydantic.PlainSerializer(lambda s: emoji.replace_emoji(s), return_type=str)
 ]
 
-PageType = Literal["default", "blog_index", "blog_post"]
+PageType = Literal["default", "blog", "blog_index"]
 
 
 class OpenGraphFrontmatter(pydantic.BaseModel):
@@ -48,7 +48,7 @@ class PageFrontmatter(pydantic.BaseModel):
     default.
     """
 
-    template: str = "default.html"
+    template: str | None = None
     """The name of the template to use when rendering the page."""
 
     title: EmojiStr = ""
@@ -71,6 +71,9 @@ class PageFrontmatter(pydantic.BaseModel):
     Arbitrary values that can be set on a per-page basis with no further validation or
     prescribed semantic meaning. It depends on the template how these values are used.
     """
+
+    def get_template(self) -> str:
+        return self.template or f"{self.type}.html"
 
 
 class TemplateContext(pydantic.BaseModel):

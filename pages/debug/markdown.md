@@ -1,10 +1,9 @@
 ---
-type: debug
+type: default
+debug: true
 title: Markdown test
 subtitle: Test all the various markdown things we can render
 description: A test of all markdown content
-date: 2022-09-16
-path: /debug/markdown
 ---
 <!-- markdownlint-disable -->
 

@@ -1,5 +1,6 @@
 ---
-type: debug
+type: default
+debug: true
 title: Debug Page
 subtitle: There's really not anything interesting here
 meta:

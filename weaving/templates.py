@@ -20,7 +20,7 @@ class TemplateRenderer:
 
     async def render(self, ctx: models.TemplateContext) -> str:
         """Render the named template with the provided render context."""
-        template = self.env.get_or_select_template(ctx.frontmatter.template)
+        template = self.env.get_or_select_template(ctx.frontmatter.get_template())
 
         try:
             html = await template.render_async(context=ctx)

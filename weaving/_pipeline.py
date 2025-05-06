@@ -36,19 +36,20 @@ class WeavingPipeline:
         self._static_pipeline = StaticPipeline(root=root, output=output)
         self._static = static
 
-        self._markdown_pipeline = MarkdownPipeline(
+        self._page_pipeline = PagePipeline(
             root=root, output=output, templates=templates
         )
         self._pages = pages
 
     async def process(self) -> None:
+        # TODO(Nadock): delete existing build output before regenerating
         await asyncio.gather(
             self._process_static(self._static), self._process_pages(self._pages)
         )
 
     async def _process_pages(self, path: pathlib.Path) -> None:
         if path.is_file():
-            await self._markdown_pipeline.process(path)
+            await self._page_pipeline.process(path)
             return
 
         await asyncio.gather(*[self._process_pages(p) for p in path.iterdir()])
@@ -67,6 +68,7 @@ class StaticPipeline(Pipeline):
 
         try:
             output.parent.mkdir(parents=True, exist_ok=True)
+            # TODO(Nadock): See if we can't do this async
             shutil.copy(file, output)
         except Exception as ex:
             raise errors.WeavingError(
@@ -82,6 +84,25 @@ class StaticPipeline(Pipeline):
         return output
 
 
+class PagePipeline(Pipeline):
+    def __init__(
+        self, *, root: pathlib.Path, output: pathlib.Path, templates: pathlib.Path
+    ) -> None:
+        self.handlers: dict[models.PageType, MarkdownPipeline] = {
+            "default": MarkdownPipeline(root=root, output=output, templates=templates)
+        }
+
+    async def process(self, file: pathlib.Path) -> pathlib.Path:
+        try:
+            page, fm = await markdown.read_markdown(file)
+        except Exception as ex:
+            raise errors.WeavingError(
+                f"Reading markdown from {file.relative_to(self.root)} failed: {ex}"
+            ) from ex
+
+        return await self.handlers[fm.type].process(file, page=page, fm=fm)
+
+
 class MarkdownPipeline(Pipeline):
     def __init__(
         self, *, root: pathlib.Path, output: pathlib.Path, templates: pathlib.Path
@@ -92,15 +113,24 @@ class MarkdownPipeline(Pipeline):
 
     def get_output(self, file: pathlib.Path) -> pathlib.Path:
         output = super().get_output(file)
-        return output.parent / ".md".join(output.name.rsplit(".md", 1))
+        if output.name == "index.md":
+            return output.parent / "index.html"
+        return output.parent / output.name.removesuffix(".md") / "index.html"
 
-    async def process(self, file: pathlib.Path) -> pathlib.Path:
-        try:
-            page, fm = await markdown.read_markdown(file)
-        except Exception as ex:
-            raise errors.WeavingError(
-                f"Reading markdown from {file.relative_to(self.root)} failed: {ex}"
-            ) from ex
+    async def process(
+        self,
+        file: pathlib.Path,
+        *,
+        page: str | None = None,
+        fm: models.PageFrontmatter | None = None,
+    ) -> pathlib.Path:
+        if not page or not fm:
+            try:
+                page, fm = await markdown.read_markdown(file)
+            except Exception as ex:
+                raise errors.WeavingError(
+                    f"Reading markdown from {file.relative_to(self.root)} failed: {ex}"
+                ) from ex
 
         try:
             content = await self.markdown.render(page)

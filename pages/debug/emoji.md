@@ -2,7 +2,8 @@
 title: Emoji Test
 subtitle: A test of all available emojis
 description: Emoji test
-type: debug
+type: default
+debug: true
 ---
 
 ## Emoji
