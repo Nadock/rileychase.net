@@ -72,9 +72,6 @@ class PageFrontmatter(pydantic.BaseModel):
     prescribed semantic meaning. It depends on the template how these values are used.
     """
 
-    def get_template(self) -> str:
-        return self.template or f"{self.type}.html"
-
 
 class TemplateContext(pydantic.BaseModel):
     content: str
