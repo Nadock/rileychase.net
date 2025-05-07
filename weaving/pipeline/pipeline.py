@@ -10,7 +10,7 @@ class Pipeline(abc.ABC):
         self.output = output
 
     def get_output(self, file: pathlib.Path) -> pathlib.Path:
-        return self.output / (file.relative_to(self.root))
+        return self.output / pathlib.Path(*file.relative_to(self.root).parts[1:])
 
-    def process(self, _: pathlib.Path) -> AsyncGenerator[pathlib.Path | Exception]:
+    def process(self, file: pathlib.Path) -> AsyncGenerator[pathlib.Path | Exception]:
         raise NotImplementedError

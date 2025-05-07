@@ -87,25 +87,16 @@ async def build(
         log.logger().debug(f"deleting old build in {output}")
         shutil.rmtree(output)
 
-    # pl = pipeline.WeavingPipeline(
-    #     root=site.root,
-    #     templates=site.templates,
-    #     output=output,
-    #     static=site.static,
-    #     pages=site.pages,
-    # )
+    pl = pipeline.WeavingPipeline(
+        root=site.root,
+        templates=site.templates,
+        output=output,
+    )
 
-    pl = pipeline.StaticPipeline(root=site.root, output=output)
-
-    async for p_or_e in pl.process(site.static):
+    async for p_or_e in pl.process(static=site.static, pages=site.pages):
         if isinstance(p_or_e, Exception):
             log.logger().error(p_or_e)
             log_template_errors(site.templates, p_or_e)
-
-    # try:
-    # except errors.WeavingError as ex:
-    #     log.logger().error(ex)
-    #     log_template_errors(site.templates, ex)
 
 
 def log_template_errors(templates: pathlib.Path, ex: BaseException | None) -> None:

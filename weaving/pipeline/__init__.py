@@ -1,1 +1,1 @@
-from .static import StaticPipeline
+from .weaving import WeavingPipeline

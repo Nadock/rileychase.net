@@ -2,6 +2,7 @@ import asyncio
 import pathlib
 
 import aiofile
+import bs4
 import markdown
 import yaml
 
@@ -37,41 +38,42 @@ async def read_markdown(path: pathlib.Path) -> tuple[str, models.PageFrontmatter
     return "".join(lines[idx:]), fm
 
 
-class MarkdownRender:
-    """Render markdown pages."""
-
-    def __init__(self) -> None:
-        self.md = markdown.Markdown(
-            extensions=[
-                "markdown.extensions.tables",
-                "markdown.extensions.fenced_code",
-                "markdown.extensions.codehilite",
-                "pymdownx.betterem",
-                "pymdownx.emoji",
-                "pymdownx.highlight",
-                "pymdownx.magiclink",
-                "pymdownx.saneheaders",
-                "pymdownx.tasklist",
-                "pymdownx.tilde",
-                "nl2br",
-                pymdx_class_tags.ClassTags(),
-            ],
-            output_format="html",
-            extension_configs={
-                "pymdownx.emoji": {
-                    "emoji_index": emoji.to_markdown_db,
-                    "emoji_generator": emoji.to_unicode_emoji,
-                },
-                "pymdownx.tasklist": {
-                    "custom_checkbox": True,
-                },
+async def render(page: str) -> str:
+    """Render markdown content to HTML."""
+    md = markdown.Markdown(
+        output_format="html",
+        extensions=[
+            "markdown.extensions.tables",
+            "markdown.extensions.fenced_code",
+            "markdown.extensions.codehilite",
+            "pymdownx.betterem",
+            "pymdownx.emoji",
+            "pymdownx.highlight",
+            "pymdownx.magiclink",
+            "pymdownx.saneheaders",
+            "pymdownx.tasklist",
+            "pymdownx.tilde",
+            "nl2br",
+            pymdx_class_tags.ClassTags(),
+        ],
+        extension_configs={
+            "pymdownx.emoji": {
+                "emoji_index": emoji.to_markdown_db,
+                "emoji_generator": emoji.to_unicode_emoji,
             },
-        )
-        self._lock = asyncio.Lock()
+            "pymdownx.tasklist": {
+                "custom_checkbox": True,
+            },
+        },
+    )
+    return await asyncio.to_thread(md.convert, page)
 
-    async def render(self, page: str) -> str:
-        """Render a markdown page to HTML."""
-        if not page:
-            return ""
-        async with self._lock:
-            return self.md.convert(page)
+
+async def preview(page: str) -> str | None:
+    """Return a preview of the page by extracting the first paragraph of text."""
+
+    def _bs4_find_p(html: str):  # noqa: ANN202
+        return bs4.BeautifulSoup(html, features="html.parser").find("p")
+
+    first_p = await asyncio.to_thread(_bs4_find_p, await render(page))
+    return first_p.get_text() if first_p else None

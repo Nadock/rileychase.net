@@ -79,3 +79,14 @@ class TemplateContext(pydantic.BaseModel):
     rendered_at: datetime.datetime
     modified_at: datetime.datetime
     git_ref: str | None
+
+
+class BlogPostInfo(pydantic.BaseModel):
+    fm: PageFrontmatter
+    preview: str
+
+
+class BlogIndexTemplateContext(TemplateContext):
+    posts: list[BlogPostInfo]
+    current_page: int
+    max_pages: int
