@@ -116,21 +116,12 @@ class PageFrontmatter(pydantic.BaseModel):
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        if self.path and self.path.startswith("/"):
-            self.path = self.path[1:]
+        path = self.file.parent.relative_to(self.config.pages)
+        if self.file.name != "index.md":
+            path /= self.file.name.removesuffix(".md")
+        path /= "index.html"
 
-        if not self.path:
-            base = self.file.parent.relative_to(self.config.pages)
-            name = self.file.name.replace(".md", ".html")
-            path = base / name
-        else:
-            path = pathlib.Path(self.path)
-
-        path = (self.config.output / path).resolve()
-        if not path.name.endswith(".html"):
-            path = path / "index.html"
-
-        return path
+        return (self.config.output / path).resolve()
 
     def get_page_url(self) -> str:
         """
