@@ -47,12 +47,6 @@ class PageFrontmatter(pydantic.BaseModel):
     template: str | None = None
     """The name of the template to use when rendering this file."""
 
-    path: str | None = None
-    """
-    The path under which the page served in the output. If this path does not end in
-    `.html` it will have `index.html` appended so it works as expected in browsers.
-    """
-
     title: str | None = None
     """The title for this page."""
 
