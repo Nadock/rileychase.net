@@ -40,7 +40,7 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
 
         posts.append(
             {
-                "path": f"/{fm.get_output_path().relative_to(cfg.output)}",
+                "path": fm.get_page_url(),
                 "preview": preview,
                 **fm.get_props(),
             }
