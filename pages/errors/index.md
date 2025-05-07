@@ -1,12 +1,7 @@
 ---
-type: default
 debug: true
 title: Error Pages
 subtitle: You're not actually supposed to see this 😱
-template: error.html
-meta:
-  validation:
-    description: false
 ---
 
 - [HTTP 400](/errors/400.html)

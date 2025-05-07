@@ -1,5 +1,5 @@
 ---
-type: default
+type: blog
 debug: true
 title: Lorem ipsum
 subtitle: Elementum sagittis vitae
