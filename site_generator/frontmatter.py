@@ -131,10 +131,12 @@ class PageFrontmatter(pydantic.BaseModel):
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        path = "/" + str(self.get_output_path().relative_to(self.config.output))
-        path = path.removesuffix("index.html")
-
-        return self.config.base_url() + path
+        path = (
+            str(self.get_output_path().relative_to(self.config.output))
+            .removesuffix("index.html")
+            .removesuffix("/")
+        )
+        return parse.urljoin(self.config.base_url(), path)
 
     def get_open_graph(self) -> OpenGraphFrontmatter:
         """
