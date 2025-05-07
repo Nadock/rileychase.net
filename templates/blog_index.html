@@ -8,7 +8,7 @@
 {% block content %}
 
 
-{% for post in blog.posts %}
+{% for post in context.posts %}
 <div class="blog_index--post">
     <h3 class="blog_index--post-title"><a href="{{ post.path }}">{{ post.title }}</a></h3>
     <p>
@@ -22,17 +22,17 @@
 
 <div class="blog_index--page_controls">
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==1 %} class="disabled" {% else %} href="/blog/_/{{ blog.current_page - 1}}/" {% endif
-            %}>&lt;</a>
+        <a {% if context.current_page==1 %} class="disabled" {% else %} href="/blog/_/{{ context.current_page - 1}}/" {%
+            endif %}>&lt;</a>
     </div>
 
     <div class="blog_index--page_control">
-        <span>{{ blog.current_page }}</span>
+        <span>{{ context.current_page }}</span>
     </div>
 
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==blog.page_count %} class="disabled" {% else %}
-            href="/blog/_/{{ blog.current_page + 1}}/" {% endif %}>&gt;</a>
+        <a {% if context.current_page==context.page_count %} class="disabled" {% else %}
+            href="/blog/_/{{ context.current_page + 1}}/" {% endif %}>&gt;</a>
     </div>
 </div>
 
