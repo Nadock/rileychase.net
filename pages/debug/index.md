@@ -1,13 +1,13 @@
 ---
 type: debug
-title: Debug Page
+title: Debug links
 subtitle: There's really not anything interesting here
 meta:
   validation:
     description: False
 ---
 
-## Handy Pages
+## Handy pages
 
 - [Errors](/errors)
 - [Emoji test](/debug/emoji)

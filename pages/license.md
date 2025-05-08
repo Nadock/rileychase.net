@@ -9,7 +9,7 @@ Unless noted otherwise, all of the content on this site are licensed to the publ
 
 Any content reproduced on this website retains it's original license.
 
-## The MIT License (MIT)
+## The MIT license
 
 Copyright © 2021 Riley Chase <[webmaster@rileychase.net](mailto:webmaster@rileychase.net)>
 
