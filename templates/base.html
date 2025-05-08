@@ -69,9 +69,29 @@
 
         <div class="page_header">
             {% block page_header %}
-            <h2>{{ props.title }}</h2>
-            <em>{{ props.subtitle }}</em>
-            <p>{{ props.date }}</p>
+            <h2 class="page_header--title">{{ props.title }}</h2>
+
+            {% if props.date %}
+            <div class="page_header--info">
+                <img src="/img/calendar.svg">
+                <p class="page_header--date">{{ props.date }}</p>
+
+                {% if props.tags %}
+                <img src="/img/tag.svg">
+                <div class="page_header--tags">
+                    {% for tag in props.tags %}
+                    <p>{{ tag }}</p>
+                    {% if not loop.last %}<p> <strong>·</strong> </p>{% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if props.subtitle %}
+            <p class="page_header--subtitle"><em>{{ props.subtitle }}</em></p>
+            {% endif %}
+
             {% endblock page_header %}
         </div>
 

@@ -114,14 +114,49 @@ body {
     display: grid;
     align-content: center;
     color: var(--site-colour-highlight);
+
+    margin-bottom: 2em;
 }
 
-.page_header :first-child {
+.page_header p {
+    color: var(--site-colour-lowlight)
+}
+
+.page_header--title {
     margin-top: 2em;
 }
 
-.page_header :last-child {
-    margin-bottom: 3em;
+.page_header--subtitle {
+    margin-top: 1em;
+}
+
+.page_header--info {
+    margin-top: 0.5em;
+
+    display: grid;
+    grid-template-rows: auto;
+    grid-auto-flow: column;
+
+    justify-content: left;
+    align-items: center;
+}
+
+.page_header--info img {
+    margin-right: 1em;
+}
+
+.page_header--date {
+    margin-right: 1em;
+}
+
+.page_header--tags {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+.page_header--tags p {
+    margin-right: 0.5em;
 }
 
 .footer {
