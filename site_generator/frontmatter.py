@@ -1,7 +1,5 @@
-from __future__ import annotations
-
 # Must not be in a type checking block for Pydantic
-import datetime  # noqa: TC003
+import datetime
 import pathlib
 from typing import Any, Literal
 from urllib import parse
