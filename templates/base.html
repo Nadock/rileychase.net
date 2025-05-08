@@ -12,7 +12,7 @@
 
     <meta name="x-rendered-at" content="{{ info.rendered_at.isoformat() }}">
     <meta name="x-modified-at" content="{{ info.modified_at.isoformat() }}">
-    <meta name="x-ref" content="{{ info.ref }}">
+    <meta name="x-sha" content="{{ info.sha }}">
 
     {% block opengraph %}
     {% if props.og.title %}
@@ -111,7 +111,7 @@
                         title="Rendered {{ info.rendered_at.strftime('%Y-%m-%d') }} at {{ info.rendered_at.strftime('%H:%M:%S %Z') }}">
                         {{ info.rendered_at.year }}
                     </span>
-                    <span title="{{ info.ref[:7] }}">—</span>
+                    <span title="{{ info.sha[:7] }}">—</span>
                     Riley Chase
                     &lt;@Nadock&gt;
                 </p>

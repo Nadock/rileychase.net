@@ -49,7 +49,7 @@ async def _markdown_pipeline(
         "content": await render(content),
         "props": fm.get_props(),
         "meta": fm.get_meta(),
-        "info": get_template_info(cfg, path),
+        "info": get_template_info(path),
     }
 
     if fm.type == "blog_index":
@@ -150,9 +150,7 @@ async def render(content: str | None) -> str:
     return md.convert(content)
 
 
-def get_template_info(
-    cfg: config.SiteGeneratorConfig, path: pathlib.Path
-) -> dict[str, str | datetime.datetime]:
+def get_template_info(path: pathlib.Path) -> dict[str, str | datetime.datetime]:
     """
     Populate and return a `dict` of general purpose information about an individual
     template render.
@@ -171,11 +169,41 @@ def get_template_info(
         LOGGER.warning(f"Unable to read file modified time: {ex}")
 
     # Current git SHA
-    git_head = cfg.base / ".git" / "HEAD"
     try:
-        ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
-        info["ref"] = (cfg.base / ".git" / ref).read_text("utf-8").strip()
+        info["sha"] = get_git_sha(path) or ""
     except Exception as ex:
         LOGGER.warning(f"Unable to read git ref: {ex}")
 
     return info
+
+
+def get_git_sha(path: pathlib.Path) -> str | None:
+    """
+    Get the current git SHA for a file.
+
+    Walk up the directory tree from `path` to find a `.git` directory and read the
+    current SHA from there.
+    """
+    git_head = path / ".git" / "HEAD"
+    for parent in path.parents:
+        if git_head.exists():
+            break
+        git_head = parent / ".git" / "HEAD"
+
+    current_ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
+
+    try:
+        return (git_head.parent / current_ref).read_text("utf-8").strip()
+    except Exception:
+        LOGGER.debug(f"No file at {git_head.parent / current_ref}, trying packed refs")
+
+    packed_refs = (git_head.parent / "packed-refs").read_text("utf-8").splitlines()
+    for line in packed_refs:
+        if line.startswith("#"):
+            continue
+        sha, ref = line.split(" ", 1)
+        if ref == current_ref:
+            return sha
+
+    LOGGER.debug(f"Site file not in git repo: {path}")
+    return None
