@@ -1,9 +1,13 @@
 ---
 type: debug
-title: Lorem ipsum
-subtitle: Elementum sagittis vitae
+title: Test post, please ignore
+subtitle: If you're seeing this, no you're not.
 description: dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-date: 2021-02-04
+date: 2022-12-14
+tags:
+  - test
+  - lorem
+  - blog
 ---
 
 ## Lorem ipsum
