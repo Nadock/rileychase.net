@@ -37,20 +37,15 @@ def test_page_frontmatter__get_template_name__no_config() -> None:
 
 
 @pytest.mark.parametrize(
-    ("fm_kwargs", "cfg_kwargs", "expected"),
+    ("file", "expected"),
     [
-        ({}, {}, "test.html"),
-        ({"path": "foo/bar/baz.html"}, {}, "foo/bar/baz.html"),
-        ({"path": "foo/bar/baz"}, {}, "foo/bar/baz/index.html"),
-        ({"path": "/foo/bar/baz.html"}, {}, "foo/bar/baz.html"),
-        ({"path": "/foo/bar/baz"}, {}, "foo/bar/baz/index.html"),
+        ("./pages/debug/markdown.md", "debug/markdown/index.html"),
+        ("./pages/debug/index.md", "debug/index.html"),
     ],
 )
-def test_page_frontmatter__get_output_path(
-    fm_kwargs: dict, cfg_kwargs: dict, expected: str
-) -> None:
-    fm = fake_page_frontmatter(**fm_kwargs)
-    fm.config = config_test.fake_test_config(**cfg_kwargs)
+def test_page_frontmatter__get_output_path(file: str, expected: str) -> None:
+    fm = fake_page_frontmatter(file=pathlib.Path(file).resolve())
+    fm.config = config_test.fake_test_config()
 
     assert fm.get_output_path() == fm.config.output / expected
 
@@ -65,24 +60,28 @@ def test_page_frontmatter__get_output_path__no_config() -> None:
     ("fm_kwargs", "expected"),
     [
         (
-            {},
+            {"file": pathlib.Path("./pages/debug/markdown.md").resolve()},
             {
                 "tags": [],
                 "type": "default",
                 "og": frontmatter.OpenGraphFrontmatter(
-                    url="https://localhost/test.html", type="website"
+                    url="https://localhost/debug/markdown", type="website"
                 ),
             },
         ),
         (
-            {"title": "test title", "subtitle": None},
+            {
+                "title": "test title",
+                "subtitle": None,
+                "file": pathlib.Path("./pages/debug/markdown.md").resolve(),
+            },
             {
                 "title": "test title",
                 "tags": [],
                 "type": "default",
                 "og": frontmatter.OpenGraphFrontmatter(
                     title="test title",
-                    url="https://localhost/test.html",
+                    url="https://localhost/debug/markdown",
                     type="website",
                 ),
             },
@@ -90,20 +89,18 @@ def test_page_frontmatter__get_output_path__no_config() -> None:
         (
             {
                 "template": "props_template",
-                "path": "props_path",
                 "title": "props_title",
                 "subtitle": "props_subtitle",
                 "description": "props_description",
                 "tags": ["tag_a", "tag_b"],
                 "date": datetime.date(2022, 1, 1),
                 "meta": {"foo": "bar"},
-                "file": pathlib.Path("/path/to/file"),
+                "file": pathlib.Path("./pages/debug/markdown.md").resolve(),
                 "config": config_test.fake_test_config(),
                 "type": "default",
             },
             {
                 "template": "props_template",
-                "path": "props_path",
                 "title": "props_title",
                 "subtitle": "props_subtitle",
                 "description": "props_description",
@@ -113,7 +110,7 @@ def test_page_frontmatter__get_output_path__no_config() -> None:
                 "og": frontmatter.OpenGraphFrontmatter(
                     title="props_title",
                     description="props_subtitle",
-                    url="https://localhost/props_path/",
+                    url="https://localhost/debug/markdown",
                     type="website",
                 ),
             },
