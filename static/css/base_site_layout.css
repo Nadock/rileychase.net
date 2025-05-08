@@ -127,11 +127,12 @@ body {
 }
 
 .page_header--subtitle {
-    margin-top: 1em;
+    margin-top: 0.5em;
 }
 
 .page_header--info {
-    margin-top: 0.5em;
+    margin-top: 1em;
+    height: 1em;
 
     display: grid;
     grid-template-rows: auto;
@@ -142,11 +143,12 @@ body {
 }
 
 .page_header--info img {
-    margin-right: 1em;
+    margin-right: 0.5em;
+    height: 100%;
 }
 
 .page_header--date {
-    margin-right: 1em;
+    margin-right: 2em;
 }
 
 .page_header--tags {

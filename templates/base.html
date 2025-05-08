@@ -71,6 +71,10 @@
             {% block page_header %}
             <h2 class="page_header--title">{{ props.title }}</h2>
 
+            {% if props.subtitle %}
+            <p class="page_header--subtitle"><em>{{ props.subtitle }}</em></p>
+            {% endif %}
+
             {% if props.date %}
             <div class="page_header--info">
                 <img src="/img/calendar.svg">
@@ -88,9 +92,7 @@
             </div>
             {% endif %}
 
-            {% if props.subtitle %}
-            <p class="page_header--subtitle"><em>{{ props.subtitle }}</em></p>
-            {% endif %}
+
 
             {% endblock page_header %}
         </div>
