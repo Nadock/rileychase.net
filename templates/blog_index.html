@@ -7,18 +7,39 @@
 
 {% block content %}
 
+<div class=".blog_index--posts">
+    {% for post in blog.posts %}
+    <div class="blog_index--post">
+        <div class="blog_index--post-title">
+            <h2><a href="{{ post.path }}">{{ post.title }}</a></h2>
+        </div>
 
-{% for post in blog.posts %}
-<div class="blog_index--post">
-    <h3 class="blog_index--post-title"><a href="{{ post.path }}">{{ post.title }}</a></h3>
-    <p>
-        <em>{{ post.date }}</em>
-        <span>|</span>
-        <em>{{ post.subtitle }}</em>
-    </p>
-    <blockquote>{{ post.preview }}</blockquote>
+        <div class="blog_index--post-subtitle">
+            <p><em>{{ post.subtitle }}</em></p>
+        </div>
+
+        <div class="blog_index--post-info">
+            <img src="/img/calendar.svg">
+            <p class="blog_index--post-date">{{ post.date }}</p>
+
+            {% if post.tags %}
+            <img src="/img/tag.svg">
+
+            <div class="blog_index--post-tags">
+                {% for tag in post.tags %}
+                <p>{{ tag }}</p>
+                {% if not loop.last %}<p> <strong>·</strong> </p>{% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="blog_index--post-preview">
+            <blockquote>{{ post.preview }}</blockquote>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
 
 <div class="blog_index--page_controls">
     <div class="blog_index--page_control">
