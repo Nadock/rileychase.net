@@ -10,13 +10,8 @@
 .blog_index--post {
     display: grid;
     grid-auto-flow: row;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    border-bottom: 0.2em solid var(--site-colour-border);
-}
 
-.blog_index--post:first-child {
-    padding-top: 0;
+    margin-top: 4em;
 }
 
 .blog_index--post:last-child {
@@ -83,7 +78,7 @@
     grid-auto-flow: column;
     justify-content: center;
 
-    margin-top: 1em;
+    margin-top: 4em;
 }
 
 .blog_index--page_control:first-child {
