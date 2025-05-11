@@ -1,6 +1,6 @@
-# Must not be in a type checking block for Pydantic
 import datetime
 import pathlib
+import re
 from typing import Any, Literal
 from urllib import parse
 
@@ -8,6 +8,8 @@ import pydantic
 
 from site_generator import config as _config
 from site_generator import emoji
+
+_WHITESPACE_RE = re.compile(r"\s+")
 
 PageType = Literal["default", "blog_index", "debug"]
 
@@ -112,6 +114,9 @@ class PageFrontmatter(pydantic.BaseModel):
         if self.file.name != "index.md":
             path /= self.file.name.removesuffix(".md")
         path /= "index.html"
+
+        # Replace whitespace with underscores for nice URLs
+        path = pathlib.Path(*[_WHITESPACE_RE.sub("_", part) for part in path.parts])
 
         return (self.config.output / path).resolve()
 
