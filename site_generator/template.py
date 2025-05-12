@@ -1,25 +1,21 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING, Any
+import pathlib
+from typing import Any
 
 import jinja2
 
 from site_generator import logging
 
-if TYPE_CHECKING:
-    import pathlib
-
 LOGGER = logging.getLogger()
 
 
 async def render_template(
-    templates: pathlib.Path, name: str, **render_kwargs: dict[str, Any]
+    templates: pathlib.Path, names: list[str], **render_kwargs: dict[str, Any]
 ) -> str:
     """Render the `name`d template from the `templates` directory."""
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(templates), autoescape=True)
     env.filters["render"] = _render_filter
 
-    template = env.get_or_select_template(name)
+    template = env.get_or_select_template(list(names))
     return tidy_html(template.render(**render_kwargs))
 
 

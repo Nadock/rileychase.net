@@ -48,7 +48,14 @@ class PageFrontmatter(pydantic.BaseModel):
     """Page details extracted from markdown frontmatter content."""
 
     template: str | None = None
-    """The name of the template to use when rendering this file."""
+    """
+    The name of the template to use when rendering this file.
+
+    The template to render this page will be chosen from the following ordered options:
+    1. The `template` frontmatter property.
+    2. A template name from the page type — `"{type}.html"`.
+    3. The configured default template name — `"default.html"` unless set otherwise.
+    """
 
     title: str | None = None
     """The title for this page."""
@@ -100,16 +107,11 @@ class PageFrontmatter(pydantic.BaseModel):
     file: pathlib.Path
     config: _config.SiteGeneratorConfig | None = None
 
-    def get_template_name(self) -> str:
+    def get_template_names(self) -> list[str]:
         """Determine the template name to use in rendering the associated page."""
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
-
-        if self.template:
-            return self.template
-        if self.config.default_template:
-            return self.config.default_template
-        return "default.html"
+        return [self.template or "", f"{self.type}.html", self.config.default_template]
 
     def get_output_path(self) -> pathlib.Path:
         """Determine the output path to write rendered page content into."""

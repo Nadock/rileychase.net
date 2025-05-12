@@ -15,25 +15,30 @@ def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:
 @pytest.mark.parametrize(
     ("fm_kwargs", "cfg_kwargs", "expected"),
     [
-        ({}, {}, "default.html"),
-        ({"template": "foo.html"}, {}, "foo.html"),
-        ({}, {"default_template": "bar.html"}, "bar.html"),
-        ({"template": "foo.html"}, {"default_template": "bar.html"}, "foo.html"),
+        ({}, {}, ["", "default.html", "default.html"]),
+        ({"template": "foo.html"}, {}, ["foo.html", "default.html", "default.html"]),
+        ({}, {"default_template": "bar.html"}, ["", "default.html", "bar.html"]),
+        (
+            {"template": "foo.html"},
+            {"default_template": "bar.html"},
+            ["foo.html", "default.html", "bar.html"],
+        ),
+        ({"type": "blog"}, {}, ["", "blog.html", "default.html"]),
     ],
 )
-def test_page_frontmatter__get_template_name(
-    fm_kwargs: dict, cfg_kwargs: dict, expected: str
+def test_page_frontmatter__get_template_names(
+    fm_kwargs: dict, cfg_kwargs: dict, expected: list[str]
 ) -> None:
     fm = fake_page_frontmatter(**fm_kwargs)
     fm.config = config_test.fake_test_config(**cfg_kwargs)
 
-    assert fm.get_template_name() == expected
+    assert fm.get_template_names() == expected
 
 
-def test_page_frontmatter__get_template_name__no_config() -> None:
+def test_page_frontmatter__get_template_names__no_config() -> None:
     fm = fake_page_frontmatter()
     with pytest.raises(ValueError, match="config must be set"):
-        fm.get_template_name()
+        fm.get_template_names()
 
 
 @pytest.mark.parametrize(

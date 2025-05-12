@@ -57,7 +57,7 @@ async def _markdown_pipeline(
 
     html = await template.render_template(
         templates=cfg.templates,
-        name=fm.get_template_name(),
+        names=fm.get_template_names(),
         **render_kwargs,
     )
 
