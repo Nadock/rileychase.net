@@ -120,20 +120,23 @@ class PageFrontmatter(pydantic.BaseModel):
 
         return (self.config.output / path).resolve()
 
-    def get_page_url(self) -> str:
-        """
-        Determine the URL to this page in the rendered site based on it's output path
-        and the base URL.
-        """
+    def get_page_path(self) -> str:
+        """Get the site relative URL path for this page."""
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        path = (
+        return (
             str(self.get_output_path().relative_to(self.config.output))
             .removesuffix("index.html")
             .removesuffix("/")
         )
-        return parse.urljoin(self.config.base_url(), path)
+
+    def get_page_url(self) -> str:
+        """Get the fully qualified URL for this page."""
+        if not self.config:
+            raise ValueError(f"{self.__class__.__name__}.config must be set")
+
+        return parse.urljoin(self.config.base_url(), self.get_page_path())
 
     def get_open_graph(self) -> OpenGraphFrontmatter:
         """
