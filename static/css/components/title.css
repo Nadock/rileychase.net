@@ -1,0 +1,56 @@
+.title {
+    display: grid;
+    grid-auto-flow: row;
+
+    margin-top: 4em;
+}
+
+.title--title {
+    color: var(--site-colour-highlight);
+}
+
+.title--title:hover {
+    color: var(--site-colour-lowlight);
+}
+
+.title--title .disabled {
+    pointer-events: none;
+    text-decoration: none;
+}
+
+
+.title--subtitle {
+    color: var(--site-colour-lowlight);
+    margin-top: 0.5em;
+}
+
+.title--info {
+    color: var(--site-colour-border);
+    margin-top: 0.5em;
+
+    display: grid;
+    grid-auto-flow: column;
+
+    justify-content: left;
+    align-items: center;
+}
+
+.title--icon {
+    margin-right: 0.5em;
+    max-height: var(--site-font-size);
+}
+
+.title--date {
+    margin-right: 2em;
+}
+
+.title--tags {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    justify-content: left;
+}
+
+.title--tags p {
+    margin-right: 0.5em;
+}

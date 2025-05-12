@@ -1,0 +1,34 @@
+{% macro title(title, subtitle="", date="", tags=[], path="") -%}
+<div class="title">
+    <a {% if path %} class="title--title" href="{{ path }}" {% else %} class="title--tile disabled" {% endif %}>
+        <h2>{{ title }}</h2>
+    </a>
+
+    {% if subtitle %}
+    <p class="title--subtitle"><em>{{ subtitle }}</em></p>
+    {% endif %}
+
+    {% if date or tags %}
+    <div class="title--info">
+        {% if date %}
+        <img class="title--icon" src="/img/calendar.svg">
+        <p class="title--date">{{ date }}</p>
+        {% endif %}
+
+        {% if tags %}
+        <img class="title--icon" src="/img/tag.svg">
+        <div class="title--tags">
+            {% for tag in tags %}
+            <p>{{ tag }}</p>
+            {% if not loop.last %}<p> <strong>·</strong> </p>{% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{%- endmacro %}
+
+{% macro stylesheets() -%}
+<link rel="stylesheet" type="text/css" href="/css/components/title.css">
+{%- endmacro %}

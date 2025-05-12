@@ -1,4 +1,6 @@
 {# https://jinja.palletsprojects.com/en/3.1.x/templates/ #}
+{% import "components/title.html" as title %}
+
 <!DOCTYPE html>
 <html lang="en-au">
 
@@ -41,6 +43,8 @@
     <link rel="stylesheet" type="text/css" href="/css/base_site_layout.css">
     <link rel="stylesheet" type="text/css" href="/css/markdown_formatting.css">
     <link rel="stylesheet" type="text/css" href="/css/code_highlighting.css">
+
+    {{ title.stylesheets() }}
     {% endblock stylesheets %}
 
     <title>{{ props.title }}</title>
@@ -69,31 +73,7 @@
 
         <div class="page_header">
             {% block page_header %}
-            <h2 class="page_header--title">{{ props.title }}</h2>
-
-            {% if props.subtitle %}
-            <p class="page_header--subtitle"><em>{{ props.subtitle }}</em></p>
-            {% endif %}
-
-            {% if props.date %}
-            <div class="page_header--info">
-                <img src="/img/calendar.svg">
-                <p class="page_header--date">{{ props.date }}</p>
-
-                {% if props.tags %}
-                <img src="/img/tag.svg">
-                <div class="page_header--tags">
-                    {% for tag in props.tags %}
-                    <p>{{ tag }}</p>
-                    {% if not loop.last %}<p> <strong>·</strong> </p>{% endif %}
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </div>
-            {% endif %}
-
-
-
+            {{ title.title(title=props.title, subtitle=props.subtitle, path=props.path) }}
             {% endblock page_header %}
         </div>
 
