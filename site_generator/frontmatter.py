@@ -1,4 +1,5 @@
 import datetime
+import logging
 import pathlib
 import re
 from typing import Any, Literal
@@ -12,6 +13,8 @@ from site_generator import emoji
 _WHITESPACE_RE = re.compile(r"\s+")
 
 PageType = Literal["default", "blog", "blog_index"]
+
+LOGGER = logging.getLogger(__name__)
 
 
 class OpenGraphFrontmatter(pydantic.BaseModel):
@@ -128,11 +131,9 @@ class PageFrontmatter(pydantic.BaseModel):
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        return (
-            str(self.get_output_path().relative_to(self.config.output))
-            .removesuffix("index.html")
-            .removesuffix("/")
-        )
+        return "/" + str(
+            self.get_output_path().relative_to(self.config.output)
+        ).removesuffix("index.html").removesuffix("/")
 
     def get_page_url(self) -> str:
         """Get the fully qualified URL for this page."""
