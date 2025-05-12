@@ -18,8 +18,13 @@
 
 <div class="blog_index--page_controls">
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==1 %} class="disabled" {% endif %} {% if blog.current_page==2 %} href="/blog" {% else
-            %} href="/blog/_/{{ blog.current_page - 1}}/" {% endif %}>&lt;</a>
+        {% if blog.current_page == 1 %}
+        <a class="disabled">&lt;</a>
+        {% elif blog.current_page == 2 %}
+        <a href="/blog">&lt;</a>
+        {% else %}
+        <a href="/blog/_/{{ blog.current_page - 1}}/">&lt;</a>
+        {% endif %}
     </div>
 
     <div class="blog_index--page_control">
@@ -27,8 +32,11 @@
     </div>
 
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==blog.page_count %} class="disabled" {% endif %}
-            href="/blog/_/{{ blog.current_page + 1}}/">&gt;</a>
+        {% if blog.current_page == 1 %}
+        <a class="disabled">&gt;</a>
+        {% else %}
+        <a href="/blog/_/{{ blog.current_page + 1}}/">&gt;</a>
+        {% endif %}
     </div>
 </div>
 
