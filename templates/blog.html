@@ -1,0 +1,12 @@
+{% extends "default.html" %}
+
+{% import "components/title.html" as title %}
+
+{% block stylesheets %}
+{{ super() }}
+{{ title.stylesheets() }}
+{% endblock stylesheets %}
+
+{% block page_header %}
+{{ title.title(title=props.title, subtitle=props.subtitle, date=props.date, tags=props.tags, path=props.path) }}
+{% endblock page_header %}

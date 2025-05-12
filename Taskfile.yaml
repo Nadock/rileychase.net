@@ -48,7 +48,7 @@ tasks:
   live:
     desc: Run the site_generator in live rebuild mode
     cmds:
-      - uv run python -m site_generator live {{.CLI_ARGS}}
+      - uv run python -m site_generator --include-debug live {{.CLI_ARGS}}
 
   build:
     desc: Run the site_generator in single build mode

@@ -1,4 +1,6 @@
 {# https://jinja.palletsprojects.com/en/3.1.x/templates/ #}
+{% import "components/title.html" as title %}
+
 <!DOCTYPE html>
 <html lang="en-au">
 
@@ -12,7 +14,7 @@
 
     <meta name="x-rendered-at" content="{{ info.rendered_at.isoformat() }}">
     <meta name="x-modified-at" content="{{ info.modified_at.isoformat() }}">
-    <meta name="x-ref" content="{{ info.ref }}">
+    <meta name="x-sha" content="{{ info.sha }}">
 
     {% block opengraph %}
     {% if props.og.title %}
@@ -41,6 +43,8 @@
     <link rel="stylesheet" type="text/css" href="/css/base_site_layout.css">
     <link rel="stylesheet" type="text/css" href="/css/markdown_formatting.css">
     <link rel="stylesheet" type="text/css" href="/css/code_highlighting.css">
+
+    {{ title.stylesheets() }}
     {% endblock stylesheets %}
 
     <title>{{ props.title }}</title>
@@ -69,9 +73,7 @@
 
         <div class="page_header">
             {% block page_header %}
-            <h2>{{ props.title }}</h2>
-            <em>{{ props.subtitle }}</em>
-            <p>{{ props.date }}</p>
+            {{ title.title(title=props.title, subtitle=props.subtitle, path=props.path) }}
             {% endblock page_header %}
         </div>
 
@@ -91,7 +93,7 @@
                         title="Rendered {{ info.rendered_at.strftime('%Y-%m-%d') }} at {{ info.rendered_at.strftime('%H:%M:%S %Z') }}">
                         {{ info.rendered_at.year }}
                     </span>
-                    <span title="{{ info.ref[:7] }}">—</span>
+                    <span title="{{ info.sha[:7] }}">—</span>
                     Riley Chase
                     &lt;@Nadock&gt;
                 </p>

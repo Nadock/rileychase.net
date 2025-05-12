@@ -3,14 +3,13 @@ title: License
 subtitle: I'm just a webpage, I can't tell you what to do.
 description: Unless noted otherwise, all of the content on this site are licensed to the public under the MIT license.
 date: 2022-09-16
-path: /license
 ---
 
 Unless noted otherwise, all of the content on this site are licensed to the public under the MIT license (see below). This includes any source code that comprises the website as well as any of the content on the website such as blog posts and code snippets.
 
 Any content reproduced on this website retains it's original license.
 
-## The MIT License (MIT)
+## The MIT license
 
 Copyright © 2021 Riley Chase <[webmaster@rileychase.net](mailto:webmaster@rileychase.net)>
 

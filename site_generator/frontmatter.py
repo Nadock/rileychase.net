@@ -1,8 +1,6 @@
-from __future__ import annotations
-
-# Must not be in a type checking block for Pydantic
-import datetime  # noqa: TC003
+import datetime
 import pathlib
+import re
 from typing import Any, Literal
 from urllib import parse
 
@@ -10,6 +8,8 @@ import pydantic
 
 from site_generator import config as _config
 from site_generator import emoji
+
+_WHITESPACE_RE = re.compile(r"\s+")
 
 PageType = Literal["default", "blog_index", "debug"]
 
@@ -46,12 +46,6 @@ class PageFrontmatter(pydantic.BaseModel):
 
     template: str | None = None
     """The name of the template to use when rendering this file."""
-
-    path: str | None = None
-    """
-    The path under which the page served in the output. If this path does not end in
-    `.html` it will have `index.html` appended so it works as expected in browsers.
-    """
 
     title: str | None = None
     """The title for this page."""
@@ -116,34 +110,33 @@ class PageFrontmatter(pydantic.BaseModel):
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        if self.path and self.path.startswith("/"):
-            self.path = self.path[1:]
+        path = self.file.parent.relative_to(self.config.pages)
+        if self.file.name != "index.md":
+            path /= self.file.name.removesuffix(".md")
+        path /= "index.html"
 
-        if not self.path:
-            base = self.file.parent.relative_to(self.config.pages)
-            name = self.file.name.replace(".md", ".html")
-            path = base / name
-        else:
-            path = pathlib.Path(self.path)
+        # Replace whitespace with underscores for nice URLs
+        path = pathlib.Path(*[_WHITESPACE_RE.sub("_", part) for part in path.parts])
 
-        path = (self.config.output / path).resolve()
-        if not path.name.endswith(".html"):
-            path = path / "index.html"
+        return (self.config.output / path).resolve()
 
-        return path
-
-    def get_page_url(self) -> str:
-        """
-        Determine the URL to this page in the rendered site based on it's output path
-        and the base URL.
-        """
+    def get_page_path(self) -> str:
+        """Get the site relative URL path for this page."""
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        path = "/" + str(self.get_output_path().relative_to(self.config.output))
-        path = path.removesuffix("index.html")
+        return (
+            str(self.get_output_path().relative_to(self.config.output))
+            .removesuffix("index.html")
+            .removesuffix("/")
+        )
 
-        return self.config.base_url() + path
+    def get_page_url(self) -> str:
+        """Get the fully qualified URL for this page."""
+        if not self.config:
+            raise ValueError(f"{self.__class__.__name__}.config must be set")
+
+        return parse.urljoin(self.config.base_url(), self.get_page_path())
 
     def get_open_graph(self) -> OpenGraphFrontmatter:
         """

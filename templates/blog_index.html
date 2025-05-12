@@ -1,29 +1,25 @@
 {% extends "default.html" %}
 
+{% import "components/title.html" as title %}
+
 {% block stylesheets %}
 {{ super() }}
+{{ title.stylesheets() }}
 <link rel="stylesheet" type="text/css" href="/css/blog_index.css">
 {% endblock stylesheets %}
 
 {% block content %}
 
-
-{% for post in blog.posts %}
-<div class="blog_index--post">
-    <h3 class="blog_index--post-title"><a href="{{ post.path }}">{{ post.title }}</a></h3>
-    <p>
-        <em>{{ post.date }}</em>
-        <span>|</span>
-        <em>{{ post.subtitle }}</em>
-    </p>
-    <blockquote>{{ post.preview }}</blockquote>
+<div class="blog_index--posts">
+    {% for post in blog.posts %}
+    {{ title.title(title=post.title, subtitle=post.subtitle, date=post.date, tags=post.tags, path=post.path) }}
+    {% endfor %}
 </div>
-{% endfor %}
 
 <div class="blog_index--page_controls">
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==1 %} class="disabled" {% else %} href="/blog/_/{{ blog.current_page - 1}}/" {% endif
-            %}>&lt;</a>
+        <a {% if blog.current_page==1 %} class="disabled" {% endif %} {% if blog.current_page==2 %} href="/blog" {% else
+            %} href="/blog/_/{{ blog.current_page - 1}}/" {% endif %}>&lt;</a>
     </div>
 
     <div class="blog_index--page_control">
@@ -31,8 +27,8 @@
     </div>
 
     <div class="blog_index--page_control">
-        <a {% if blog.current_page==blog.page_count %} class="disabled" {% else %}
-            href="/blog/_/{{ blog.current_page + 1}}/" {% endif %}>&gt;</a>
+        <a {% if blog.current_page==blog.page_count %} class="disabled" {% endif %}
+            href="/blog/_/{{ blog.current_page + 1}}/">&gt;</a>
     </div>
 </div>
 

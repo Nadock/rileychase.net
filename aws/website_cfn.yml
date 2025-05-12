@@ -89,37 +89,37 @@ Resources:
         CustomErrorResponses:
           - ErrorCode: 400
             ResponseCode: 400
-            ResponsePagePath: /errors/400.html
+            ResponsePagePath: /errors/400
           - ErrorCode: 403
             ResponseCode: 403
-            ResponsePagePath: /errors/403.html
+            ResponsePagePath: /errors/403
           - ErrorCode: 404
             ResponseCode: 404
-            ResponsePagePath: /errors/404.html
+            ResponsePagePath: /errors/404
           - ErrorCode: 405
             ResponseCode: 405
-            ResponsePagePath: /errors/405.html
+            ResponsePagePath: /errors/405
           - ErrorCode: 414
             ResponseCode: 414
-            ResponsePagePath: /errors/414.html
+            ResponsePagePath: /errors/414
           - ErrorCode: 416
             ResponseCode: 416
-            ResponsePagePath: /errors/416.html
+            ResponsePagePath: /errors/416
           - ErrorCode: 500
             ResponseCode: 500
-            ResponsePagePath: /errors/500.html
+            ResponsePagePath: /errors/500
           - ErrorCode: 501
             ResponseCode: 501
-            ResponsePagePath: /errors/501.html
+            ResponsePagePath: /errors/501
           - ErrorCode: 502
             ResponseCode: 502
-            ResponsePagePath: /errors/502.html
+            ResponsePagePath: /errors/502
           - ErrorCode: 503
             ResponseCode: 503
-            ResponsePagePath: /errors/503.html
+            ResponsePagePath: /errors/503
           - ErrorCode: 504
             ResponseCode: 504
-            ResponsePagePath: /errors/504.html
+            ResponsePagePath: /errors/504
         DefaultCacheBehavior:
           AllowedMethods:
             - GET

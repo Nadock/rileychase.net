@@ -40,7 +40,7 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
 
         posts.append(
             {
-                "path": f"/{fm.get_output_path().relative_to(cfg.output)}",
+                "path": fm.get_page_path(),
                 "preview": preview,
                 **fm.get_props(),
             }
@@ -72,11 +72,12 @@ async def blog_index_pipeline(
     page_size = cfg.blog_posts_per_page
     page_count = math.ceil(len(posts) / page_size)
 
-    for page in range(0, len(posts), page_size):
+    for page_idx in range(0, len(posts), page_size):
+        page = (page_idx // page_size) + 1
         render_kwargs["blog"] = {
-            "posts": posts[page : page + page_size],
+            "posts": posts[page_idx : page_idx + page_size],
             "page_count": page_count,
-            "current_page": page + 1,
+            "current_page": page,
         }
 
         html = await template.render_template(
@@ -85,11 +86,11 @@ async def blog_index_pipeline(
             **render_kwargs,
         )
 
-        if page == 0:
+        if page_idx == 0:
             root_output.parent.mkdir(parents=True, exist_ok=True)
             root_output.write_text(html)
 
-            output = root_output.parent / "_" / str(page + 1) / "index.html"
+            output = root_output.parent / "_" / "1" / "index.html"
             output.parent.mkdir(parents=True, exist_ok=True)
 
             output.write_text(
@@ -100,15 +101,13 @@ async def blog_index_pipeline(
                 "</head>"
                 "</html>"
             )
-
-            LOGGER.debug(
-                f"wrote blog posts {page} to {page + page_size} to {root_output}"
-            )
         else:
-            output = root_output.parent / "_" / str(page + 1) / "index.html"
+            output = root_output.parent / "_" / str(page) / "index.html"
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_text(html)
 
-            LOGGER.debug(f"wrote blog posts {page} to {page + page_size} to {output}")
+        LOGGER.debug(
+            f"wrote blog posts {page_idx} to {page_idx + page_size} to {output}"
+        )
 
     return root_output

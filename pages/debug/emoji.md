@@ -1,5 +1,5 @@
 ---
-title: Emoji Test
+title: Emoji test
 subtitle: A test of all available emojis
 description: Emoji test
 type: debug
