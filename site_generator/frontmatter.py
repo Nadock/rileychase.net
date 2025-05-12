@@ -63,9 +63,6 @@ class PageFrontmatter(pydantic.BaseModel):
     subtitle: str | None = None
     """The subtitle for this page."""
 
-    description: str | None = None
-    """The meta description for this page."""
-
     tags: list[str] = pydantic.Field(default_factory=list)
     """Classification tags for this page's content."""
 
@@ -181,7 +178,6 @@ class PageFrontmatter(pydantic.BaseModel):
             **self.model_dump(exclude={"meta", "config", "file"}),
             "title": emoji.replace_emoji(self.title),
             "subtitle": emoji.replace_emoji(self.subtitle),
-            "description": emoji.replace_emoji(self.description),
             "og": self.get_open_graph(),
         }
         return {k: v for k, v in props.items() if v is not None}
@@ -212,9 +208,6 @@ class PageFrontmatter(pydantic.BaseModel):
 
         if not self.subtitle and validation.get("subtitle", True):
             errors.append("no subtitle set")
-
-        if not self.description and validation.get("description", True):
-            errors.append("no description set")
 
         if self.type == "blog_index" and self.file.name != "index.md":
             errors.append("type set to 'blog_index' but file not named `index.md`")

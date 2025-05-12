@@ -2,9 +2,6 @@
 debug: true
 title: Debug links
 subtitle: There's really not anything interesting here
-meta:
-  validation:
-    description: False
 ---
 
 ## Handy pages

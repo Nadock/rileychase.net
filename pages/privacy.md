@@ -1,7 +1,8 @@
 ---
 title: Privacy
 subtitle: This website doesn't know what you do in the dark
-description: Privacy policy information for this website rileychase.net.
+og:
+  description: Privacy policy information for this website rileychase.net.
 date: 2025-05-08
 ---
 

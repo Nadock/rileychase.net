@@ -9,7 +9,7 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ props.description }}">
+    <meta name="description" content="{{ props.og.description }}">
     <meta name="color-scheme" content="dark light">
 
     <meta name="x-rendered-at" content="{{ info.rendered_at.isoformat() }}">
@@ -29,13 +29,10 @@
     <meta property="og:description" content="{{ props.og.description }}">
     {% endif %}
 
-    {% if props.og.url %}
-    <meta property="og:url" content="{{ props.og.url }}">
-    {% endif %}
-
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="en_AU">
-    <meta property="og:site_name" content="rileychase.net">
+    <meta property="og:url" content="{{ props.og.url }}">
+    <meta property="og:locale" content="{{ props.og.locale }}">
+    <meta property="og:site_name" content="{{ props.og.site_name }}">
     {% endblock opengraph %}
 
     {% block stylesheets %}
