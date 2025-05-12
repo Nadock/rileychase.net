@@ -1,8 +1,8 @@
 ---
-type: debug
+debug: true
+type: blog
 title: Test post, please ignore
 subtitle: If you're seeing this, no you're not.
-description: dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
 date: 2022-12-14
 tags:
   - test

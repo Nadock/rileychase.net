@@ -5,6 +5,5 @@ type: blog_index
 template: blog_index.html
 meta:
   validation:
-    description: False
     content: False
 ---

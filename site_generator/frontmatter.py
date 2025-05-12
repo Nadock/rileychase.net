@@ -1,4 +1,5 @@
 import datetime
+import logging
 import pathlib
 import re
 from typing import Any, Literal
@@ -11,7 +12,9 @@ from site_generator import emoji
 
 _WHITESPACE_RE = re.compile(r"\s+")
 
-PageType = Literal["default", "blog_index", "debug"]
+PageType = Literal["default", "blog", "blog_index"]
+
+LOGGER = logging.getLogger(__name__)
 
 
 class OpenGraphFrontmatter(pydantic.BaseModel):
@@ -45,16 +48,20 @@ class PageFrontmatter(pydantic.BaseModel):
     """Page details extracted from markdown frontmatter content."""
 
     template: str | None = None
-    """The name of the template to use when rendering this file."""
+    """
+    The name of the template to use when rendering this file.
+
+    The template to render this page will be chosen from the following ordered options:
+    1. The `template` frontmatter property.
+    2. A template name from the page type — `"{type}.html"`.
+    3. The configured default template name — `"default.html"` unless set otherwise.
+    """
 
     title: str | None = None
     """The title for this page."""
 
     subtitle: str | None = None
     """The subtitle for this page."""
-
-    description: str | None = None
-    """The meta description for this page."""
 
     tags: list[str] = pydantic.Field(default_factory=list)
     """Classification tags for this page's content."""
@@ -82,28 +89,26 @@ class PageFrontmatter(pydantic.BaseModel):
     functionality.
 
     - `default` is the default value and has no special meaning.
+    - `blog` indicates the page is a blog post and should be collated with the nearest
+      `blog_index` parent page.
     - `blog_index` marks this page as the root page for a blog. When being processed,
        this file will use the `blog_index` pipeline instead of the default `markdown`
        pipeline. The file must be named `index.md`.
-    - `debug` marks this page for local preview only, not to be included in the full
-       site build.
     """
+
+    debug: bool = False
+    """Mark this page for local preview only, not included in the regular build."""
 
     # The following fields are populated automatically, don't need to be in the
     # template frontmatter, and aren't included in template rendering.
     file: pathlib.Path
     config: _config.SiteGeneratorConfig | None = None
 
-    def get_template_name(self) -> str:
+    def get_template_names(self) -> list[str]:
         """Determine the template name to use in rendering the associated page."""
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
-
-        if self.template:
-            return self.template
-        if self.config.default_template:
-            return self.config.default_template
-        return "default.html"
+        return [self.template or "", f"{self.type}.html", self.config.default_template]
 
     def get_output_path(self) -> pathlib.Path:
         """Determine the output path to write rendered page content into."""
@@ -125,11 +130,9 @@ class PageFrontmatter(pydantic.BaseModel):
         if not self.config:
             raise ValueError(f"{self.__class__.__name__}.config must be set")
 
-        return (
-            str(self.get_output_path().relative_to(self.config.output))
-            .removesuffix("index.html")
-            .removesuffix("/")
-        )
+        return "/" + str(
+            self.get_output_path().relative_to(self.config.output)
+        ).removesuffix("index.html").removesuffix("/")
 
     def get_page_url(self) -> str:
         """Get the fully qualified URL for this page."""
@@ -175,7 +178,6 @@ class PageFrontmatter(pydantic.BaseModel):
             **self.model_dump(exclude={"meta", "config", "file"}),
             "title": emoji.replace_emoji(self.title),
             "subtitle": emoji.replace_emoji(self.subtitle),
-            "description": emoji.replace_emoji(self.description),
             "og": self.get_open_graph(),
         }
         return {k: v for k, v in props.items() if v is not None}
@@ -206,9 +208,6 @@ class PageFrontmatter(pydantic.BaseModel):
 
         if not self.subtitle and validation.get("subtitle", True):
             errors.append("no subtitle set")
-
-        if not self.description and validation.get("description", True):
-            errors.append("no description set")
 
         if self.type == "blog_index" and self.file.name != "index.md":
             errors.append("type set to 'blog_index' but file not named `index.md`")

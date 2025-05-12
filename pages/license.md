@@ -1,7 +1,8 @@
 ---
 title: License
 subtitle: I'm just a webpage, I can't tell you what to do.
-description: Unless noted otherwise, all of the content on this site are licensed to the public under the MIT license.
+og:
+  description: Unless noted otherwise, all of the content on this site are licensed to the public under the MIT license.
 date: 2022-09-16
 ---
 

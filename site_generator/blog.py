@@ -25,7 +25,7 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
         content, fm = await markdown.load_markdown(cfg, post)
         if not fm.date:
             raise ValueError("Cannot render blog post without a date")
-        if fm.type == "debug" and not cfg.debug_pages:
+        if fm.debug and not cfg.debug_pages:
             LOGGER.debug(f"Skipping debug blog page: {path}")
             continue
 
@@ -82,7 +82,7 @@ async def blog_index_pipeline(
 
         html = await template.render_template(
             templates=cfg.templates,
-            name=fm.get_template_name(),
+            names=fm.get_template_names(),
             **render_kwargs,
         )
 

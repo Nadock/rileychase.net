@@ -41,7 +41,7 @@ async def _markdown_pipeline(
     cfg: config.SiteGeneratorConfig, path: pathlib.Path
 ) -> pathlib.Path | None:
     content, fm = await load_markdown(cfg, path)
-    if fm.type == "debug" and not cfg.debug_pages:
+    if fm.debug and not cfg.debug_pages:
         LOGGER.debug(f"Skipping debug markdown page: {path}")
         return None
 
@@ -57,7 +57,7 @@ async def _markdown_pipeline(
 
     html = await template.render_template(
         templates=cfg.templates,
-        name=fm.get_template_name(),
+        names=fm.get_template_names(),
         **render_kwargs,
     )
 
