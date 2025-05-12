@@ -1,5 +1,5 @@
 ---
-type: debug
+debug: true
 title: Markdown test
 subtitle: Test all the various markdown things we can render
 description: A test of all markdown content

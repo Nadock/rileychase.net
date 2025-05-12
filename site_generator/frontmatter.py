@@ -11,7 +11,7 @@ from site_generator import emoji
 
 _WHITESPACE_RE = re.compile(r"\s+")
 
-PageType = Literal["default", "blog_index", "debug"]
+PageType = Literal["default", "blog", "blog_index"]
 
 
 class OpenGraphFrontmatter(pydantic.BaseModel):
@@ -82,12 +82,15 @@ class PageFrontmatter(pydantic.BaseModel):
     functionality.
 
     - `default` is the default value and has no special meaning.
+    - `blog` indicates the page is a blog post and should be collated with the nearest
+      `blog_index` parent page.
     - `blog_index` marks this page as the root page for a blog. When being processed,
        this file will use the `blog_index` pipeline instead of the default `markdown`
        pipeline. The file must be named `index.md`.
-    - `debug` marks this page for local preview only, not to be included in the full
-       site build.
     """
+
+    debug: bool = False
+    """Mark this page for local preview only, not included in the regular build."""
 
     # The following fields are populated automatically, don't need to be in the
     # template frontmatter, and aren't included in template rendering.

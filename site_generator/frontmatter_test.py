@@ -64,6 +64,7 @@ def test_page_frontmatter__get_output_path__no_config() -> None:
             {
                 "tags": [],
                 "type": "default",
+                "debug": False,
                 "og": frontmatter.OpenGraphFrontmatter(
                     url="https://localhost/debug/markdown", type="website"
                 ),
@@ -79,6 +80,7 @@ def test_page_frontmatter__get_output_path__no_config() -> None:
                 "title": "test title",
                 "tags": [],
                 "type": "default",
+                "debug": False,
                 "og": frontmatter.OpenGraphFrontmatter(
                     title="test title",
                     url="https://localhost/debug/markdown",
@@ -107,6 +109,7 @@ def test_page_frontmatter__get_output_path__no_config() -> None:
                 "tags": ["tag_a", "tag_b"],
                 "date": datetime.date(2022, 1, 1),
                 "type": "default",
+                "debug": False,
                 "og": frontmatter.OpenGraphFrontmatter(
                     title="props_title",
                     description="props_subtitle",
