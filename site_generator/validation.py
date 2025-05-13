@@ -46,7 +46,8 @@ class Validator:
         async for page in markdown.find_markdown(self.cfg.pages):
             content, fm = await markdown.load_markdown(self.cfg, page)
 
-            if not content and fm.get_meta().get("validation", {}).get("content", True):
+            meta = fm.meta or {}
+            if not content and meta.get("validation", {}).get("content", True):
                 yield errors.ValidationError(file=page, error="content: page is empty")
 
             for error in fm.validate_frontmatter():

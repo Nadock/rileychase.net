@@ -9,30 +9,30 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{{ props.og.description }}">
+    <meta name="description" content="{{ ctx.frontmatter.og.description }}">
     <meta name="color-scheme" content="dark light">
 
-    <meta name="x-rendered-at" content="{{ info.rendered_at.isoformat() }}">
-    <meta name="x-modified-at" content="{{ info.modified_at.isoformat() }}">
-    <meta name="x-sha" content="{{ info.sha }}">
+    <meta name="x-rendered-at" content="{{ ctx.rendered_at.isoformat() }}">
+    <meta name="x-modified-at" content="{{ ctx.modified_at.isoformat() }}">
+    <meta name="x-sha" content="{{ ctx.git_sha }}">
 
     {% block opengraph %}
-    {% if props.og.title %}
-    <meta property="og:title" content="{{ props.og.title }}">
+    {% if ctx.frontmatter.og.title %}
+    <meta property="og:title" content="{{ ctx.frontmatter.og.title }}">
     {% endif %}
 
-    {% if props.og.image %}
-    <meta property="og:image" content="{{ props.og.image }}">
+    {% if ctx.frontmatter.og.image %}
+    <meta property="og:image" content="{{ ctx.frontmatter.og.image }}">
     {% endif %}
 
-    {% if props.og.description %}
-    <meta property="og:description" content="{{ props.og.description }}">
+    {% if ctx.frontmatter.og.description %}
+    <meta property="og:description" content="{{ ctx.frontmatter.og.description }}">
     {% endif %}
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ props.og.url }}">
-    <meta property="og:locale" content="{{ props.og.locale }}">
-    <meta property="og:site_name" content="{{ props.og.site_name }}">
+    <meta property="og:type" content="{{ ctx.frontmatter.og.type }}">
+    <meta property="og:url" content="{{ ctx.frontmatter.og.url }}">
+    <meta property="og:locale" content="{{ ctx.frontmatter.og.locale }}">
+    <meta property="og:site_name" content="{{ ctx.frontmatter.og.site_name }}">
     {% endblock opengraph %}
 
     {% block stylesheets %}
@@ -44,7 +44,7 @@
     {{ title.stylesheets() }}
     {% endblock stylesheets %}
 
-    <title>{{ props.title }}</title>
+    <title>{{ ctx.frontmatter.title }}</title>
     {% endblock head %}
 </head>
 
@@ -70,14 +70,16 @@
 
         <div class="page_header">
             {% block page_header %}
-            {{ title.title(title=props.title, subtitle=props.subtitle, path=props.path) }}
+            {{
+            title.title(title=ctx.frontmatter.title,subtitle=ctx.frontmatter.subtitle,path=ctx.frontmatter.get_page_path())
+            }}
             {% endblock page_header %}
         </div>
 
         <div class="content">
             {% block content %}
             {% autoescape false %}
-            {{ content|render }}
+            {{ ctx.content|render }}
             {% endautoescape %}
             {% endblock content %}
         </div>
@@ -86,11 +88,10 @@
             {% block footer %}
             <div class="nav_links nav_links--right">
                 <p>
-                    <span
-                        title="Rendered {{ info.rendered_at.strftime('%Y-%m-%d') }} at {{ info.rendered_at.strftime('%H:%M:%S %Z') }}">
-                        {{ info.rendered_at.year }}
+                    <span title="Rendered {{ ctx.rendered_at.strftime('%Y-%m-%d at %H:%M:%S %Z') }}">
+                        {{ ctx.rendered_at.year }}
                     </span>
-                    <span title="{{ info.sha[:7] }}">—</span>
+                    <span title="{{ ctx.git_sha[:7] }}">—</span>
                     Riley Chase
                     &lt;@Nadock&gt;
                 </p>
