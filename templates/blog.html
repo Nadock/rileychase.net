@@ -8,5 +8,6 @@
 {% endblock stylesheets %}
 
 {% block page_header %}
-{{ title.title(title=props.title, subtitle=props.subtitle, date=props.date, tags=props.tags, path=props.path) }}
+{{ title.title(title=ctx.frontmatter.title, subtitle=ctx.frontmatter.subtitle, date=ctx.frontmatter.date,
+tags=ctx.frontmatter.tags, path=ctx.frontmatter.path, ) }}
 {% endblock page_header %}

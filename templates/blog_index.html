@@ -11,31 +11,32 @@
 {% block content %}
 
 <div class="blog_index--posts">
-    {% for post in blog.posts %}
-    {{ title.title(title=post.title, subtitle=post.subtitle, date=post.date, tags=post.tags, path=post.path) }}
+    {% for post in ctx.posts %}
+    {{ title.title(title=post.frontmatter.title, subtitle=post.frontmatter.subtitle, date=post.frontmatter.date,
+    tags=post.frontmatter.tags, path=post.frontmatter.get_page_path()) }}
     {% endfor %}
 </div>
 
 <div class="blog_index--page_controls">
     <div class="blog_index--page_control">
-        {% if blog.current_page == 1 %}
+        {% if ctx.current_page == 1 %}
         <a class="disabled">&lt;</a>
-        {% elif blog.current_page == 2 %}
+        {% elif ctx.current_page == 2 %}
         <a href="/blog">&lt;</a>
         {% else %}
-        <a href="/blog/_/{{ blog.current_page - 1}}/">&lt;</a>
+        <a href="/blog/_/{{ ctx.current_page - 1}}/">&lt;</a>
         {% endif %}
     </div>
 
     <div class="blog_index--page_control">
-        <span>{{ blog.current_page }}</span>
+        <span>{{ ctx.current_page }}</span>
     </div>
 
     <div class="blog_index--page_control">
-        {% if blog.current_page == 1 %}
+        {% if ctx.current_page == 1 %}
         <a class="disabled">&gt;</a>
         {% else %}
-        <a href="/blog/_/{{ blog.current_page + 1}}/">&gt;</a>
+        <a href="/blog/_/{{ ctx.current_page + 1}}/">&gt;</a>
         {% endif %}
     </div>
 </div>
