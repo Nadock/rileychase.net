@@ -56,10 +56,7 @@ async def _markdown_pipeline(
     if fm.type == "blog_index":
         return await blog.blog_index_pipeline(cfg, path, fm, ctx)
 
-    html = await template.renderer(cfg.templates).render(
-        names=fm.get_template_names(),
-        ctx=ctx,
-    )
+    html = await template.renderer(cfg.templates).render(ctx=ctx)
 
     output = fm.get_output_path()
     output.parent.mkdir(parents=True, exist_ok=True)

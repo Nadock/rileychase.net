@@ -65,11 +65,20 @@ class TemplateRenderer:
         )
         self.env.filters["render"] = _render_filter
 
-    async def render(self, names: list[str], ctx: TemplateContext) -> str:
+    async def render(self, ctx: TemplateContext) -> str:
         """Render the named template with the provided render context."""
-        template = self.env.get_or_select_template([n for n in names if n])
+        cfg = ctx.frontmatter.config
+        if not cfg:
+            raise ValueError("Internal error rendering template, config must be set")
+
+        templates = [
+            ctx.frontmatter.template,
+            f"{ctx.frontmatter.type}.html",
+            cfg.default_template,
+        ]
 
         try:
+            template = self.env.get_or_select_template([t for t in templates if t])
             html = await template.render_async(ctx=ctx)
         except jinja2.TemplateError as ex:
             if (

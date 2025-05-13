@@ -103,12 +103,6 @@ class PageFrontmatter(pydantic.BaseModel):
     file: pathlib.Path
     config: _config.SiteGeneratorConfig | None = None
 
-    def get_template_names(self) -> list[str]:
-        """Determine the template name to use in rendering the associated page."""
-        if not self.config:
-            raise ValueError(f"{self.__class__.__name__}.config must be set")
-        return [self.template or "", f"{self.type}.html", self.config.default_template]
-
     def get_output_path(self) -> pathlib.Path:
         """Determine the output path to write rendered page content into."""
         if not self.config:

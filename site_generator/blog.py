@@ -78,8 +78,7 @@ async def blog_index_pipeline(
         current_page = (page_idx // page_size) + 1
 
         html = await template.renderer(cfg.templates).render(
-            names=fm.get_template_names(),
-            ctx=template.BlogIndexTemplateContext(
+            template.BlogIndexTemplateContext(
                 **ctx.model_dump(),
                 posts=posts[page_idx : page_idx + page_size],
                 current_page=current_page,
