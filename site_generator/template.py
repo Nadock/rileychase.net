@@ -1,4 +1,5 @@
 import datetime
+import functools
 import pathlib
 import re
 from typing import Any
@@ -82,17 +83,10 @@ class TemplateRenderer:
         return tidy_html(html)
 
 
-async def render_template(
-    templates: pathlib.Path, names: list[str], ctx: TemplateContext
-) -> str:
-    """
-    Render the `name`d template from the `templates` directory.
-
-    This is just a convenience wrapper around creating a `TemplateRenderer` and calling
-    it's `render` method. For better caching and render performance we should migrate
-    all calling code to maintain a single long running `TemplateRenderer` instance.
-    """
-    return await TemplateRenderer(templates).render(names, ctx)
+@functools.cache
+def renderer(templates: pathlib.Path) -> TemplateRenderer:
+    """Get a `TemplateRenderer` for the templates in the provided directory."""
+    return TemplateRenderer(templates)
 
 
 @jinja2.pass_context
