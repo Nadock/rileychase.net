@@ -3,7 +3,7 @@ from __future__ import annotations
 import datetime
 import os
 import pathlib
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import markdown
 import yaml
@@ -45,20 +45,21 @@ async def _markdown_pipeline(
         LOGGER.debug(f"Skipping debug markdown page: {path}")
         return None
 
-    render_kwargs: dict[str, Any] = {
-        "content": await render(content),
-        "props": fm.get_props(),
-        "meta": fm.get_meta(),
-        "info": get_template_info(path),
-    }
+    ctx = template.TemplateContext(
+        content=await render(content),
+        frontmatter=fm,
+        rendered_at=get_rendered_at(),
+        modified_at=get_modified_at(path),
+        git_sha=get_git_sha(path),
+    )
 
     if fm.type == "blog_index":
-        return await blog.blog_index_pipeline(cfg, path, fm, render_kwargs)
+        return await blog.blog_index_pipeline(cfg, path, fm, ctx)
 
     html = await template.render_template(
         templates=cfg.templates,
         names=fm.get_template_names(),
-        **render_kwargs,
+        ctx=ctx,
     )
 
     output = fm.get_output_path()
@@ -112,6 +113,7 @@ async def load_markdown(
         page_fm = yaml.safe_load("".join(lines[1 : idx - 1]))
     fm = frontmatter.PageFrontmatter(file=path, **page_fm)
     fm.config = cfg
+    fm.og = fm.get_open_graph()
 
     return content, fm
 
@@ -150,31 +152,14 @@ async def render(content: str | None) -> str:
     return md.convert(content)
 
 
-def get_template_info(path: pathlib.Path) -> dict[str, str | datetime.datetime]:
-    """
-    Populate and return a `dict` of general purpose information about an individual
-    template render.
-    """
-    info: dict[str, str | datetime.datetime] = {}
+def get_rendered_at() -> datetime.datetime:
+    """Get the time a page is being rendered at."""
+    return datetime.datetime.now(datetime.UTC)
 
-    # Output render timestamp
-    info["rendered_at"] = datetime.datetime.now(datetime.UTC)
 
-    # Source file last modified time
-    try:
-        info["modified_at"] = datetime.datetime.fromtimestamp(
-            path.stat().st_mtime, datetime.UTC
-        )
-    except OSError as ex:
-        LOGGER.warning(f"Unable to read file modified time: {ex}")
-
-    # Current git SHA
-    try:
-        info["sha"] = get_git_sha(path) or ""
-    except Exception as ex:
-        LOGGER.warning(f"Unable to read git ref: {ex}")
-
-    return info
+def get_modified_at(path: pathlib.Path) -> datetime.datetime:
+    """Get the date and time the file was last modified time."""
+    return datetime.datetime.fromtimestamp(path.stat().st_mtime, datetime.UTC)
 
 
 def get_git_sha(path: pathlib.Path) -> str | None:

@@ -2,13 +2,12 @@ import datetime
 import logging
 import pathlib
 import re
-from typing import Any, Literal
+from typing import Literal
 from urllib import parse
 
 import pydantic
 
 from site_generator import config as _config
-from site_generator import emoji
 
 _WHITESPACE_RE = re.compile(r"\s+")
 
@@ -166,32 +165,6 @@ class PageFrontmatter(pydantic.BaseModel):
         og.site_name = og.site_name or self.config.site_name
 
         return og
-
-    def get_props(self) -> dict[str, Any]:
-        """
-        Return the frontmatter properties as a `dict` of values.
-
-        Frontmatter "properties" are any frontmatter values that might be included in
-        the rendered output, like the `title`.
-        """
-        props = {
-            **self.model_dump(exclude={"meta", "config", "file"}),
-            "title": emoji.replace_emoji(self.title),
-            "subtitle": emoji.replace_emoji(self.subtitle),
-            "og": self.get_open_graph(),
-        }
-        return {k: v for k, v in props.items() if v is not None}
-
-    def get_meta(self) -> dict[str, Any]:
-        """
-        Return the frontmatter meta content as a `dict` of values.
-
-        Frontmatter "meta" values are the frontmatter values that aren't used directly
-        in the page render but are used in other parts of the process, such as the
-        `path` meta property.
-        """
-        meta = self.model_dump(include={"meta"}).get("meta", {})
-        return meta if isinstance(meta, dict) else {}
 
     def validate_frontmatter(self) -> list[str]:
         """

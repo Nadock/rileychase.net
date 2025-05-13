@@ -1,3 +1,4 @@
+import datetime
 import math
 import pathlib
 
@@ -8,7 +9,9 @@ from site_generator import config, frontmatter, logging, markdown, template
 LOGGER = logging.getLogger()
 
 
-async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -> list:
+async def find_blog_posts(
+    cfg: config.SiteGeneratorConfig, path: pathlib.Path
+) -> list[template.BlogIndexPostContext]:
     """
     Generate and return all the additional info the `"blog_index"` page type requires.
 
@@ -16,7 +19,7 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
     """
     search_dir = path.parent
 
-    posts = []
+    posts: list[template.BlogIndexPostContext] = []
     async for post in markdown.find_markdown(search_dir):
         if post == path:
             continue
@@ -38,16 +41,15 @@ async def find_blog_posts(cfg: config.SiteGeneratorConfig, path: pathlib.Path) -
             else "This page has no paragraphs, please add some content!"
         )
 
-        posts.append(
-            {
-                "path": fm.get_page_path(),
-                "preview": preview,
-                **fm.get_props(),
-            }
-        )
+        posts.append(template.BlogIndexPostContext(frontmatter=fm, preview=preview))
 
     # Sort post by their date
-    posts.sort(key=lambda p: p["date"], reverse=True)
+    def sort_frontmatter(t: template.BlogIndexPostContext) -> datetime.date:
+        if not t.frontmatter.date:
+            raise ValueError("Cannot render blog post without a date")
+        return t.frontmatter.date
+
+    posts.sort(key=sort_frontmatter, reverse=True)
     return posts
 
 
@@ -55,7 +57,7 @@ async def blog_index_pipeline(
     cfg: config.SiteGeneratorConfig,
     path: pathlib.Path,
     fm: frontmatter.PageFrontmatter,
-    render_kwargs: dict,
+    ctx: template.TemplateContext,
 ) -> pathlib.Path:
     """
     Render pipeline for a `blog_index` page, returning the path to the first rendered
@@ -70,20 +72,20 @@ async def blog_index_pipeline(
     root_output = fm.get_output_path()
 
     page_size = cfg.blog_posts_per_page
-    page_count = math.ceil(len(posts) / page_size)
+    max_pages = math.ceil(len(posts) / page_size)
 
     for page_idx in range(0, len(posts), page_size):
-        page = (page_idx // page_size) + 1
-        render_kwargs["blog"] = {
-            "posts": posts[page_idx : page_idx + page_size],
-            "page_count": page_count,
-            "current_page": page,
-        }
+        current_page = (page_idx // page_size) + 1
 
         html = await template.render_template(
             templates=cfg.templates,
             names=fm.get_template_names(),
-            **render_kwargs,
+            ctx=template.BlogIndexTemplateContext(
+                **ctx.model_dump(),
+                posts=posts[page_idx : page_idx + page_size],
+                current_page=current_page,
+                max_pages=max_pages,
+            ),
         )
 
         if page_idx == 0:
@@ -102,7 +104,7 @@ async def blog_index_pipeline(
                 "</html>"
             )
         else:
-            output = root_output.parent / "_" / str(page) / "index.html"
+            output = root_output.parent / "_" / str(current_page) / "index.html"
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_text(html)
 
