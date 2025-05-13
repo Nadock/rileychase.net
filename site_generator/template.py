@@ -93,7 +93,7 @@ class TemplateRenderer:
 
 
 @functools.cache
-def renderer(templates: pathlib.Path) -> TemplateRenderer:
+def jinja(templates: pathlib.Path) -> TemplateRenderer:
     """Get a `TemplateRenderer` for the templates in the provided directory."""
     return TemplateRenderer(templates)
 

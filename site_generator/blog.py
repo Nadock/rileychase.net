@@ -77,14 +77,13 @@ async def blog_index_pipeline(
     for page_idx in range(0, len(posts), page_size):
         current_page = (page_idx // page_size) + 1
 
-        html = await template.renderer(cfg.templates).render(
-            template.BlogIndexTemplateContext(
-                **ctx.model_dump(),
-                posts=posts[page_idx : page_idx + page_size],
-                current_page=current_page,
-                max_pages=max_pages,
-            ),
+        ctx = template.BlogIndexTemplateContext(
+            **ctx.model_dump(),
+            posts=posts[page_idx : page_idx + page_size],
+            current_page=current_page,
+            max_pages=max_pages,
         )
+        html = await template.jinja(cfg.templates).render(ctx)
 
         if page_idx == 0:
             root_output.parent.mkdir(parents=True, exist_ok=True)
