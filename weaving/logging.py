@@ -12,7 +12,7 @@ def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:
     """Setup root `logging.Logger` objects to print to stderr nicely."""
     root = logging.getLogger()
 
-    app = root.getChild("site_generator")
+    app = root.getChild("weaving")
     app.propagate = False
 
     root.setLevel(logging.ERROR)
@@ -33,5 +33,5 @@ def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:
 
 def getLogger(name: str | None = None) -> logging.Logger:  # noqa: N802
     """Alias function for `logging.getLogger` that ensures we use the app logger."""
-    name = f"site_generator.{name}" if name else "site_generator"
+    name = f"weaving.{name}" if name else "weaving"
     return logging.getLogger(name)

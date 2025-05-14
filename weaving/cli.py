@@ -111,8 +111,8 @@ _COMMANDS: dict[str, type[Command]] = {
 
 
 def setup_argparse() -> argparse.ArgumentParser:
-    """Setup an `argparse.ArgumentParser` for the `site_generator` CLI."""
-    parser = argparse.ArgumentParser(prog="site_generator", add_help=False)
+    """Setup an `argparse.ArgumentParser` for the `weaving` CLI."""
+    parser = argparse.ArgumentParser(prog="weaving", add_help=False)
     parser.add_argument(
         "--help",
         "-h",
@@ -198,7 +198,7 @@ def setup_argparse() -> argparse.ArgumentParser:
 
 
 async def main() -> None:
-    """Run the `site_generator` CLI."""
+    """Run the `weaving` CLI."""
     parser = setup_argparse()
 
     args = parser.parse_args()

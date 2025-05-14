@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class SiteGeneratorConfig(BaseSettings):
-    """General configuration values for `site_generator`, populated from CLI args."""
+    """General configuration values for `weaving`, populated from CLI args."""
 
     model_config = SettingsConfigDict(env_prefix="SG_", from_attributes=True)
 

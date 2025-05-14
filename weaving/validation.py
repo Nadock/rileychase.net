@@ -61,7 +61,7 @@ class Validator:
         discovered.
         """
         if not self.cfg.output.is_dir():
-            raise errors.SiteGeneratorError(
+            raise errors.WeavingError(
                 "Site must be built before it can be validated for dead links."
             )
 
