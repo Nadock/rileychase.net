@@ -3,7 +3,7 @@ import pathlib
 import sys
 from typing import Protocol
 
-from site_generator import config, dev, errors, logging, pipeline, validation
+from weaving import config, dev, errors, logging, pipeline, validation
 
 LOGGER = logging.getLogger()
 

@@ -1,7 +1,7 @@
 import asyncio
 import contextlib
 
-from site_generator import cli
+from weaving import cli
 
 with contextlib.suppress(KeyboardInterrupt):
     asyncio.run(cli.main())

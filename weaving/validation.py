@@ -10,7 +10,7 @@ import aiohttp
 import aiostream
 import bs4
 
-from site_generator import config, errors, markdown
+from weaving import config, errors, markdown
 
 if TYPE_CHECKING:
     import pathlib

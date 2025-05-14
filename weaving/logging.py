@@ -5,7 +5,7 @@ import sys
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from site_generator import config
+    from weaving import config
 
 
 def configure_logging(cfg: config.SiteGeneratorConfig) -> logging.Logger:

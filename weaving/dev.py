@@ -8,7 +8,7 @@ from collections.abc import Callable, Coroutine
 
 import watchfiles
 
-from site_generator import config, logging, pipeline
+from weaving import config, logging, pipeline
 
 LOGGER = logging.getLogger()
 

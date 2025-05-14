@@ -7,7 +7,7 @@ from typing import Any
 import jinja2
 import pydantic
 
-from site_generator import frontmatter, logging
+from weaving import frontmatter, logging
 
 LOGGER = logging.getLogger()
 

@@ -2,7 +2,7 @@ import pathlib
 
 import pydantic
 
-from site_generator import logging
+from weaving import logging
 
 LOGGER = logging.getLogger()
 

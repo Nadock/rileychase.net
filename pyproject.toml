@@ -78,12 +78,12 @@ lint.ignore = [
     "D103",   # undocumented-public-function
     "ANN003", # missing-type-kwargs
 ]
-"site_generator/emoji/_generate*.py" = [
+"weaving/emoji/_generate*.py" = [
     "T201",    # print
     "PLR2004", # magic-value-comparison
     "ERA001",  # commented-out-code
 ]
-"site_generator/emoji/db.py" = [
+"weaving/emoji/db.py" = [
     "RUF001", # ambiguous-unicode-character-string
 ]
 
