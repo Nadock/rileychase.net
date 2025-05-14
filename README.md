@@ -33,13 +33,13 @@ To work on the site content or the `site_generator` you will need a working inst
 
 ## Site Generator Usage
 
-The site generator has three commands; `build`, `live`, and `validate`. Their use and purpose are described below.
+The site generator has three commands; `build`, `dev`, and `validate`. Their use and purpose are described below.
 
 ### `build`
 
 Builds the entire site once and writes it to the `output` directory. Exits `0` if the build succeeded or non-zero if it failed.
 
-### `live`
+### `dev`
 
 Builds the entire site, then runs a simple Python web server at (by default) `http://localhost:8000`. The `site_generator` then watches the source files for changes, and when a change is detected the site will be rebuilt.
 

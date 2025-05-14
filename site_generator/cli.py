@@ -3,7 +3,7 @@ import pathlib
 import sys
 from typing import Protocol
 
-from site_generator import config, errors, live, logging, pipeline, validation
+from site_generator import config, dev, errors, logging, pipeline, validation
 
 LOGGER = logging.getLogger()
 
@@ -77,8 +77,8 @@ class Validate(Command):
         LOGGER.info("No validation errors found")
 
 
-class Live(Command):
-    """Run a live reload server version of the site."""
+class Dev(Command):
+    """Run a dev server version of the site."""
 
     @classmethod
     def setup(cls, parser: argparse.ArgumentParser) -> None:  # noqa: D102
@@ -87,7 +87,7 @@ class Live(Command):
             type=str,
             default="localhost",
             metavar="HOST",
-            help="Hostname to listen at when running in live mode.",
+            help="Hostname to listen at when running in dev mode.",
         )
         parser.add_argument(
             "--port",
@@ -95,17 +95,17 @@ class Live(Command):
             type=int,
             default=8080,
             metavar="PORT",
-            help="Port number to listen on when running in live mode.",
+            help="Port number to listen on when running in dev mode.",
         )
 
     @classmethod
     async def run(cls, cfg: config.SiteGeneratorConfig) -> None:  # noqa: D102
-        await live.watch_and_serve(cfg)
+        await dev.watch_and_serve(cfg)
 
 
 _COMMANDS: dict[str, type[Command]] = {
     "build": Build,
-    "live": Live,
+    "dev": Dev,
     "validate": Validate,
 }
 

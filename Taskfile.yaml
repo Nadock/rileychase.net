@@ -45,10 +45,10 @@ tasks:
     cmds:
       - npx markdownlint '**/*.md' {{.CLI_ARGS}} --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/debug/markdown.md'
 
-  live:
-    desc: Run the site_generator in live rebuild mode
+  dev:
+    desc: Run the site_generator in local dev mode
     cmds:
-      - uv run python -m site_generator --include-debug --site-name rileychase.net --locale en_AU live {{.CLI_ARGS}}
+      - uv run python -m site_generator --include-debug --site-name rileychase.net --locale en_AU dev {{.CLI_ARGS}}
 
   build:
     desc: Run the site_generator in single build mode
