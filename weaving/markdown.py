@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import markdown
 import yaml
 
-from site_generator import (
+from weaving import (
     blog,
     config,
     emoji,

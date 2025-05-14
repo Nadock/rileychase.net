@@ -7,7 +7,7 @@ from urllib import parse
 
 import pydantic
 
-from site_generator import config as _config
+from weaving import config as _config
 
 _WHITESPACE_RE = re.compile(r"\s+")
 

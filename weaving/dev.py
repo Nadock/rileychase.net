@@ -8,14 +8,14 @@ from collections.abc import Callable, Coroutine
 
 import watchfiles
 
-from site_generator import config, logging, pipeline
+from weaving import config, logging, pipeline
 
 LOGGER = logging.getLogger()
 
 
 async def watch_and_serve(cfg: config.SiteGeneratorConfig) -> None:
-    """Watch for file changes and serve the live site."""
-    await asyncio.gather(_watch_site_files(cfg), _serve_live_site(cfg))
+    """Watch for file changes and serve the dev site."""
+    await asyncio.gather(_watch_site_files(cfg), _serve_dev_site(cfg))
 
 
 async def _watch_site_files(cfg: config.SiteGeneratorConfig) -> None:
@@ -35,7 +35,7 @@ def _run_process_callback(
         asyncio.run(cr(cfg))
 
 
-async def _serve_live_site(cfg: config.SiteGeneratorConfig) -> None:
+async def _serve_dev_site(cfg: config.SiteGeneratorConfig) -> None:
     adev_module = importlib.import_module("aiohttp_devtools")
 
     if not adev_module.__file__:

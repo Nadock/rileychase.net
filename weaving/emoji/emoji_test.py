@@ -1,6 +1,6 @@
 import pytest
 
-from site_generator.emoji import emoji
+from weaving.emoji import emoji
 
 
 @pytest.mark.parametrize(

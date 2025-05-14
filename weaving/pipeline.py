@@ -2,7 +2,7 @@ import asyncio
 import shutil
 import time
 
-from site_generator import config, errors, logging, markdown, static
+from weaving import config, errors, logging, markdown, static
 
 LOGGER = logging.getLogger()
 

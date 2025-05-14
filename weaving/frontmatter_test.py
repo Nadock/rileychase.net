@@ -2,7 +2,7 @@ import pathlib
 
 import pytest
 
-from site_generator import config_test, frontmatter
+from weaving import config_test, frontmatter
 
 
 def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:

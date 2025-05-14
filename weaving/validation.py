@@ -10,7 +10,7 @@ import aiohttp
 import aiostream
 import bs4
 
-from site_generator import config, errors, markdown
+from weaving import config, errors, markdown
 
 if TYPE_CHECKING:
     import pathlib
@@ -61,7 +61,7 @@ class Validator:
         discovered.
         """
         if not self.cfg.output.is_dir():
-            raise errors.SiteGeneratorError(
+            raise errors.WeavingError(
                 "Site must be built before it can be validated for dead links."
             )
 

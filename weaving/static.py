@@ -3,7 +3,7 @@ import pathlib
 import shutil
 from collections.abc import AsyncIterator
 
-from site_generator import config, errors, logging
+from weaving import config, errors, logging
 
 LOGGER = logging.getLogger()
 

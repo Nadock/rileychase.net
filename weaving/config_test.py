@@ -2,7 +2,7 @@ import pathlib
 
 import pytest
 
-from site_generator import config
+from weaving import config
 
 
 def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Generator script that generates ./site_generator/emoji.py from a gemoji source JSON
+Generator script that generates ./weaving/emoji.py from a gemoji source JSON
 file.
 """
 

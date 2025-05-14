@@ -9,7 +9,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class SiteGeneratorConfig(BaseSettings):
-    """General configuration values for `site_generator`, populated from CLI args."""
+    """General configuration values for `weaving`, populated from CLI args."""
 
     model_config = SettingsConfigDict(env_prefix="SG_", from_attributes=True)
 
@@ -41,9 +41,9 @@ class SiteGeneratorConfig(BaseSettings):
     """
 
     host: str = "localhost"
-    """The host to serve the live site at."""
+    """The host to serve the dev site at."""
     port: int = 8080
-    """The port to serve the live site at."""
+    """The port to serve the dev site at."""
 
     dead_links: bool = False
     """Enable dead link detection for the `validation` CLI command."""
@@ -95,12 +95,12 @@ class SiteGeneratorConfig(BaseSettings):
         """
         Return the base URL of the site.
 
-        When running in live mode, this assumes `http` and uses both the configured host
+        When running in dev mode, this assumes `http` and uses both the configured host
         and port values. Otherwise, this assumes `https` and uses only the host value.
 
         >>> cfg.base_url()
         'https://example.com'
         """
-        scheme = "http" if self.command == "live" else "https"
-        fqdn = f"{self.host}:{self.port}" if self.command == "live" else self.host
+        scheme = "http" if self.command == "dev" else "https"
+        fqdn = f"{self.host}:{self.port}" if self.command == "dev" else self.host
         return f"{scheme}://{fqdn}"

@@ -4,7 +4,7 @@ import pathlib
 
 import bs4
 
-from site_generator import config, frontmatter, logging, markdown, template
+from weaving import config, frontmatter, logging, markdown, template
 
 LOGGER = logging.getLogger()
 

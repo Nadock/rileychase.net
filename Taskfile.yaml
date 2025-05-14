@@ -33,44 +33,44 @@ tasks:
   mypy:
     desc: Run python/mypy Python type checking tool
     cmds:
-      - uv run mypy {{.CLI_ARGS}} ./site_generator
+      - uv run mypy {{.CLI_ARGS}} ./weaving
 
   pytest:
     desc: Run unit tests via pytest-dev/pytest
     cmds:
-      - uv run pytest {{.CLI_ARGS}} ./site_generator
+      - uv run pytest {{.CLI_ARGS}} ./weaving
 
   mdlint:
     desc: Lint markdown sources with DavidAnson/markdownlint
     cmds:
       - npx markdownlint '**/*.md' {{.CLI_ARGS}} --ignore node_modules --ignore .mypy_cache --ignore .pytest_cache --ignore-path 'pages/debug/markdown.md'
 
-  live:
-    desc: Run the site_generator in live rebuild mode
+  dev:
+    desc: Run weaving in local dev mode
     cmds:
-      - uv run python -m site_generator --include-debug --site-name rileychase.net --locale en_AU live {{.CLI_ARGS}}
+      - uv run python -m weaving --include-debug --site-name rileychase.net --locale en_AU dev {{.CLI_ARGS}}
 
   build:
-    desc: Run the site_generator in single build mode
+    desc: Run weaving in single build mode
     cmds:
-      - uv run python -m site_generator --site-name rileychase.net --locale en_AU build --host rileychase.net {{.CLI_ARGS}}
+      - uv run python -m weaving --site-name rileychase.net --locale en_AU build --host rileychase.net {{.CLI_ARGS}}
 
   validate:
-    desc: Run the inbuilt site_generator validator
+    desc: Run the inbuilt weaving validator
     cmds:
-      - uv run python -m site_generator validate {{.CLI_ARGS}}
+      - uv run python -m weaving validate {{.CLI_ARGS}}
 
   validate:links:
-    desc: Run the inbuilt site_generator validator with dead link detection enabled
+    desc: Run the inbuilt weaving validator with dead link detection enabled
     deps:
       - build
     cmds:
-      - uv run python -m site_generator validate --dead-links --allow-link 'https://www.linkedin.com/.*' --allow-link 'https://zendesk.com' --allow-link 'https://www.canva.com' {{.CLI_ARGS}}
+      - uv run python -m weaving validate --dead-links --allow-link 'https://www.linkedin.com/.*' --allow-link 'https://zendesk.com' --allow-link 'https://www.canva.com' {{.CLI_ARGS}}
 
   emoji:
     desc: Update emoji files
     cmds:
-      - ./site_generator/emoji/update.sh
+      - ./weaving/emoji/update.sh
 
   aws:lint:
     desc: Run cfn-lint across all templates
