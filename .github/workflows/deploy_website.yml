@@ -42,21 +42,21 @@ jobs:
           enable-cache: true
           cache-dependency-glob: uv.lock
 
-      - name: Configure AWS Credentials
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_ROLE_ARN }}
           aws-region: ap-southeast-2
 
-      - name: Build Website
+      - name: Build website
         run: |
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \
                --output-group-end "::endgroup::" \
                build validate:links
 
-      - name: Deploy Website
-        run: aws s3 sync ./output s3://${{ secrets.BUCKET_NAME }}/website --exclude "**/*.md" --delete
-
-      - name: Invalidate Cache
-        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --path "/*"
+      - name: Deploy website & invalidate Cache
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          DISTRIBUTION_ID: ${{ secrets.DISTRIBUTION_ID }}
+        run: task deploy
