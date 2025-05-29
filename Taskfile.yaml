@@ -67,6 +67,12 @@ tasks:
     cmds:
       - uv run python -m weaving validate --dead-links --allow-link 'https://www.linkedin.com/.*' --allow-link 'https://zendesk.com' --allow-link 'https://www.canva.com' {{.CLI_ARGS}}
 
+  deploy:
+    desc: Deploy the built site to S3
+    cmds:
+      - aws s3 sync ./output s3://{{ .BUCKET_NAME }}/website --exclude "**/*.md" --delete
+      - aws cloudfront create-invalidation --distribution-id {{ .DISTRIBUTION_ID }} --path "/*"
+
   emoji:
     desc: Update emoji files
     cmds:
