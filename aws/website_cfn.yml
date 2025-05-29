@@ -203,45 +203,61 @@ Resources:
         Runtime: cloudfront-js-2.0
       FunctionCode: |
         function handler(event) {
-            var request = event.request;
+          var request = event.request;
 
-            // Redirect users on alternate domains back to the primary domain
-            var host = event.request.headers.host.value;
-            if (host !== 'rileychase.net') {
-              var location = 'https://rileychase.net'
-              if (!request.uri.startsWith('/')) {
-                location += '/'
+          // Redirect users on alternate domains back to the primary domain
+          var host = event.request.headers.host.value;
+          if (host !== "rileychase.net") {
+            var location = "https://rileychase.net"
+            if (!request.uri.startsWith("/")) {
+              location += "/"
+            }
+            location += request.uri
+
+            return {
+              statusCode: 302,
+              statusDescription: "Found",
+              headers: {
+                location: {
+                  value: location
+                }
               }
-              location += request.uri
+            }
+          }
 
+          // Redirect users from deleted GIFs to their WEBP replacements
+          if (request.uri.match(/\/img\/dj_howard\/.*\.gif/)) {
               return {
-                statusCode: 302,
-                statusDescription: 'Found',
-                headers: { location: { value: location } }
+              statusCode: 303,
+              statusDescription: "Moved Permanently",
+              headers: {
+                location: {
+                  value: request.uri.replace(".gif", ".webp")
+                }
               }
             }
+          }
 
-            // Redirect users from deleted GIFs to their WEBP replacements
-            if (request.uri.match(/\/img\/dj_howard\/.*\.gif/)) {
-                return {
-                statusCode: 303,
-                statusDescription: 'Moved Permanently',
-                headers: { location: { value: request.uri.replace(".gif", ".webp") } }
+          // Redirect users to URLs not ending with /
+          if (request.uri.endsWith("/")) {
+              return {
+              statusCode: 303,
+              statusDescription: "Moved Permanently",
+              headers: {
+                location: {
+                  value: request.uri.slice(0, request.uri.length - 1)
+                }
               }
             }
+          }
 
-            var leaf = request.uri.split("/").pop();
+          // Transparently modify URIs like /foo/bar to load /foo/bar/index.html from S3
+          var leaf = request.uri.split("/").pop();
+          if (!leaf.includes(".")) {
+            request.uri += "/index.html";
+          }
 
-            // Check whether the URI is missing a file name
-            if (request.uri.endsWith('/')) {
-              request.uri += 'index.html';
-            }
-            // Check whether the URI is missing a file extension
-            else if (!leaf.includes('.')) {
-              request.uri += '/index.html';
-            }
-
-            return request;
+          return request;
         }
 
   WebsiteDNS:
