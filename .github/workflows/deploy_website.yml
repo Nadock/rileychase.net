@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths:
+      - aws/**
       - pages/**
       - static/**
       - templates/**
@@ -47,6 +48,12 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_ROLE_ARN }}
           aws-region: ap-southeast-2
+
+      - name: Deploy infra
+        env:
+          BUCKET_NAME: ${{ secrets.DOMAIN_NAME }}
+          DISTRIBUTION_ID: ${{ secrets.CERTIFICATE_ARN }}
+        run: task aws:website:deploy
 
       - name: Build website
         run: |
