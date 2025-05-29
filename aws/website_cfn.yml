@@ -200,7 +200,7 @@ Resources:
       Name: !Sub ${AWS::StackName}-index-redirect-function
       FunctionConfig:
         Comment: !Ref AWS::StackName
-        Runtime: cloudfront-js-1.0
+        Runtime: cloudfront-js-2.0
       FunctionCode: |
         function handler(event) {
             var request = event.request;
@@ -221,11 +221,19 @@ Resources:
               }
             }
 
-            var uri = request.uri;
-            var leaf = uri.split("/")[uri.split("/").length - 1];
+            // Redirect to webp versions of GIFs
+            if (request.uri.match(/.*\/img\/dj_howard\/.*\.gif/)) {
+                return {
+                statusCode: 302,
+                statusDescription: 'Found',
+                headers: { 'location': { value: request.uri.replace(".gif", ".webp") } }
+              }
+            }
+
+            var leaf = request.uri.split("/").pop();
 
             // Check whether the URI is missing a file name.
-            if (uri.endsWith('/')) {
+            if (request.uri.endsWith('/')) {
                 request.uri += 'index.html';
             }
             // Check whether the URI is missing a file extension.
