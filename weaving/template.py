@@ -101,13 +101,13 @@ def jinja(templates: pathlib.Path) -> TemplateRenderer:
 @jinja2.pass_context
 async def _render_filter(ctx: jinja2.runtime.Context, value: Any) -> str:
     """
-    Implements a filter than pass HTML through the Jinja renderer.
+    Implements a filter that passes HTML through the Jinja renderer.
 
     This is used so we can put Jinja markup in markdown source pages and have it
     rendered correctly in the output page.
     """
     if not value:
-        return value
+        return ""
 
     if not isinstance(value, str):
         value = str(value)

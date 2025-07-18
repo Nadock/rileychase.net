@@ -2,7 +2,7 @@ import datetime
 import logging
 import pathlib
 import re
-from typing import Literal
+from typing import Any, Literal
 from urllib import parse
 
 import pydantic
@@ -74,7 +74,7 @@ class PageFrontmatter(pydantic.BaseModel):
     and other sources.
     """
 
-    meta: dict | None = None
+    meta: dict[str, Any] | None = None
     """
     Arbitrary values that can be set on a per-page basis with no further validation or
     prescribed semantic meaning. It depends on the template how these values are used.

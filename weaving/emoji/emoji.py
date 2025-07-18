@@ -12,7 +12,7 @@ def to_unicode_emoji(
     alt: str = "",
     title: str = "",
     category: str = "",
-    options: dict | None = None,
+    options: dict[Any, Any] | None = None,
     md: Any = None,
 ) -> str:
     """
@@ -26,7 +26,9 @@ def to_unicode_emoji(
     return EMOJI[shortname]
 
 
-def to_markdown_db(options: Any, md: Any) -> dict:
+def to_markdown_db(
+    options: Any, md: Any
+) -> dict[str, str | dict[str, str | dict[str, str]]]:
     """Return the Unicode emoji DB in the structure required for markdown conversion."""
     del options, md
     return {
