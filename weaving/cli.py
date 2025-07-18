@@ -1,7 +1,7 @@
 import argparse
 import pathlib
 import sys
-from typing import Protocol
+from typing import Protocol, override
 
 from weaving import config, dev, errors, logging, pipeline, validation
 
@@ -23,8 +23,9 @@ class Command(Protocol):
 class Build(Command):
     """Build a fully rendered site and then exit."""
 
+    @override
     @classmethod
-    def setup(cls, parser: argparse.ArgumentParser) -> None:  # noqa: D102
+    def setup(cls, parser: argparse.ArgumentParser) -> None:
         parser.add_argument(
             "--host",
             type=str,
@@ -33,16 +34,18 @@ class Build(Command):
             help="Hostname the site will be hosted under.",
         )
 
+    @override
     @classmethod
-    async def run(cls, cfg: config.SiteGeneratorConfig) -> None:  # noqa: D102
+    async def run(cls, cfg: config.SiteGeneratorConfig) -> None:
         await pipeline.pipeline(cfg)
 
 
 class Validate(Command):
     """Validate source file for semantic errors."""
 
+    @override
     @classmethod
-    def setup(cls, parser: argparse.ArgumentParser) -> None:  # noqa: D102
+    def setup(cls, parser: argparse.ArgumentParser) -> None:
         parser.add_argument(
             "--dead-links",
             default=False,
@@ -58,8 +61,9 @@ class Validate(Command):
             help="Regex pattern for a URL that is explicitly allowed.",
         )
 
+    @override
     @classmethod
-    async def run(cls, cfg: config.SiteGeneratorConfig) -> None:  # noqa: D102
+    async def run(cls, cfg: config.SiteGeneratorConfig) -> None:
         LOGGER.info("Starting site validation")
 
         count = 0
@@ -80,8 +84,9 @@ class Validate(Command):
 class Dev(Command):
     """Run a dev server version of the site."""
 
+    @override
     @classmethod
-    def setup(cls, parser: argparse.ArgumentParser) -> None:  # noqa: D102
+    def setup(cls, parser: argparse.ArgumentParser) -> None:
         parser.add_argument(
             "--host",
             type=str,
@@ -98,8 +103,9 @@ class Dev(Command):
             help="Port number to listen on when running in dev mode.",
         )
 
+    @override
     @classmethod
-    async def run(cls, cfg: config.SiteGeneratorConfig) -> None:  # noqa: D102
+    async def run(cls, cfg: config.SiteGeneratorConfig) -> None:
         await dev.watch_and_serve(cfg)
 
 

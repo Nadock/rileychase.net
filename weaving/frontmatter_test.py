@@ -1,11 +1,12 @@
 import pathlib
+from typing import Any
 
 import pytest
 
 from weaving import config_test, frontmatter
 
 
-def fake_page_frontmatter(**kwargs) -> frontmatter.PageFrontmatter:
+def fake_page_frontmatter(**kwargs: Any) -> frontmatter.PageFrontmatter:
     if "file" not in kwargs:
         kwargs["file"] = pathlib.Path("./pages/test.md").absolute()
     return frontmatter.PageFrontmatter(**kwargs)

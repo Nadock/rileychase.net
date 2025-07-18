@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from typing import override
 from xml.etree import ElementTree as ET
 
 import markdown
@@ -16,6 +17,7 @@ class _ClassTagsProcessor(treeprocessors.Treeprocessor):
         self.md: markdown.Markdown = md
         self._cb = cb
 
+    @override
     def run(self, root: ET.Element) -> None:
         for element in root.iter():
             self._cb(element)
@@ -32,7 +34,8 @@ class ClassTags(markdown.Extension):
 
     config = {"callback": [_set_class_attribute]}  # noqa: RUF012
 
-    def extendMarkdown(self, md: markdown.Markdown) -> None:  # noqa: N802, D102
+    @override
+    def extendMarkdown(self, md: markdown.Markdown) -> None:
         md.treeprocessors.register(
             _ClassTagsProcessor(md, self.config["callback"][0]), "class-tags", 0
         )

@@ -47,7 +47,7 @@ class SiteGeneratorConfig(BaseSettings):
 
     dead_links: bool = False
     """Enable dead link detection for the `validation` CLI command."""
-    allowed_links: list[re.Pattern] = pydantic.Field(default_factory=list)
+    allowed_links: list[re.Pattern[str]] = pydantic.Field(default_factory=list)
     """Patterns for URLs that are allowed without checking in dead link detection."""
 
     locale: str | None = None

@@ -174,6 +174,37 @@ wheels = [
 ]
 
 [[package]]
+name = "basedmypy"
+version = "2.10.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "basedtyping" },
+    { name = "mypy-extensions" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/24/f5/223ddf7be63d4549a0e0351e37a54f799d18ef4b799af95093c8359ddf48/basedmypy-2.10.0.tar.gz", hash = "sha256:85dd20aa8de401982073970a90a78a5d47442251140401b4863f0018247e533f", size = 5516524, upload-time = "2025-03-09T15:05:44.44Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ca/6e/a9fbef73c01d731ce0339be9b6f3e356a0ac217b13e27c4cb3a12ba9811f/basedmypy-2.10.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:f1e4800cb4643b49a1fe851bd3eae27c714a86b92ace5f916acd8571f2739843", size = 11154841, upload-time = "2025-03-09T15:05:30.594Z" },
+    { url = "https://files.pythonhosted.org/packages/1c/7b/486eefe99853b6fc409bf1aed5a5e3df21f02b06586d169d1545dd6264c6/basedmypy-2.10.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:025d7ad9ab60717b50cc87c9c4dcb9e7ba9047b77ccd5312b7f3da3c13dae9c1", size = 10071084, upload-time = "2025-03-09T15:04:58.351Z" },
+    { url = "https://files.pythonhosted.org/packages/10/f0/4f1abccbee4b3da150f992a9a34ef63a97350efeb63acf6635999e0d4730/basedmypy-2.10.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:9933a38b73f5d57e0609a30721d12d40d384a9ff33b0828fe26ac19bbc89e375", size = 12801332, upload-time = "2025-03-09T15:05:23.474Z" },
+    { url = "https://files.pythonhosted.org/packages/e3/03/983b23bf5e146875d31046d02a4a258f8e3297262451fc958bcd317e1e8e/basedmypy-2.10.0-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:64ad7c3c13e0504891a70e1a0db49ac78851c0847f7d4770c0b22efe54c20457", size = 12910526, upload-time = "2025-03-09T15:05:39.587Z" },
+    { url = "https://files.pythonhosted.org/packages/8b/c8/5c680ef984f5d5c458e892a502d9255c0c360f7f35ae2dda12c071b971c5/basedmypy-2.10.0-cp313-cp313-win_amd64.whl", hash = "sha256:1c782fde0a3018ca1a89eeeaaf5d48eb2618cc7e039ac24a59dc08c24597aa22", size = 9680025, upload-time = "2025-03-09T15:04:50.586Z" },
+    { url = "https://files.pythonhosted.org/packages/b0/bd/33d3b1a369fa1c516900b0e01844d8782dd06adc4f2de350570831ad2711/basedmypy-2.10.0-py3-none-any.whl", hash = "sha256:05047ee1821ba4026c21029b342b903883aac8520961bb9d021f49721428d029", size = 2263380, upload-time = "2025-03-09T15:05:15.094Z" },
+]
+
+[[package]]
+name = "basedtyping"
+version = "0.1.10"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/99/36/7ba70ab751f08f8619c9c1985899cc75223fef6b9583159414e08a1240f3/basedtyping-0.1.10.tar.gz", hash = "sha256:d7600917ec9f232c9eb4266916c2ea5a4719ffca59fb7902fc96fd59a4678110", size = 14672, upload-time = "2024-11-21T00:19:15.892Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/db/4a/76fe7ddbb90aadaeb298dbb57e562a365f21a6fa17d3c69e73cb3c0c84e8/basedtyping-0.1.10-py3-none-any.whl", hash = "sha256:8952416f8fd196d25c1f6d6bb556223183e928c944bee4bd0c49af659677dea9", size = 15045, upload-time = "2024-11-21T00:19:14.17Z" },
+]
+
+[[package]]
 name = "beautifulsoup4"
 version = "4.13.4"
 source = { registry = "https://pypi.org/simple" }
@@ -575,31 +606,12 @@ wheels = [
 ]
 
 [[package]]
-name = "mypy"
-version = "1.15.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "mypy-extensions" },
-    { name = "typing-extensions" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ce/43/d5e49a86afa64bd3839ea0d5b9c7103487007d728e1293f52525d6d5486a/mypy-1.15.0.tar.gz", hash = "sha256:404534629d51d3efea5c800ee7c42b72a6554d6c400e6a79eafe15d11341fd43", size = 3239717, upload-time = "2025-02-05T03:50:34.655Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6a/9b/fd2e05d6ffff24d912f150b87db9e364fa8282045c875654ce7e32fffa66/mypy-1.15.0-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:93faf3fdb04768d44bf28693293f3904bbb555d076b781ad2530214ee53e3445", size = 10788592, upload-time = "2025-02-05T03:48:55.789Z" },
-    { url = "https://files.pythonhosted.org/packages/74/37/b246d711c28a03ead1fd906bbc7106659aed7c089d55fe40dd58db812628/mypy-1.15.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:811aeccadfb730024c5d3e326b2fbe9249bb7413553f15499a4050f7c30e801d", size = 9753611, upload-time = "2025-02-05T03:48:44.581Z" },
-    { url = "https://files.pythonhosted.org/packages/a6/ac/395808a92e10cfdac8003c3de9a2ab6dc7cde6c0d2a4df3df1b815ffd067/mypy-1.15.0-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:98b7b9b9aedb65fe628c62a6dc57f6d5088ef2dfca37903a7d9ee374d03acca5", size = 11438443, upload-time = "2025-02-05T03:49:25.514Z" },
-    { url = "https://files.pythonhosted.org/packages/d2/8b/801aa06445d2de3895f59e476f38f3f8d610ef5d6908245f07d002676cbf/mypy-1.15.0-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:c43a7682e24b4f576d93072216bf56eeff70d9140241f9edec0c104d0c515036", size = 12402541, upload-time = "2025-02-05T03:49:57.623Z" },
-    { url = "https://files.pythonhosted.org/packages/c7/67/5a4268782eb77344cc613a4cf23540928e41f018a9a1ec4c6882baf20ab8/mypy-1.15.0-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:baefc32840a9f00babd83251560e0ae1573e2f9d1b067719479bfb0e987c6357", size = 12494348, upload-time = "2025-02-05T03:48:52.361Z" },
-    { url = "https://files.pythonhosted.org/packages/83/3e/57bb447f7bbbfaabf1712d96f9df142624a386d98fb026a761532526057e/mypy-1.15.0-cp313-cp313-win_amd64.whl", hash = "sha256:b9378e2c00146c44793c98b8d5a61039a048e31f429fb0eb546d93f4b000bedf", size = 9373648, upload-time = "2025-02-05T03:49:11.395Z" },
-    { url = "https://files.pythonhosted.org/packages/09/4e/a7d65c7322c510de2c409ff3828b03354a7c43f5a8ed458a7a131b41c7b9/mypy-1.15.0-py3-none-any.whl", hash = "sha256:5469affef548bd1895d86d3bf10ce2b44e33d86923c29e4d675b3e323437ea3e", size = 2221777, upload-time = "2025-02-05T03:50:08.348Z" },
-]
-
-[[package]]
 name = "mypy-extensions"
-version = "1.0.0"
+version = "1.1.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/98/a4/1ab47638b92648243faf97a5aeb6ea83059cc3624972ab6b8d2316078d3f/mypy_extensions-1.0.0.tar.gz", hash = "sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782", size = 4433, upload-time = "2023-02-04T12:11:27.157Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a2/6e/371856a3fb9d31ca8dac321cda606860fa4548858c0cc45d9d1d4ca2628b/mypy_extensions-1.1.0.tar.gz", hash = "sha256:52e68efc3284861e772bbcd66823fde5ae21fd2fdb51c62a211403730b916558", size = 6343, upload-time = "2025-04-22T14:54:24.164Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2a/e2/5d3f6ada4297caebe1a2add3b126fe800c96f56dbe5d1988a2cbe0b267aa/mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d", size = 4695, upload-time = "2023-02-04T12:11:25.002Z" },
+    { url = "https://files.pythonhosted.org/packages/79/7b/2c79738432f5c924bef5071f933bcc9efd0473bac3b4aa584a6f7c1c8df8/mypy_extensions-1.1.0-py3-none-any.whl", hash = "sha256:1be4cccdb0f2482337c4743e60421de3a356cd97508abadd57d47403e94f5505", size = 4963, upload-time = "2025-04-22T14:54:22.983Z" },
 ]
 
 [[package]]
@@ -1031,6 +1043,36 @@ wheels = [
 ]
 
 [[package]]
+name = "types-cffi"
+version = "1.17.0.20250523"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "types-setuptools" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f7/5f/ac80a2f55757019e5d4809d17544569c47a623565258ca1a836ba951d53f/types_cffi-1.17.0.20250523.tar.gz", hash = "sha256:e7110f314c65590533adae1b30763be08ca71ad856a1ae3fe9b9d8664d49ec22", size = 16858, upload-time = "2025-05-23T03:05:40.983Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f1/86/e26e6ae4dfcbf6031b8422c22cf3a9eb2b6d127770406e7645b6248d8091/types_cffi-1.17.0.20250523-py3-none-any.whl", hash = "sha256:e98c549d8e191f6220e440f9f14315d6775a21a0e588c32c20476be885b2fad9", size = 20010, upload-time = "2025-05-23T03:05:39.136Z" },
+]
+
+[[package]]
+name = "types-colorama"
+version = "0.4.15.20240311"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/59/73/0fb0b9fe4964b45b2a06ed41b60c352752626db46aa0fb70a49a9e283a75/types-colorama-0.4.15.20240311.tar.gz", hash = "sha256:a28e7f98d17d2b14fb9565d32388e419f4108f557a7d939a66319969b2b99c7a", size = 5608, upload-time = "2024-03-11T02:15:51.557Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b7/83/6944b4fa01efb2e63ac62b791a8ddf0fee358f93be9f64b8f152648ad9d3/types_colorama-0.4.15.20240311-py3-none-any.whl", hash = "sha256:6391de60ddc0db3f147e31ecb230006a6823e81e380862ffca1e4695c13a0b8e", size = 5840, upload-time = "2024-03-11T02:15:50.43Z" },
+]
+
+[[package]]
+name = "types-docutils"
+version = "0.21.0.20250715"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/1c/22/95cc688902751d289df35012b7a80257ecc77aa7fba8558431776d3f9bb6/types_docutils-0.21.0.20250715.tar.gz", hash = "sha256:f7beb7d136cfbbc456e4a33f45eb367c7a5338b591c57a6555c821f85238a7fb", size = 44342, upload-time = "2025-07-15T03:23:20.22Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b4/06/48dd8ab72d7abc4cf1caa7619cd978ff7c4f5217dd08d413cbc640c46769/types_docutils-0.21.0.20250715-py3-none-any.whl", hash = "sha256:f254ab9aa46cfd4dce07034dc224db25a55452380ed3df156d9ce5589811c261", size = 73240, upload-time = "2025-07-15T03:23:18.903Z" },
+]
+
+[[package]]
 name = "types-html5lib"
 version = "1.1.11.20241018"
 source = { registry = "https://pypi.org/simple" }
@@ -1049,12 +1091,42 @@ wheels = [
 ]
 
 [[package]]
+name = "types-pexpect"
+version = "4.9.0.20250516"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/92/a3/3943fcb94c12af29a88c346b588f1eda180b8b99aeb388a046b25072732c/types_pexpect-4.9.0.20250516.tar.gz", hash = "sha256:7baed9ee566fa24034a567cbec56a5cff189a021344e84383b14937b35d83881", size = 13285, upload-time = "2025-05-16T03:08:33.327Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e1/d4/3128ae3365b46b9c4a33202af79b0e0d9d4308a6348a3317ce2331fea6cb/types_pexpect-4.9.0.20250516-py3-none-any.whl", hash = "sha256:84cbd7ae9da577c0d2629d4e4fd53cf074cd012296e01fd4fa1031e01973c28a", size = 17081, upload-time = "2025-05-16T03:08:32.127Z" },
+]
+
+[[package]]
+name = "types-pygments"
+version = "2.19.0.20250715"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "types-docutils" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/cb/e6/5ee8339d4122dccb08cf6b2d766221784960325767cf32a4b9e0aca08cd8/types_pygments-2.19.0.20250715.tar.gz", hash = "sha256:896e45cb5331492be0937b0e9cef976547dee5c507d546a1351289f3cea6eaac", size = 18491, upload-time = "2025-07-15T03:23:28.244Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ed/48/1b924b3cfbde33b296197615fa5aea5612b59369e5127e8302daec1ea165/types_pygments-2.19.0.20250715-py3-none-any.whl", hash = "sha256:90b45a484123727e125ffddf0379c627d88401dce768a2555038cb5be98b3f2c", size = 25451, upload-time = "2025-07-15T03:23:26.951Z" },
+]
+
+[[package]]
 name = "types-pyyaml"
 version = "6.0.12.20250402"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/2d/68/609eed7402f87c9874af39d35942744e39646d1ea9011765ec87b01b2a3c/types_pyyaml-6.0.12.20250402.tar.gz", hash = "sha256:d7c13c3e6d335b6af4b0122a01ff1d270aba84ab96d1a1a1063ecba3e13ec075", size = 17282, upload-time = "2025-04-02T02:56:00.235Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ed/56/1fe61db05685fbb512c07ea9323f06ea727125951f1eb4dff110b3311da3/types_pyyaml-6.0.12.20250402-py3-none-any.whl", hash = "sha256:652348fa9e7a203d4b0d21066dfb00760d3cbd5a15ebb7cf8d33c88a49546681", size = 20329, upload-time = "2025-04-02T02:55:59.382Z" },
+]
+
+[[package]]
+name = "types-setuptools"
+version = "80.9.0.20250529"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/79/66/1b276526aad4696a9519919e637801f2c103419d2c248a6feb2729e034d1/types_setuptools-80.9.0.20250529.tar.gz", hash = "sha256:79e088ba0cba2186c8d6499cbd3e143abb142d28a44b042c28d3148b1e353c91", size = 41337, upload-time = "2025-05-29T03:07:34.487Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1b/d8/83790d67ec771bf029a45ff1bd1aedbb738d8aa58c09dd0cc3033eea0e69/types_setuptools-80.9.0.20250529-py3-none-any.whl", hash = "sha256:00dfcedd73e333a430e10db096e4d46af93faf9314f832f13b6bbe3d6757e95f", size = 63263, upload-time = "2025-05-29T03:07:33.064Z" },
 ]
 
 [[package]]
@@ -1163,15 +1235,20 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "basedmypy" },
     { name = "cfn-lint" },
     { name = "isort" },
-    { name = "mypy" },
     { name = "pytest" },
     { name = "rope" },
     { name = "ruff" },
     { name = "types-beautifulsoup4" },
+    { name = "types-cffi" },
+    { name = "types-colorama" },
     { name = "types-markdown" },
+    { name = "types-pexpect" },
+    { name = "types-pygments" },
     { name = "types-pyyaml" },
+    { name = "types-setuptools" },
 ]
 
 [package.metadata]
@@ -1193,15 +1270,20 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "basedmypy", specifier = ">=2.10.0" },
     { name = "cfn-lint", specifier = ">=1.34.0" },
     { name = "isort", specifier = ">=6.0.1" },
-    { name = "mypy", specifier = ">=1.15.0" },
     { name = "pytest", specifier = ">=8.3.5" },
     { name = "rope", specifier = ">=1.13.0" },
     { name = "ruff", specifier = ">=0.11.6" },
     { name = "types-beautifulsoup4", specifier = ">=4.12.0.20250204" },
+    { name = "types-cffi", specifier = ">=1.17.0.20250523" },
+    { name = "types-colorama", specifier = ">=0.4.15.20240311" },
     { name = "types-markdown", specifier = ">=3.8.0.20250415" },
+    { name = "types-pexpect", specifier = ">=4.9.0.20250516" },
+    { name = "types-pygments", specifier = ">=2.19.0.20250715" },
     { name = "types-pyyaml", specifier = ">=6.0.12.20250402" },
+    { name = "types-setuptools", specifier = ">=80.9.0.20250529" },
 ]
 
 [[package]]

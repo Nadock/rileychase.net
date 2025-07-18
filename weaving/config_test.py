@@ -1,11 +1,12 @@
 import pathlib
+from typing import Any
 
 import pytest
 
 from weaving import config
 
 
-def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:
+def fake_test_config(**kwargs: Any) -> config.SiteGeneratorConfig:
     if "base" not in kwargs:
         kwargs["base"] = pathlib.Path()
     if "templates" not in kwargs:
@@ -31,7 +32,7 @@ def fake_test_config(**kwargs) -> config.SiteGeneratorConfig:
 def test_config__ensure_directory(
     path: pathlib.Path | None, expected: pathlib.Path | None
 ) -> None:
-    actual = config.SiteGeneratorConfig.ensure_directory(path)  # type: ignore[call-arg]
+    actual = config.SiteGeneratorConfig.ensure_directory(path)
     assert actual == expected
 
 
