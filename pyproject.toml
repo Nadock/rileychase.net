@@ -94,3 +94,4 @@ convention = "google"
 [tool.mypy]
 show_error_codes = true
 pretty = true
+strict = true
