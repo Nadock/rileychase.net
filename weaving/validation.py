@@ -146,11 +146,11 @@ class Validator:
         async with self._lock:
             if link not in self._link_cache:
                 with contextlib.suppress(Exception):
-                    self._link_cache[link] = await session.head(link)
+                    self._link_cache[link] = await session.head(link)  # type:ignore[no-untyped-call]
 
                     if self._link_cache[link].status >= 300:  # noqa: PLR2004
                         # Fallback GET request
-                        self._link_cache[link] = await session.get(link)
+                        self._link_cache[link] = await session.get(link)  # type:ignore[no-untyped-call]
 
         resp = self._link_cache.get(link)
         if resp and 200 <= resp.status < 300:  # noqa: PLR2004

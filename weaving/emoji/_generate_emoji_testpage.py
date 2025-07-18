@@ -44,10 +44,10 @@ def main() -> None:
         "| :------: | :------: | ------- |",
     ]
 
-    for emoji_record in emoji_db:
-        emoji = emoji_record["emoji"]
-        rendered = f":{emoji_record['aliases'][0]}:"
-        aliases = ", ".join([f"`:{a}:`" for a in emoji_record["aliases"]])
+    for emoji_record in emoji_db:  # type:ignore[union-attr]
+        emoji = emoji_record["emoji"]  # type:ignore[call-overload,index]
+        rendered = f":{emoji_record['aliases'][0]}:"  # type:ignore[index,call-overload]
+        aliases = ", ".join([f"`:{a}:`" for a in emoji_record["aliases"]])  # type:ignore[union-attr,call-overload,index]
         lines.append(f"| {emoji} | {rendered} | {aliases} |")
 
     lines.append("")

@@ -68,8 +68,8 @@ async def _serve_dev_site(cfg: config.SiteGeneratorConfig) -> None:
         code = await proc.wait()
     except subprocess.SubprocessError as ex:
         raise RuntimeError("Error while running dev server subprocess") from ex
-    except Exception:  # noqa: S110
-        pass
+    except Exception:
+        code = -1
     finally:
         with contextlib.suppress(Exception):
             proc.kill()

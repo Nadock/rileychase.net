@@ -39,9 +39,10 @@ def main() -> None:
         "EMOJI = {",
     ]
 
-    for emoji_record in emoji_db:
-        for alias in emoji_record["aliases"]:
-            lines.append(f'    "{alias}": "{emoji_record["emoji"]}",')  # noqa: PERF401
+    for emoji_record in emoji_db:  # type:ignore[union-attr]
+        for alias in emoji_record["aliases"]:  # type:ignore[call-overload,union-attr,index]
+            emoji = emoji_record["emoji"]  # type:ignore[call-overload,index]
+            lines.append(f'    "{alias}": "{emoji}",')
 
     lines.append("}")
 
