@@ -100,3 +100,7 @@ convention = "google"
 show_error_codes = true
 pretty = true
 strict = true
+
+# These rules make it a massive PITA to do anything as `Any` kinda shows up everywhere
+disallow_any_expr = false
+disable_error_code = "explicit-any,decorated-any"
