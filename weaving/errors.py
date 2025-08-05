@@ -32,8 +32,8 @@ def log_error(ex: Exception) -> None:
     """Log an exception according to what kind of exception it is."""
     if isinstance(ex, WeavingError):
         LOGGER.error(ex)
-        LOGGER.debug(ex, exc_info=True)
+        LOGGER.debug(ex, exc_info=ex)
         return
 
-    LOGGER.error(ex, exc_info=True)
+    LOGGER.error(ex, exc_info=ex)
     raise ex
