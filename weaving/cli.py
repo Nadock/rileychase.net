@@ -3,6 +3,8 @@ import pathlib
 import sys
 from typing import Protocol, override
 
+import anyio
+
 from weaving import config, dev, errors, logging, pipeline, validation
 
 LOGGER = logging.getLogger()
@@ -212,7 +214,7 @@ async def main() -> None:
         parser.print_help(sys.stderr)
         return
 
-    args.base = pathlib.Path().cwd()
+    args.base = pathlib.Path(await anyio.Path.cwd())
 
     cfg = config.SiteGeneratorConfig.model_validate(args)
     logger = logging.configure_logging(cfg)

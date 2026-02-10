@@ -174,7 +174,7 @@ class Validator:
         ensuring there is a page generated for it.
         """
         if link.startswith("mailto:"):
-            if len(link.split("mailto:")[-1].split("@")) == 2:  # noqa: PLR2004
+            if len(link.rsplit("mailto:", maxsplit=1)[-1].split("@")) == 2:  # noqa: PLR2004
                 return None
             return errors.ValidationError(
                 file=path, error=f"invalid email: {link}", line=line, char=pos
