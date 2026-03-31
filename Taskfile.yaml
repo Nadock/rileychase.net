@@ -12,7 +12,7 @@ tasks:
     cmds:
       - task: ruff:check
       - task: pytest
-      - task: mypy
+      - task: basedpyright
       - task: mdlint
       - task: build
       - task: validate:links
@@ -30,10 +30,10 @@ tasks:
       - uv run ruff check --fix {{.CLI_ARGS}} .
       - uv run ruff format {{.CLI_ARGS}} .
 
-  mypy:
-    desc: Run python/mypy Python type checking tool
+  basedpyright:
+    desc: Check Python type annotations with `detachhead/basedpyright`
     cmds:
-      - uv run mypy {{.CLI_ARGS}} ./weaving
+      - uv run basedpyright {{.CLI_ARGS}}
 
   pytest:
     desc: Run unit tests via pytest-dev/pytest
