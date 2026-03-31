@@ -53,7 +53,7 @@ Validate the site pages contents for valid content and front matter information.
 
 The following tools run on every PR and must succeed before a branch can be merged to `main`.
 
-- `ruff` & `mypy` are run to validate code quality.
+- `ruff` & `basedpyright` are run to validate code quality.
 - Unit tests are run with `pytest`.
 - The `weaving validate` command is run to check page front matter.
 - Markdown content is validated by `markdownlint` — install Node.js dependencies for this tool.

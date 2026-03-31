@@ -23,7 +23,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "basedmypy>=2.10.0",
+    "basedpyright>=1.38.4",
     "cfn-lint>=1.34.0",
     "isort>=6.0.1",
     "pytest>=8.3.5",
@@ -97,11 +97,11 @@ lint.ignore = [
 convention = "google"
 
 
-[tool.mypy]
-show_error_codes = true
-pretty = true
-strict = true
+[tool.basedpyright]
+include = ["weaving"]
 
-# These rules make it a massive PITA to do anything as `Any` kinda shows up everywhere
-disallow_any_expr = false
-disable_error_code = "explicit-any,decorated-any"
+# Leave this to the linter
+reportUnusedCallResult = false
+reportUnusedParameter = false
+reportUnusedVariable = false
+reportImplicitStringConcatenation = false
