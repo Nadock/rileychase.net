@@ -1,9 +1,7 @@
 name: Pull Request Checks
 
-
 on:
   pull_request: {}
-
 
 jobs:
   pr_checks:
@@ -36,6 +34,8 @@ jobs:
         run: npm install
 
       - name: PR Checks
+        env:
+          WEAVING_VERBOSE: "true"
         run: |
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \

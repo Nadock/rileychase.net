@@ -1,6 +1,5 @@
 name: Deploy Website
 
-
 on:
   push:
     branches:
@@ -11,7 +10,6 @@ on:
       - static/**
       - templates/**
   workflow_dispatch: {}
-
 
 jobs:
   deploy_website:
@@ -50,6 +48,8 @@ jobs:
           aws-region: ap-southeast-2
 
       - name: Build website
+        env:
+          WEAVING_VERBOSE: "true"
         run: |
           task --output group \
                --output-group-begin "::group::{{.TASK}}{{if .NAME}}:{{.NAME}}{{end}}" \

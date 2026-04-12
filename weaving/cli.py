@@ -1,4 +1,5 @@
 import argparse
+import os
 import pathlib
 import sys
 from typing import Protocol, override
@@ -163,7 +164,7 @@ def setup_argparse() -> argparse.ArgumentParser:
     parser.add_argument(
         "--verbose",
         "-v",
-        default=False,
+        default=bool(env) if (env := os.environ.get("WEAVING_VERBOSE")) else False,
         action="store_true",
         help="Enable verbose logging output.",
     )
@@ -205,14 +206,14 @@ def setup_argparse() -> argparse.ArgumentParser:
     return parser
 
 
-async def main() -> None:
+async def main() -> int:
     """Run the `weaving` CLI."""
     parser = setup_argparse()
 
     args = parser.parse_args()
     if args.help or not args.command:
         parser.print_help(sys.stderr)
-        return
+        return 0
 
     args.base = pathlib.Path(await anyio.Path.cwd())
 
@@ -229,7 +230,12 @@ async def main() -> None:
 
     try:
         await cmd.run(cfg)
-    except KeyboardInterrupt:
-        pass
+    except errors.WeavingError as ex:
+        LOGGER.error(ex)  # noqa: TRY400
+        LOGGER.debug(ex, exc_info=ex)
+        return 1
     except Exception as ex:
-        errors.log_error(ex)
+        LOGGER.exception(ex)  # noqa: TRY401
+        return 1
+
+    return 0
