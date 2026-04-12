@@ -205,14 +205,14 @@ def setup_argparse() -> argparse.ArgumentParser:
     return parser
 
 
-async def main() -> None:
+async def main() -> int:
     """Run the `weaving` CLI."""
     parser = setup_argparse()
 
     args = parser.parse_args()
     if args.help or not args.command:
         parser.print_help(sys.stderr)
-        return
+        return 0
 
     args.base = pathlib.Path(await anyio.Path.cwd())
 
@@ -230,6 +230,13 @@ async def main() -> None:
     try:
         await cmd.run(cfg)
     except KeyboardInterrupt:
-        pass
+        return 0
+    except errors.WeavingError as ex:
+        LOGGER.error(ex)  # noqa: TRY400
+        LOGGER.debug(ex, exc_info=ex)
+        return 1
     except Exception as ex:
-        errors.log_error(ex)
+        LOGGER.exception(ex)  # noqa: TRY401
+        return 1
+
+    return 0
