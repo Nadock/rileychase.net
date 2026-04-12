@@ -3,6 +3,7 @@ from __future__ import annotations
 import datetime
 import os
 import pathlib
+import subprocess
 from typing import TYPE_CHECKING
 
 import markdown
@@ -50,7 +51,7 @@ async def _markdown_pipeline(
         frontmatter=fm,
         rendered_at=get_rendered_at(),
         modified_at=get_modified_at(path),
-        git_sha=get_git_sha(path),
+        git_sha=get_git_sha(),
     )
 
     if fm.type == "blog_index":
@@ -158,33 +159,7 @@ def get_modified_at(path: pathlib.Path) -> datetime.datetime:
     return datetime.datetime.fromtimestamp(path.stat().st_mtime, datetime.UTC)
 
 
-def get_git_sha(path: pathlib.Path) -> str | None:
-    """
-    Get the current git SHA for a file.
-
-    Walk up the directory tree from `path` to find a `.git` directory and read the
-    current SHA from there.
-    """
-    git_head = path / ".git" / "HEAD"
-    for parent in path.parents:
-        if git_head.exists():
-            break
-        git_head = parent / ".git" / "HEAD"
-
-    current_ref = git_head.read_text("utf-8").strip().replace("ref: ", "")
-
-    try:
-        return (git_head.parent / current_ref).read_text("utf-8").strip()
-    except Exception:
-        LOGGER.debug(f"No file at {git_head.parent / current_ref}, trying packed refs")
-
-    packed_refs = (git_head.parent / "packed-refs").read_text("utf-8").splitlines()
-    for line in packed_refs:
-        if line.startswith("#"):
-            continue
-        sha, ref = line.split(" ", 1)
-        if ref == current_ref:
-            return sha
-
-    LOGGER.debug(f"Site file not in git repo: {path}")
-    return None
+def get_git_sha() -> str | None:
+    """Get the current git SHA."""
+    proc = subprocess.run(["git", "rev-parse", "HEAD"], check=True, capture_output=True)  # noqa: S607
+    return proc.stdout.decode("utf-8")
