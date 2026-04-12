@@ -1,4 +1,5 @@
 import argparse
+import os
 import pathlib
 import sys
 from typing import Protocol, override
@@ -163,7 +164,7 @@ def setup_argparse() -> argparse.ArgumentParser:
     parser.add_argument(
         "--verbose",
         "-v",
-        default=False,
+        default=bool(env) if (env := os.environ.get("WEAVING_VERBOSE")) else False,
         action="store_true",
         help="Enable verbose logging output.",
     )
