@@ -44,7 +44,7 @@ date: 2026-03-31
 - [limp_penis.webp](/img/dj_howard/limp_penis.webp)
 - [meryl_streep_boo.webp](/img/dj_howard/meryl_streep_boo.webp)
 - [morrison_very_nice.webp](/img/dj_howard/morrison_very_nice.webp)
-- [nick_points.png](/img/dj_howard/nick_points.png)
+- [nick_points.png](/img/dj_howard/nick_points.webp)
 - [succulent_chinese_meal.webp](/img/dj_howard/succulent_chinese_meal.webp)
 - [the_ayes_have_it.webp](/img/dj_howard/the_ayes_have_it.webp)
 - [the_noes_have_it.webp](/img/dj_howard/the_noes_have_it.webp)
