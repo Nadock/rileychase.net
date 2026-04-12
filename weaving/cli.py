@@ -229,8 +229,6 @@ async def main() -> int:
 
     try:
         await cmd.run(cfg)
-    except KeyboardInterrupt:
-        return 0
     except errors.WeavingError as ex:
         LOGGER.error(ex)  # noqa: TRY400
         LOGGER.debug(ex, exc_info=ex)
