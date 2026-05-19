@@ -16,7 +16,7 @@ dependencies = [
     "pydantic>=2.13.4",
     "pydantic-settings>=2.14.1",
     "pygments>=2.19.1",
-    "pymdown-extensions>=10.14.3",
+    "pymdown-extensions>=10.21.3",
     "pyyaml>=6.0.2",
     "watchfiles>=1.0.5",
 ]
