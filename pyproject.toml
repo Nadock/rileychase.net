@@ -24,11 +24,11 @@ dependencies = [
 [dependency-groups]
 dev = [
     "basedpyright>=1.39.6",
-    "cfn-lint>=1.51.1",
+    "cfn-lint>=1.51.3",
     "isort>=6.0.1",
     "pytest>=9.0.3",
     "rope>=1.13.0",
-    "ruff>=0.15.14",
+    "ruff>=0.15.15",
     "types-beautifulsoup4>=4.12.0.20250204",
     "types-cffi>=2.0.0.20260518",
     "types-colorama>=0.4.15.20260508",
