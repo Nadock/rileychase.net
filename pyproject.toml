@@ -36,7 +36,7 @@ dev = [
     "types-pexpect>=4.9.0.20260518",
     "types-pygments>=2.20.0.20260518",
     "types-pyyaml>=6.0.12.20260518",
-    "types-setuptools>=82.0.0.20260518",
+    "types-setuptools>=83.0.0.20260706",
 ]
 
 
