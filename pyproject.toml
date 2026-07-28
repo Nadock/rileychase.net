@@ -45,28 +45,29 @@ exclude = []
 lint.select = ["ALL"]
 lint.ignore = [
     # Docstrings
-    "D100", # undocumented-public-module
-    "D104", # undocumented-public-package
-    "D105", # undocumented-magic-method
-    "D107", # undocumented-public-init
-    "D200", # fits-on-one-line
-    "D205", # blank-line-after-summary
-    "D212", # multi-line-summary-first-line
+    "D100",   # undocumented-public-module
+    "D104",   # undocumented-public-package
+    "D105",   # undocumented-magic-method
+    "D107",   # undocumented-public-init
+    "D200",   # fits-on-one-line
+    "D205",   # blank-line-after-summary
+    "D212",   # multi-line-summary-first-line
+    "CPY001", # missing-copyright-notice
 
     # Type annotations
     "ANN401", # any-type
 
     # Code design
-    "A001",   # builtin-variable-shadowing
-    "A002",   # builtin-argument-shadowing
-    "A003",   # builtin-attribute-shadowing
-    "BLE001", # blind-except
-    "EM101",  # raw-string-in-exception
-    "EM102",  # f-string-in-exception
-    # "ERA001",  # commented-out-code
+    "A001",    # builtin-variable-shadowing
+    "A002",    # builtin-argument-shadowing
+    "A003",    # builtin-attribute-shadowing
+    "BLE001",  # blind-except
+    "EM101",   # raw-string-in-exception
+    "EM102",   # f-string-in-exception
     "G004",    # logging-f-string
     "PLR0913", # too-many-arguments
     "TRY003",  # raise-vanilla-args
+    "PLR0917", # too-many-positional-arguments
 
     # Meta
     "FIX002", # line-contains-todo
