@@ -31,7 +31,7 @@ def _format_runtime(t_0: int, t_1: int) -> str:
     """
     Format the elapsed time between two nanosecond time readings from `time.time_ns`.
     """
-    t_detla = abs(t_0 - t_1) / (10 ** 9)
+    t_detla = abs(t_0 - t_1) / (10**9)
     if t_detla < 0.001:
         return "under 1ms"
 
