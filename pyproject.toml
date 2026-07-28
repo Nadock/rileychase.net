@@ -24,19 +24,19 @@ dependencies = [
 [dependency-groups]
 dev = [
     "basedpyright>=1.39.9",
-    "cfn-lint>=1.53.1",
+    "cfn-lint>=1.53.2",
     "isort>=6.0.1",
     "pytest>=9.1.1",
     "rope>=1.13.0",
-    "ruff>=0.15.22",
+    "ruff>=0.16.0",
     "types-beautifulsoup4>=4.12.0.20250204",
     "types-cffi>=2.0.0.20260518",
     "types-colorama>=0.4.15.20260508",
     "types-markdown>=3.10.2.20260712",
     "types-pexpect>=4.9.0.20260518",
     "types-pygments>=2.20.0.20260518",
-    "types-pyyaml>=6.0.12.20260518",
-    "types-setuptools>=83.0.0.20260716",
+    "types-pyyaml>=6.0.12.20260724",
+    "types-setuptools>=83.0.0.20260724",
 ]
 
 
@@ -45,28 +45,29 @@ exclude = []
 lint.select = ["ALL"]
 lint.ignore = [
     # Docstrings
-    "D100", # undocumented-public-module
-    "D104", # undocumented-public-package
-    "D105", # undocumented-magic-method
-    "D107", # undocumented-public-init
-    "D200", # fits-on-one-line
-    "D205", # blank-line-after-summary
-    "D212", # multi-line-summary-first-line
+    "D100",   # undocumented-public-module
+    "D104",   # undocumented-public-package
+    "D105",   # undocumented-magic-method
+    "D107",   # undocumented-public-init
+    "D200",   # fits-on-one-line
+    "D205",   # blank-line-after-summary
+    "D212",   # multi-line-summary-first-line
+    "CPY001", # missing-copyright-notice
 
     # Type annotations
     "ANN401", # any-type
 
     # Code design
-    "A001",   # builtin-variable-shadowing
-    "A002",   # builtin-argument-shadowing
-    "A003",   # builtin-attribute-shadowing
-    "BLE001", # blind-except
-    "EM101",  # raw-string-in-exception
-    "EM102",  # f-string-in-exception
-    # "ERA001",  # commented-out-code
+    "A001",    # builtin-variable-shadowing
+    "A002",    # builtin-argument-shadowing
+    "A003",    # builtin-attribute-shadowing
+    "BLE001",  # blind-except
+    "EM101",   # raw-string-in-exception
+    "EM102",   # f-string-in-exception
     "G004",    # logging-f-string
     "PLR0913", # too-many-arguments
     "TRY003",  # raise-vanilla-args
+    "PLR0917", # too-many-positional-arguments
 
     # Meta
     "FIX002", # line-contains-todo
