@@ -5,7 +5,7 @@ description = "Simple static site generator and content that powers rileychase.n
 readme = "README.md"
 requires-python = ">=3.13.1"
 dependencies = [
-    "aiofile>=3.11.1",
+    "aiofile>=3.12.3",
     "aiohttp-devtools>=1.1.2",
     "aiohttp[speedups]>=3.14.3",
     "aiostream>=0.6.4",
@@ -14,7 +14,7 @@ dependencies = [
     "jinja2>=3.1.6",
     "markdown>=3.10.3",
     "pydantic>=2.13.4",
-    "pydantic-settings>=2.14.2",
+    "pydantic-settings>=2.15.0",
     "pygments>=2.19.1",
     "pymdown-extensions>=11.0.1",
     "pyyaml>=6.0.2",
