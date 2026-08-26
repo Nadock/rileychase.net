@@ -6,6 +6,8 @@ date: 2026-03-31
 
 <!-- This list maintained manually, please sort alphabetically. -->
 
+## DJ Howard
+
 - [albo_falls](/img/dj_howard/albo_falls.webp)
 - [albo_lick](/img/dj_howard/albo_lick.webp)
 - [albo_plane](/img/dj_howard/albo_plane.webp)
@@ -51,3 +53,21 @@ date: 2026-03-31
 - [the_ayes_have_it](/img/dj_howard/the_ayes_have_it.webp)
 - [the_noes_have_it](/img/dj_howard/the_noes_have_it.webp)
 - [xkcd_nginx_404](/img/dj_howard/xkcd_nginx_404.webp)
+
+## Sox
+
+- [allow_me](/img/dj_howard/sox/allow_me.webp)
+- [beep_boop](/img/dj_howard/sox/beep_boop.webp)
+- [belly_rub](/img/dj_howard/sox/belly_rub.webp)
+- [good_night](/img/dj_howard/sox/good_night.webp)
+- [ha_i_see_you](/img/dj_howard/sox/ha_i_see_you.webp)
+- [hairball](/img/dj_howard/sox/hairball.webp)
+- [head_spin](/img/dj_howard/sox/head_spin.webp)
+- [hello](/img/dj_howard/sox/hello.webp)
+- [its_protocol](/img/dj_howard/sox/its_protocol.webp)
+- [kill](/img/dj_howard/sox/kill.webp)
+- [meow](/img/dj_howard/sox/meow.webp)
+- [never_wear_pants](/img/dj_howard/sox/never_wear_pants.webp)
+- [peaking](/img/dj_howard/sox/peaking.webp)
+- [sox](/img/dj_howard/sox/sox.webp)
+- [utterly_terrifying](/img/dj_howard/sox/utterly_terrifying.webp)
