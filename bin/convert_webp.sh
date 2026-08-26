@@ -14,7 +14,7 @@ for src in "${1}"/*.jpg; do
     dest="${src//.jpg/.webp}"
     if [[ ! -f "${dest}" && -f "${src}" ]]; then
         echo "src=${src}, dest=${dest}"
-        ffmpeg -i "$src" -vcodec webp -loop 0 "${dest}"
+        ffmpeg -i "$src" -vcodec webp "${dest}"
     fi
 done
 
@@ -22,7 +22,7 @@ for src in "${1}"/*.png; do
     dest="${src//.png/.webp}"
     if [[ ! -f "${dest}" && -f "${src}" ]]; then
         echo "src=${src}, dest=${dest}"
-        ffmpeg -i "$src" -vcodec webp -loop 0 "${dest}"
+        ffmpeg -i "$src" -vcodec webp "${dest}"
     fi
 done
 
@@ -31,5 +31,13 @@ for src in "${1}"/*.gif; do
     if [[ ! -f "${dest}" && -f "${src}" ]]; then
         echo "src=${src}, dest=${dest}"
         ffmpeg -i "$src" -vcodec webp -loop 0 "${dest}"
+    fi
+done
+
+for src in "${1}"/*.mp4; do
+    dest="${src//.mp4/.webp}"
+    if [[ ! -f "${dest}" && -f "${src}" ]]; then
+        echo "src=${src}, dest=${dest}"
+        ffmpeg -i "$src" -vcodec webp -an -loop 0 "${dest}"
     fi
 done
