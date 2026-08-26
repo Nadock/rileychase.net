@@ -52,6 +52,8 @@ async def _serve_dev_site(cfg: config.SiteGeneratorConfig) -> None:
         / "adev"
     )
 
+    cfg.output.mkdir(exist_ok=True, parents=True)
+
     proc = await asyncio.create_subprocess_exec(
         adev.resolve(),
         "serve",
