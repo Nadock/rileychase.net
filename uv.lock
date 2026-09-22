@@ -158,14 +158,14 @@ wheels = [
 
 [[package]]
 name = "aiostream"
-version = "0.7.2"
+version = "0.8.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/52/5c/64090fd9b6ecaf8a6411aaf800da5ebed4fe21d6933ff357de71b49bdcc8/aiostream-0.7.2.tar.gz", hash = "sha256:ba9773f470cb0771f258c64e181a2a2b92b0aba76ce73585a5b1b40d8864247a", size = 44116, upload-time = "2026-09-08T16:16:43.427Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/02/be/c3e2b0e360a0350294df8f8d90cf51bef258ca1421b8bf1e4bea49a2661a/aiostream-0.8.1.tar.gz", hash = "sha256:32d180b4ab01ebb2fc59eda7fa59f496895a4d07b32fc57537d1dade2514a8a1", size = 45013, upload-time = "2026-09-16T10:41:54.253Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/73/2f/e1a133cd83d326db04115f03c8eb4385f0bc61abb814e029ce77461621e0/aiostream-0.7.2-py3-none-any.whl", hash = "sha256:e23a209ba4bb9ddb15d217302e4bab6964bf6b9f56be9b29ce09cafa0f5086cd", size = 41557, upload-time = "2026-09-08T16:16:42.072Z" },
+    { url = "https://files.pythonhosted.org/packages/7b/8c/018f92b5e71460ed4e83bb066a64c0a0072d8f90273464c75104bab73262/aiostream-0.8.1-py3-none-any.whl", hash = "sha256:f31c894f1e14a0825a45458e311e0b2a12d80b0d247a0fdf46d7d8ecaf4bc796", size = 41858, upload-time = "2026-09-16T10:41:52.865Z" },
 ]
 
 [[package]]
@@ -960,15 +960,15 @@ wheels = [
 
 [[package]]
 name = "pymdown-extensions"
-version = "11.0.2"
+version = "12.0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markdown" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ad/17/2db4b414de89659144488e0d9c6c0bf0c8395841dc12d81d0532cc6ef310/pymdown_extensions-11.0.2.tar.gz", hash = "sha256:9506fcbe66fa355a775b768084334238dd6805020ac4b92bea0c0dda6f8f223d", size = 855419, upload-time = "2026-08-22T19:28:47.236Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/eb/7e/53144b512818c75d459523e3a91d9bf7b65cd6a1dfb964fe690adc8b3670/pymdown_extensions-12.0.1.tar.gz", hash = "sha256:88fe2c97fb9153b9f2cc1da59f1d7c7cb74971110daf33cccb2a5514e0f7e970", size = 866904, upload-time = "2026-09-15T23:20:33.187Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a6/43/9f45ec4d14e596efc32c925a78104934790438b0c0628b70d741016734ad/pymdown_extensions-11.0.2-py3-none-any.whl", hash = "sha256:259910762019732caa1dfd76f3faa62c59f191d46573e80bcb1d13c0f675bbe5", size = 269929, upload-time = "2026-08-22T19:28:45.389Z" },
+    { url = "https://files.pythonhosted.org/packages/8c/30/c866b3ca8ad5cca79a3ee1a55c12d61d3e72381e5eadbfdaceb6006ebc84/pymdown_extensions-12.0.1-py3-none-any.whl", hash = "sha256:15d629e8035892b93d788a8424ccea754d4aa3cec247a64cbfe7b15089c9ad7f", size = 276957, upload-time = "2026-09-15T23:20:31.551Z" },
 ]
 
 [[package]]
