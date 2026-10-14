@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 import logging
 import pathlib
 import re
@@ -65,7 +65,7 @@ class PageFrontmatter(pydantic.BaseModel):
     tags: list[str] = pydantic.Field(default_factory=list)
     """Classification tags for this page's content."""
 
-    date: datetime.date | None = None
+    date: dt.date | None = None
     """The original publication date for this page."""
 
     og: OpenGraphFrontmatter | None = None
