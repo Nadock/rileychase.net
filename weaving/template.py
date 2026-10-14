@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 import functools
 import pathlib
 import re
@@ -21,10 +21,10 @@ class TemplateContext(pydantic.BaseModel):
     frontmatter: frontmatter.PageFrontmatter
     """Page frontmatter."""
 
-    rendered_at: datetime.datetime
+    rendered_at: dt.datetime
     """The date and time the page is being rendered at."""
 
-    modified_at: datetime.datetime
+    modified_at: dt.datetime
     """The date and time the page source was last modified."""
 
     git_sha: str | None

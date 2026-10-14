@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import os
 import pathlib
 import subprocess
@@ -149,14 +149,14 @@ async def render(content: str | None) -> str:
     return md.convert(content)
 
 
-def get_rendered_at() -> datetime.datetime:
+def get_rendered_at() -> dt.datetime:
     """Get the time a page is being rendered at."""
-    return datetime.datetime.now(datetime.UTC)
+    return dt.datetime.now(dt.UTC)
 
 
-def get_modified_at(path: pathlib.Path) -> datetime.datetime:
+def get_modified_at(path: pathlib.Path) -> dt.datetime:
     """Get the date and time the file was last modified time."""
-    return datetime.datetime.fromtimestamp(path.stat().st_mtime, datetime.UTC)
+    return dt.datetime.fromtimestamp(path.stat().st_mtime, dt.UTC)
 
 
 def get_git_sha() -> str | None:

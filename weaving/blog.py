@@ -1,4 +1,4 @@
-import datetime
+import datetime as dt
 import math
 import pathlib
 
@@ -44,7 +44,7 @@ async def find_blog_posts(
         posts.append(template.BlogIndexPostContext(frontmatter=fm, preview=preview))
 
     # Sort post by their date
-    def sort_frontmatter(t: template.BlogIndexPostContext) -> datetime.date:
+    def sort_frontmatter(t: template.BlogIndexPostContext) -> dt.date:
         if not t.frontmatter.date:
             raise ValueError("Cannot render blog post without a date")
         return t.frontmatter.date
