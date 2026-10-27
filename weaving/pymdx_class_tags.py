@@ -1,6 +1,6 @@
-from collections.abc import Callable
 from typing import override
-from xml.etree import ElementTree as ET
+lazy from collections.abc import Callable
+lazy from xml.etree import ElementTree as ET
 
 import markdown
 from markdown import treeprocessors

@@ -1,6 +1,6 @@
-import datetime as dt
 import math
-import pathlib
+lazy import datetime as dt
+lazy import pathlib
 
 import bs4
 

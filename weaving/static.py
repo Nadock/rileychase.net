@@ -1,7 +1,7 @@
 import os
 import pathlib
 import shutil
-from collections.abc import AsyncIterator
+lazy from collections.abc import AsyncIterator
 
 from weaving import config, errors, logging
 
