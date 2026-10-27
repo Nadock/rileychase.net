@@ -1,10 +1,13 @@
 import math
-lazy import datetime as dt
-lazy import pathlib
+from typing import TYPE_CHECKING
 
 import bs4
 
 from weaving import config, frontmatter, logging, markdown, template
+
+if TYPE_CHECKING:
+    import datetime as dt
+    import pathlib
 
 LOGGER = logging.getLogger()
 

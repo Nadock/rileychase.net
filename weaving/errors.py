@@ -1,8 +1,11 @@
-lazy import pathlib
+from typing import TYPE_CHECKING
 
 import pydantic
 
 from weaving import logging
+
+if TYPE_CHECKING:
+    import pathlib
 
 LOGGER = logging.getLogger()
 

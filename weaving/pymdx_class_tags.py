@@ -1,9 +1,11 @@
-from typing import override
-lazy from collections.abc import Callable
-lazy from xml.etree import ElementTree as ET
+from typing import TYPE_CHECKING, override
 
 import markdown
 from markdown import treeprocessors
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from xml.etree import ElementTree as ET
 
 
 def _set_class_attribute(element: ET.Element) -> None:

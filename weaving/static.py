@@ -1,9 +1,12 @@
 import os
 import pathlib
 import shutil
-lazy from collections.abc import AsyncIterator
+from typing import TYPE_CHECKING
 
 from weaving import config, errors, logging
+
+if TYPE_CHECKING:
+    from collections.abc import AsyncIterator
 
 LOGGER = logging.getLogger()
 
