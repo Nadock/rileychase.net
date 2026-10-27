@@ -1,4 +1,4 @@
-import pathlib
+lazy import pathlib
 
 import pydantic
 

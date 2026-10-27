@@ -4,11 +4,14 @@ import importlib
 import pathlib
 import subprocess
 import sys
-from collections.abc import Callable, Coroutine
+from typing import TYPE_CHECKING
 
 import watchfiles
 
 from weaving import config, logging, pipeline
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Coroutine
 
 LOGGER = logging.getLogger()
 
