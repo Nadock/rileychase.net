@@ -1,13 +1,13 @@
+import datetime as dt  # noqa: TC003
 import logging
 import pathlib
 import re
 from typing import Any, Literal
 from urllib import parse
-lazy import datetime as dt
 
 import pydantic
 
-lazy from weaving import config as _config
+from weaving import config as _config  # noqa: TC001
 
 _WHITESPACE_RE = re.compile(r"\s+")
 

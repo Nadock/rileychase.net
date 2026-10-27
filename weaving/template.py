@@ -1,8 +1,8 @@
+import datetime as dt  # noqa: TC003
 import functools
+import pathlib  # noqa: TC003
 import re
 from typing import Any
-lazy import datetime as dt
-lazy import pathlib
 
 import jinja2
 import pydantic
