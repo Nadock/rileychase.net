@@ -91,8 +91,6 @@ Resources:
           # This is not portable, if you're copying this you'll want to remove the
           # additional domains below.
           - rileychase.au
-          - taylorchase.net
-          - taylorchase.au
         Comment: !Ref AWS::StackName
         CustomErrorResponses:
           - ErrorCode: 400
